@@ -3,6 +3,7 @@
   "fixture_type": "synthetic_lab_result",
   "synthetic_only": true,
   "live_endpoint": null,
+  "source_event_id": "lab-synthetic-result-0001",
   "sample_id": "sample_synthetic_soil_001",
   "observed_at": "2026-07-04T17:00:00Z",
   "result": {

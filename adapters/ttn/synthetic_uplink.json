@@ -3,7 +3,9 @@
   "fixture_type": "synthetic_ttn_uplink",
   "synthetic_only": true,
   "live_endpoint": null,
+  "source_event_id": "ttn-synthetic-uplink-0001",
   "device_id": "dev_synthetic_soil_001",
+  "observed_at": "2026-07-04T17:00:00Z",
   "received_at": "2026-07-04T17:00:02Z",
   "payload_shape": {
     "frm_payload": "U1lOVEhFVElDX1BBWUxPQUQ=",

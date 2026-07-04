@@ -1,0 +1,37 @@
+{
+  "event_id": "evt_66e6f379bd0137524483a85064a5191b92a9bcf9b8005b2fe6a24367ef2c2f3c",
+  "event_type": "lab_result",
+  "source_system": "lab",
+  "source_event_id": "lab-synthetic-result-0001",
+  "device_id": "dev_synthetic_lab_001",
+  "sensor_id": "sen_synthetic_lab_som_001",
+  "observed_at": "2026-07-04T17:00:00Z",
+  "received_at": "2026-07-04T17:00:00Z",
+  "decoder_id": "dec_synthetic_lab_result",
+  "decoder_version": "v0.1.0-draft",
+  "method_version": "method-v0.1.0-draft",
+  "raw_payload_sha256": "fc8816c05d1567577984b059a787d11c24992335aee3494388ce9cf52ac6cbd0",
+  "normalized": {
+    "measurement_type": "soil_organic_matter",
+    "value": 3.2,
+    "unit": "percent"
+  },
+  "qa": {
+    "quality_status": "synthetic",
+    "duplicate_status": "not_checked",
+    "gap_status": "not_applicable",
+    "out_of_order": false
+  },
+  "storage": {
+    "raw_uri": "memory://synthetic/lab/result-0001/raw",
+    "normalized_uri": "memory://synthetic/lab/result-0001/normalized",
+    "retention_policy": "development_ephemeral"
+  },
+  "holochain": {
+    "commit_policy": "commit_batch_reference_only",
+    "batch_hash": null,
+    "entry_ref": null
+  },
+  "authoritative_for_mrv": false,
+  "statement": "evaluation, not certification"
+}

@@ -1,0 +1,37 @@
+{
+  "event_id": "evt_35c2eb7ecab14b8a28a77092bf463d6ef2e3690429feed24caa3188e1321dad3",
+  "event_type": "manual_observation",
+  "source_system": "manual",
+  "source_event_id": "manual-synthetic-observation-0001",
+  "device_id": "dev_synthetic_manual_001",
+  "sensor_id": "sen_synthetic_manual_soil_moisture_001",
+  "observed_at": "2026-07-04T17:00:00Z",
+  "received_at": "2026-07-04T17:00:00Z",
+  "decoder_id": "dec_synthetic_manual_observation",
+  "decoder_version": "v0.1.0-draft",
+  "method_version": "method-v0.1.0-draft",
+  "raw_payload_sha256": "f2f07cdfeaa705ffb659f675dcff886d854bb42ccaa6f34e8340c07298bd1b29",
+  "normalized": {
+    "measurement_type": "soil_moisture",
+    "value": 21.5,
+    "unit": "percent_vwc"
+  },
+  "qa": {
+    "quality_status": "synthetic",
+    "duplicate_status": "not_checked",
+    "gap_status": "not_applicable",
+    "out_of_order": false
+  },
+  "storage": {
+    "raw_uri": "memory://synthetic/manual/observation-0001/raw",
+    "normalized_uri": "memory://synthetic/manual/observation-0001/normalized",
+    "retention_policy": "development_ephemeral"
+  },
+  "holochain": {
+    "commit_policy": "commit_batch_reference_only",
+    "batch_hash": null,
+    "entry_ref": null
+  },
+  "authoritative_for_mrv": false,
+  "statement": "evaluation, not certification"
+}
