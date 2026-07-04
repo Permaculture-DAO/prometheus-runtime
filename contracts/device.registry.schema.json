@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Permaculture-DAO/prometheus-runtime/contracts/device.registry.schema.json",
+  "title": "Prometheus Device Registry",
+  "type": "object",
+  "required": ["registry_id", "version", "status", "devices"],
+  "additionalProperties": false,
+  "properties": {
+    "registry_id": {
+      "type": "string",
+      "pattern": "^PROM-DEVICE-REGISTRY-[A-Za-z0-9._-]+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9._-]+)?$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "frozen", "superseded"]
+    },
+    "devices": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "device_id",
+          "source_system",
+          "device_class",
+          "admission_status",
+          "authoritative_for_mrv",
+          "location_policy",
+          "sensors"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "device_id": {
+            "type": "string",
+            "pattern": "^dev_[a-z0-9_\\-]+$"
+          },
+          "source_system": {
+            "type": "string",
+            "enum": ["synthetic", "ttn", "manual", "lab", "home_assistant", "node_red", "rain_bird"]
+          },
+          "device_class": {
+            "type": "string",
+            "enum": ["soil_sensor", "weather_sensor", "gateway", "manual_observation", "lab_result", "irrigation_controller", "synthetic_fixture"]
+          },
+          "admission_status": {
+            "type": "string",
+            "enum": ["synthetic_only", "test_only", "candidate", "admitted", "retired"]
+          },
+          "authoritative_for_mrv": {
+            "type": "boolean",
+            "const": false
+          },
+          "location_policy": {
+            "type": "string",
+            "enum": ["withheld", "coarse_public", "site_private"]
+          },
+          "sensors": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["sensor_id", "measurement_type", "unit", "calibration_status"],
+              "additionalProperties": false,
+              "properties": {
+                "sensor_id": {
+                  "type": "string",
+                  "pattern": "^sen_[a-z0-9_\\-]+$"
+                },
+                "measurement_type": {
+                  "type": "string",
+                  "enum": ["soil_moisture", "soil_temperature", "air_temperature", "relative_humidity", "rainfall", "battery_voltage", "manual_note", "lab_value", "synthetic_signal"]
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "calibration_status": {
+                  "type": "string",
+                  "enum": ["not_required", "pending", "calibrated", "expired"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

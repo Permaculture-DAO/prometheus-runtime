@@ -1,0 +1,16 @@
+{
+  "registry_id": "PROM-DECODER-REGISTRY-S3-DRAFT",
+  "version": "v0.1.0-draft",
+  "status": "draft",
+  "decoders": [
+    {
+      "decoder_id": "dec_synthetic_soil_vwc",
+      "version": "v0.1.0-draft",
+      "input_source": "synthetic",
+      "output_event_schema": "sensor.event.schema.json",
+      "authoritative_for_mrv": false,
+      "test_vector_status": "synthetic_only"
+    }
+  ]
+}
+
