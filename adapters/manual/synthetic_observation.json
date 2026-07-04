@@ -3,6 +3,7 @@
   "fixture_type": "synthetic_manual_observation",
   "synthetic_only": true,
   "live_endpoint": null,
+  "source_event_id": "manual-synthetic-observation-0001",
   "observer_ref": "observer_synthetic_internal_review",
   "observed_at": "2026-07-04T17:00:00Z",
   "observation": {

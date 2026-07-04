@@ -13,5 +13,6 @@ Start with:
 - `docs/S2_REMOTE_PUBLICATION_CHECKLIST.md`
 - `docs/S3_DATA_CONTRACTS.md`
 - `docs/S4_GATED_INGESTION.md`
+- `docs/S5_NORMALIZATION_QA.md`
 
 Do not commit `.env.local`. Copy `.env.example` locally and generate fresh secrets.
