@@ -35,3 +35,8 @@ class Settings:
     p3_enabled: bool = os.getenv("P3_PROCESSOR_ENABLED", "false").lower() == "true"
     p4_enabled: bool = os.getenv("P4_CUSTODY_EXCHANGE_ENABLED", "false").lower() == "true"
     holochain_enabled: bool = os.getenv("HOLOCHAIN_ENABLED", "false").lower() == "true"
+    s4_ingestion_enabled: bool = os.getenv("S4_INGESTION_ENABLED", "false").lower() == "true"
+    s4_live_ingestion_admitted: bool = os.getenv("S4_LIVE_INGESTION_ADMITTED", "false").lower() == "true"
+    s4_ttn_mock_enabled: bool = os.getenv("S4_TTN_MOCK_ENABLED", "false").lower() == "true"
+    s4_manual_mock_enabled: bool = os.getenv("S4_MANUAL_MOCK_ENABLED", "false").lower() == "true"
+    s4_lab_mock_enabled: bool = os.getenv("S4_LAB_MOCK_ENABLED", "false").lower() == "true"

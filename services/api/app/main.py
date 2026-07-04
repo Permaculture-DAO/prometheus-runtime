@@ -16,6 +16,7 @@ from .db import Base, build_engine, build_session_factory
 from .models import ReleaseState, EvidenceCandidate, AuditLog
 from .schemas import EvidenceCandidateIn, EvaluationRequest, EvaluationResponse
 from .security import require_write_key
+from .ingestion import adapter_by_id, ingestion_gate_status
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -132,6 +133,29 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/v1/gates")
     def gate_status():
         return load_json(settings.gate_status_path, {"gates":[]})
+
+    @app.get("/v1/ingestion/adapters")
+    def ingestion_adapters():
+        return ingestion_gate_status(settings)
+
+    @app.post("/v1/ingestion/intake/{adapter_id}", dependencies=[Depends(require_write_key(settings))])
+    def ingestion_intake(adapter_id: str, payload: dict):
+        adapter = adapter_by_id(settings, adapter_id)
+        if adapter is None:
+            raise HTTPException(status_code=404, detail="adapter not found")
+        if not settings.s4_ingestion_enabled or not adapter.enabled or not settings.s4_live_ingestion_admitted:
+            raise HTTPException(
+                status_code=423,
+                detail={
+                    "status": "locked",
+                    "adapter_id": adapter_id,
+                    "reason": "S4 ingestion is declared but not admitted",
+                    "statement": settings.runtime_statement,
+                    "production_admitted": settings.production_admitted,
+                    "live_ingestion_admitted": settings.s4_live_ingestion_admitted,
+                },
+            )
+        raise HTTPException(status_code=423, detail="live ingestion remains gated")
 
     @app.get("/v1/canon/files")
     def canon_files():

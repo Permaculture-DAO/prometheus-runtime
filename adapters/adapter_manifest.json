@@ -1,0 +1,34 @@
+{
+  "status": "S4 draft",
+  "live_ingestion_admitted": false,
+  "statement": "evaluation, not certification",
+  "adapters": [
+    {
+      "adapter_id": "ttn_mock",
+      "source_system": "ttn",
+      "enabled_by_default": false,
+      "fixture": "adapters/ttn/synthetic_uplink.json",
+      "endpoint_url": null,
+      "credential_policy": "no_live_credentials_in_repository",
+      "holochain_policy": "batch_reference_only_after_later_gate"
+    },
+    {
+      "adapter_id": "manual_mock",
+      "source_system": "manual",
+      "enabled_by_default": false,
+      "fixture": "adapters/manual/synthetic_observation.json",
+      "endpoint_url": null,
+      "credential_policy": "no_live_credentials_in_repository",
+      "holochain_policy": "batch_reference_only_after_later_gate"
+    },
+    {
+      "adapter_id": "lab_mock",
+      "source_system": "lab",
+      "enabled_by_default": false,
+      "fixture": "adapters/lab/synthetic_result.json",
+      "endpoint_url": null,
+      "credential_policy": "no_live_credentials_in_repository",
+      "holochain_policy": "batch_reference_only_after_later_gate"
+    }
+  ]
+}

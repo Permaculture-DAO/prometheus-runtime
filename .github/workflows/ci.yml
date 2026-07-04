@@ -26,6 +26,8 @@ jobs:
         run: |
           pip install jsonschema==4.26.0
           python scripts/validate_contracts.py
+      - name: S4 ingestion guard
+        run: python scripts/s4_guard.py
 
   api-tests:
     runs-on: ubuntu-latest
