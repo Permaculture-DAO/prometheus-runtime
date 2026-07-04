@@ -1,0 +1,16 @@
+{
+  "adapter_id": "ttn_mock",
+  "fixture_type": "synthetic_ttn_uplink",
+  "synthetic_only": true,
+  "live_endpoint": null,
+  "device_id": "dev_synthetic_soil_001",
+  "received_at": "2026-07-04T17:00:02Z",
+  "payload_shape": {
+    "frm_payload": "U1lOVEhFVElDX1BBWUxPQUQ=",
+    "f_port": 1,
+    "decoded_payload": {
+      "soil_moisture_percent_vwc": 21.5
+    }
+  },
+  "statement": "evaluation, not certification"
+}

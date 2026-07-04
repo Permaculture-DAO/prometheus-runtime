@@ -1,0 +1,14 @@
+{
+  "adapter_id": "lab_mock",
+  "fixture_type": "synthetic_lab_result",
+  "synthetic_only": true,
+  "live_endpoint": null,
+  "sample_id": "sample_synthetic_soil_001",
+  "observed_at": "2026-07-04T17:00:00Z",
+  "result": {
+    "measurement_type": "soil_organic_matter",
+    "value": 3.2,
+    "unit": "percent"
+  },
+  "statement": "evaluation, not certification"
+}
