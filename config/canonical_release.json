@@ -1,0 +1,29 @@
+{
+  "canonical_root": "PROMETHEUS-CANON-ROOT-v7.0",
+  "canonical_release": "PROMETHEUS-CWP-v7.0-20260704",
+  "runtime_build": "PROMETHEUS-RUNTIME-v7.0.1-20260704",
+  "build_date": "2026-07-04",
+  "authority_rule": "the lowest unresolved gate controls the permitted claim",
+  "runtime_statement": "evaluation, not certification",
+  "documentary_status": "conditional documentary pass",
+  "empirical_status": "open",
+  "legal_admission": "not admitted",
+  "market_admission": "not admitted",
+  "documentary_patch": "PROMETHEUS-DOC-PATCH-v7.0.3-20260704",
+  "runtime_stage": "development",
+  "status_qualifier": "development runtime; production admission gated",
+  "build_completed": true,
+  "locally_tested": true,
+  "production_admitted": false,
+  "legal_admitted": false,
+  "market_admitted": false,
+  "independent_assurance": "unsigned",
+  "erratum_register": "03_GOVERNANCE/11_Canonical_Erratum_and_Status_Label_Register_v7.0.2_EN.docx",
+  "audit_convergence_patch": "PROMETHEUS-AUDIT-CONVERGENCE-v7.0.3-20260704",
+  "current_critical_path": [
+    "G1 executable controls",
+    "G2 independent pilot readiness"
+  ],
+  "named_institution_endorsement": false,
+  "evidence_triggered_release_rule": true
+}

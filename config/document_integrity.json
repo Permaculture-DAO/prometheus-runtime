@@ -1,0 +1,27 @@
+{
+  "canonical_root": "PROMETHEUS-CANON-ROOT-v7.0",
+  "runtime_build": "PROMETHEUS-RUNTIME-v7.0.1-20260704",
+  "algorithm": "SHA-256",
+  "files": [
+    {
+      "path": "01_Canonical_White_Paper_v7.0_EN.docx",
+      "bytes": 442199,
+      "sha256": "1bd348bf10be45e9b6ac18234079ee09d7e8c667d42437b9868883d4c221bd0f"
+    },
+    {
+      "path": "02_Canonical_White_Paper_FULL_v7.0_EN.docx",
+      "bytes": 475852,
+      "sha256": "17e069174b41780cc2c0bb09d478e891b852f27b3549e1c40cba5331b4b30bf8"
+    },
+    {
+      "path": "03_Canonical_White_Paper_FULL_CORPUS_v7.0.1_EN.docx",
+      "bytes": 3881717,
+      "sha256": "c9e31b60613cd4e8c438f67ae4f8d179cedad4ee808ef6db907512c75833b63d"
+    },
+    {
+      "path": "04_Master_Audit_Prompt_DEFINITIVE_v7.0.3_EN.md",
+      "bytes": 11239,
+      "sha256": "e5ac84072eb55cf70e76502a04c966c1bb458e612eccdcdbf81db2f0034bb935"
+    }
+  ]
+}

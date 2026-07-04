@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/services/api"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/services/holochain_bridge"
+    schedule:
+      interval: "weekly"

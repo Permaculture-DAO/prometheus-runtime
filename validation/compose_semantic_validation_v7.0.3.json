@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "name": "prometheus-v703-audit-convergence",
+  "services": [
+    "api",
+    "db",
+    "gateway",
+    "holochain-bridge",
+    "holochain-conductor"
+  ],
+  "profiles": {
+    "holochain": [
+      "holochain-conductor",
+      "holochain-bridge"
+    ]
+  }
+}

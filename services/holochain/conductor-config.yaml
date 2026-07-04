@@ -1,0 +1,11 @@
+data_root_path: /var/lib/holochain
+keystore:
+  type: lair_server_in_proc
+admin_interfaces:
+  - driver:
+      type: websocket
+      port: 65000
+allowed_origins:
+  - 'http://127.0.0.1:8090'
+  - 'http://localhost:8090'
+  - 'prometheus-runtime'

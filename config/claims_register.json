@@ -1,0 +1,189 @@
+{
+  "release": "PROMETHEUS-CWP-v7.0-20260704",
+  "canonical_root": "PROMETHEUS-CANON-ROOT-v7.0",
+  "runtime_build": "PROMETHEUS-RUNTIME-v7.0.1-20260704",
+  "claims": [
+    {
+      "id": "C-001",
+      "claim": "Prometheus is a candidate regenerative infrastructure architecture.",
+      "status": "Canonical definition",
+      "audience": "Public",
+      "mandatory_qualification": "A candidate architecture subject to evidence, legal, operational and market gates.",
+      "blocked_wording": "\u201cValidated asset class\u201d; \u201cinvestable today\u201d",
+      "expiry": "2030-07-04"
+    },
+    {
+      "id": "C-002",
+      "claim": "OHE is the minimum deployable unit.",
+      "status": "Architectural definition",
+      "audience": "Public",
+      "mandatory_qualification": "A biophysical and stewardship unit from which evidence may be generated.",
+      "blocked_wording": "\u201cA financial asset by design\u201d",
+      "expiry": "2030-07-04"
+    },
+    {
+      "id": "C-003",
+      "claim": "PRU makes verified performance analytically comparable.",
+      "status": "Specified",
+      "audience": "Technical / diligence",
+      "mandatory_qualification": "PRU is an analytical interface and creates no rights.",
+      "blocked_wording": "\u201cPRU token\u201d; \u201cPRU price\u201d; \u201ccollateral\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-004",
+      "claim": "RAP supports portfolio analysis.",
+      "status": "Specified",
+      "audience": "Diligence",
+      "mandatory_qualification": "Portfolio-readable does not mean fund, demand, liquidity or investability.",
+      "blocked_wording": "\u201cLiquid regenerative pool\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-005",
+      "claim": "H1-H5c may hold.",
+      "status": "Pilot-required",
+      "audience": "Research only",
+      "mandatory_qualification": "Testable hypotheses; no site performance admitted.",
+      "blocked_wording": "\u201cProven by Prometheus\u201d",
+      "expiry": "After pilot review"
+    },
+    {
+      "id": "C-006",
+      "claim": "External literature supports prior plausibility.",
+      "status": "External signal",
+      "audience": "Research / diligence",
+      "mandatory_qualification": "Literature signal only; context and limitations disclosed.",
+      "blocked_wording": "\u201cExternal proof of our site\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-007",
+      "claim": "Prometheus uses provenance-first digital architecture.",
+      "status": "Specified",
+      "audience": "Technical",
+      "mandatory_qualification": "Records support traceability; they do not create ecological truth.",
+      "blocked_wording": "\u201cBlockchain-verified nature\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-008",
+      "claim": "AI assists evidence workflows.",
+      "status": "Specified",
+      "audience": "Public / technical",
+      "mandatory_qualification": "AI prepares and flags; humans, evidence, method, governance and law control.",
+      "blocked_wording": "\u201cAI-certified\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-009",
+      "claim": "Prometheus is token-neutral.",
+      "status": "Canonical definition",
+      "audience": "Public",
+      "mandatory_qualification": "No native Prometheus token is admitted in v7.0.",
+      "blocked_wording": "\u201cOfficial Prometheus token\u201d",
+      "expiry": "2030-07-04"
+    },
+    {
+      "id": "C-010",
+      "claim": "TRBK is external to Prometheus.",
+      "status": "Canonical boundary",
+      "audience": "Public / legal",
+      "mandatory_qualification": "No Prometheus rights, governance or value arise from holding TRBK.",
+      "blocked_wording": "\u201cTRBK backs PRU/RAP\u201d",
+      "expiry": "2027-07-04"
+    },
+    {
+      "id": "C-011",
+      "claim": "P1 attestation may be evaluated.",
+      "status": "Design",
+      "audience": "Named counterparties",
+      "mandatory_qualification": "Conditionally admissible after data, security, contract and legal review.",
+      "blocked_wording": "\u201cLive integration\u201d",
+      "expiry": "2027-01-04"
+    },
+    {
+      "id": "C-012",
+      "claim": "P2 merchant acceptance may be evaluated.",
+      "status": "Design; NO-GO live",
+      "audience": "Named counterparties only",
+      "mandatory_qualification": "USD-denominated invoices; live pilot only after all gates and Gate Review.",
+      "blocked_wording": "\u201cPay with TRBK now\u201d; fixed token price",
+      "expiry": "2026-10-01"
+    },
+    {
+      "id": "C-013",
+      "claim": "GENIUS Act may inform approved stablecoin-provider diligence.",
+      "status": "Current-law signal",
+      "audience": "Legal/diligence",
+      "mandatory_qualification": "Prometheus is not presumed to be a stablecoin issuer.",
+      "blocked_wording": "\u201cGENIUS-authorised Prometheus token\u201d",
+      "expiry": "On legal change"
+    },
+    {
+      "id": "C-014",
+      "claim": "H.R.3633 informs legislative monitoring.",
+      "status": "Legislative watch",
+      "audience": "Legal only",
+      "mandatory_qualification": "Pending/unfinished status at cut-off; no safe harbour relied upon.",
+      "blocked_wording": "\u201cCLARITY-compliant\u201d",
+      "expiry": "Monthly while pending"
+    },
+    {
+      "id": "C-015",
+      "claim": "Capital pathways are candidate only.",
+      "status": "Pre-instrument",
+      "audience": "Diligence",
+      "mandatory_qualification": "Rights require separate legal instruments and admission.",
+      "blocked_wording": "\u201cOffering\u201d; \u201cavailable investment\u201d",
+      "expiry": "2026-10-01"
+    },
+    {
+      "id": "C-016",
+      "claim": "v7.0 has conditional documentary conformance.",
+      "status": "Internal audit",
+      "audience": "Named counterparties",
+      "mandatory_qualification": "No empirical, legal, market or independent-assurance pass is implied.",
+      "blocked_wording": "\u201cPassed all audits\u201d",
+      "expiry": "On external review"
+    },
+    {
+      "id": "C-017",
+      "claim": "Prometheus is prepared for review under specified institutional-grade lenses.",
+      "status": "Controlled documentary statement",
+      "audience": "Named counterparties / public with qualification",
+      "mandatory_qualification": "No named institution has reviewed, endorsed or approved unless separately evidenced.",
+      "blocked_wording": "MIT-ready; BlackRock-compliant; SFI-approved",
+      "expiry": "On attributable external review"
+    },
+    {
+      "id": "C-018",
+      "claim": "The current repository is an Institutional Pilot Evidence Room.",
+      "status": "Controlled diligence design",
+      "audience": "Qualified reviewers",
+      "mandatory_qualification": "Not an offering or Investor Data Room before G5 and G7.",
+      "blocked_wording": "Investor Data Room; investment opportunity",
+      "expiry": "On G5/G7 decision"
+    },
+    {
+      "id": "C-019",
+      "claim": "Executable controls may be tested within a stated model and environment.",
+      "status": "G1 open",
+      "audience": "Technical review",
+      "mandatory_qualification": "Assumptions, counterexamples, scope and independent status disclosed.",
+      "blocked_wording": "Formally proven safe; production certified",
+      "expiry": "On G1 review"
+    },
+    {
+      "id": "C-020",
+      "claim": "Complexity models may explore scenarios under stated assumptions.",
+      "status": "Research-only",
+      "audience": "Research",
+      "mandatory_qualification": "No site evidence, forecast, PRU or capital weight unless separately admitted.",
+      "blocked_wording": "The model proves/predicts regeneration or returns",
+      "expiry": "On model admission"
+    }
+  ],
+  "documentary_patch": "PROMETHEUS-DOC-PATCH-v7.0.3-20260704",
+  "audit_convergence_patch": "PROMETHEUS-AUDIT-CONVERGENCE-v7.0.3-20260704"
+}

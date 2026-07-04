@@ -1,0 +1,47 @@
+name: runtime-s0-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main, "release/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  s0-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: S0 guard
+        run: python scripts/s0_guard.py
+      - name: Runtime validation
+        run: python scripts/validate_runtime.py
+
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        working-directory: services/api
+        run: pip install -r requirements.lock -r requirements-dev.lock
+      - name: Run API tests
+        working-directory: services/api
+        run: PYTHONPATH=. pytest -q
+
+  node-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.4"
+      - name: Syntax check bridge
+        working-directory: services/holochain_bridge
+        run: node --check src/server.js
