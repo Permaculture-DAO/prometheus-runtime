@@ -6,6 +6,7 @@ COPY services/api/requirements.lock ./
 RUN pip install --requirement requirements.lock
 COPY services/api/app ./app
 COPY config ./config
+COPY evidence ./evidence
 RUN mkdir -p /data/evidence && chown -R app:app /app /data
 USER app
 EXPOSE 8000

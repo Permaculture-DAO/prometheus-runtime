@@ -17,6 +17,7 @@ from .models import ReleaseState, EvidenceCandidate, AuditLog
 from .schemas import EvidenceCandidateIn, EvaluationRequest, EvaluationResponse
 from .security import require_write_key
 from .ingestion import adapter_by_id, ingestion_gate_status
+from .evidence_batch import verify_synthetic_evidence_batch
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -156,6 +157,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 },
             )
         raise HTTPException(status_code=423, detail="live ingestion remains gated")
+
+    @app.get("/v1/evidence/batches/synthetic")
+    def synthetic_evidence_batch():
+        if not settings.synthetic_evidence_batch_path.exists():
+            raise HTTPException(status_code=404, detail="synthetic evidence batch package not found")
+        batch = load_json(settings.synthetic_evidence_batch_path, {})
+        errors = verify_synthetic_evidence_batch(batch)
+        if errors:
+            raise HTTPException(status_code=500, detail={"status": "invalid", "errors": errors})
+        return batch
 
     @app.get("/v1/canon/files")
     def canon_files():

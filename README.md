@@ -14,5 +14,6 @@ Start with:
 - `docs/S3_DATA_CONTRACTS.md`
 - `docs/S4_GATED_INGESTION.md`
 - `docs/S5_NORMALIZATION_QA.md`
+- `docs/S6_EVIDENCE_BATCH_PACKAGING.md`
 
 Do not commit `.env.local`. Copy `.env.example` locally and generate fresh secrets.

@@ -40,3 +40,4 @@ class Settings:
     s4_ttn_mock_enabled: bool = os.getenv("S4_TTN_MOCK_ENABLED", "false").lower() == "true"
     s4_manual_mock_enabled: bool = os.getenv("S4_MANUAL_MOCK_ENABLED", "false").lower() == "true"
     s4_lab_mock_enabled: bool = os.getenv("S4_LAB_MOCK_ENABLED", "false").lower() == "true"
+    synthetic_evidence_batch_path: Path = Path(os.getenv("SYNTHETIC_EVIDENCE_BATCH_PATH", "/app/evidence/batches/synthetic_batch_0001.json"))
