@@ -1,0 +1,24 @@
+{
+  "registry_id": "PROM-DEVICE-REGISTRY-S3-DRAFT",
+  "version": "v0.1.0-draft",
+  "status": "draft",
+  "devices": [
+    {
+      "device_id": "dev_synthetic_soil_001",
+      "source_system": "synthetic",
+      "device_class": "synthetic_fixture",
+      "admission_status": "synthetic_only",
+      "authoritative_for_mrv": false,
+      "location_policy": "withheld",
+      "sensors": [
+        {
+          "sensor_id": "sen_synthetic_soil_moisture_001",
+          "measurement_type": "soil_moisture",
+          "unit": "percent_vwc",
+          "calibration_status": "not_required"
+        }
+      ]
+    }
+  ]
+}
+

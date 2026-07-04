@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Permaculture-DAO/prometheus-runtime/contracts/sensor.event.schema.json",
+  "title": "Prometheus Sensor or World Event",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "source_system",
+    "source_event_id",
+    "device_id",
+    "sensor_id",
+    "observed_at",
+    "received_at",
+    "decoder_id",
+    "decoder_version",
+    "method_version",
+    "raw_payload_sha256",
+    "normalized",
+    "qa",
+    "storage",
+    "holochain",
+    "authoritative_for_mrv",
+    "statement"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^evt_[a-f0-9]{64}$"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["synthetic_sensor_observation", "sensor_observation", "manual_observation", "lab_result", "world_adapter_observation"]
+    },
+    "source_system": {
+      "type": "string",
+      "enum": ["synthetic", "ttn", "manual", "lab", "open_meteo", "copernicus_stac", "home_assistant", "node_red", "rain_bird"]
+    },
+    "source_event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "device_id": {
+      "type": "string",
+      "pattern": "^dev_[a-z0-9_\\-]+$"
+    },
+    "sensor_id": {
+      "type": "string",
+      "pattern": "^sen_[a-z0-9_\\-]+$"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decoder_id": {
+      "type": "string",
+      "pattern": "^dec_[a-z0-9_\\-]+$"
+    },
+    "decoder_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9._-]+)?$"
+    },
+    "method_version": {
+      "type": "string",
+      "pattern": "^method-v[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9._-]+)?$"
+    },
+    "raw_payload_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "normalized": {
+      "type": "object",
+      "required": ["measurement_type", "value", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "measurement_type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "required": ["quality_status", "duplicate_status", "gap_status", "out_of_order"],
+      "additionalProperties": false,
+      "properties": {
+        "quality_status": {
+          "type": "string",
+          "enum": ["synthetic", "raw_unchecked", "candidate", "rejected", "accepted_for_review"]
+        },
+        "duplicate_status": {
+          "type": "string",
+          "enum": ["not_checked", "unique", "duplicate", "replay"]
+        },
+        "gap_status": {
+          "type": "string",
+          "enum": ["not_checked", "no_gap_detected", "gap_detected", "not_applicable"]
+        },
+        "out_of_order": {
+          "type": "boolean"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "required": ["raw_uri", "normalized_uri", "retention_policy"],
+      "additionalProperties": false,
+      "properties": {
+        "raw_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retention_policy": {
+          "type": "string",
+          "enum": ["development_ephemeral", "pilot_candidate", "archival"]
+        }
+      }
+    },
+    "holochain": {
+      "type": "object",
+      "required": ["commit_policy", "batch_hash", "entry_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "commit_policy": {
+          "type": "string",
+          "enum": ["do_not_commit_raw", "commit_batch_reference_only"]
+        },
+        "batch_hash": {
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "entry_ref": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "authoritative_for_mrv": {
+      "type": "boolean",
+      "const": false
+    },
+    "statement": {
+      "type": "string",
+      "const": "evaluation, not certification"
+    }
+  }
+}
+

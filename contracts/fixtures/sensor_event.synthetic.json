@@ -1,0 +1,37 @@
+{
+  "event_id": "evt_9666df44190326bcd8cb767950269549eacf3c655dc58ae45264defdcb6acb6a",
+  "event_type": "synthetic_sensor_observation",
+  "source_system": "synthetic",
+  "source_event_id": "synthetic-uplink-0001",
+  "device_id": "dev_synthetic_soil_001",
+  "sensor_id": "sen_synthetic_soil_moisture_001",
+  "observed_at": "2026-07-04T17:00:00Z",
+  "received_at": "2026-07-04T17:00:02Z",
+  "decoder_id": "dec_synthetic_soil_vwc",
+  "decoder_version": "v0.1.0-draft",
+  "method_version": "method-v0.1.0-draft",
+  "raw_payload_sha256": "7b9a47f0f9d9380a6f61d19944dfe4c8455b53c3196d3e1e65ca93b9b8c28f5b",
+  "normalized": {
+    "measurement_type": "soil_moisture",
+    "value": 21.5,
+    "unit": "percent_vwc"
+  },
+  "qa": {
+    "quality_status": "synthetic",
+    "duplicate_status": "not_checked",
+    "gap_status": "not_applicable",
+    "out_of_order": false
+  },
+  "storage": {
+    "raw_uri": "memory://synthetic/raw/uplink-0001",
+    "normalized_uri": "memory://synthetic/normalized/uplink-0001",
+    "retention_policy": "development_ephemeral"
+  },
+  "holochain": {
+    "commit_policy": "commit_batch_reference_only",
+    "batch_hash": null,
+    "entry_ref": null
+  },
+  "authoritative_for_mrv": false,
+  "statement": "evaluation, not certification"
+}
