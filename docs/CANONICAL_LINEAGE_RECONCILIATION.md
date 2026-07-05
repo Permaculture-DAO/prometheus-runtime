@@ -38,13 +38,32 @@ runtime track on `v7.0.x` and recording the v1.1 authority explicitly via the ne
 | `document_integrity.json` files + hashes | v7.0.x | The internal documents the runtime fail-closes against at boot. |
 | `runtime_build`, `documentary_patch`, `audit_convergence_patch`, `erratum_register` | v7.0.x | Internal build/documentary tracking identifiers. |
 
-## Open follow-up (not blocking, steward-owned)
+## Boot-document integrity — VERIFIED 2026-07-05
 
-The runtime boots against the four `*_v7.0*` documents in `document_integrity.json`,
-whose hashes are distinct from the published `v1.1.2-genesis` white paper. If/when the
-runtime should verify against the v1.1 canon documents directly, that requires the
-actual v1.1 canon DOCX set + regenerated hashes — a canon-custody + deploy-mounting
-action, deliberately **not** inferred or fabricated here.
+The four `*_v7.0*` documents in `document_integrity.json` are **real and hash-correct**.
+Verified against the source `PROMETHEUS_v7_0_3_AUDIT_CONVERGENCE_PATCH` (`01_CANON/`):
+all four SHA-256 and byte-lengths match the recorded values exactly —
+
+| Document | Bytes | SHA-256 (recorded == actual) |
+|---|---|---|
+| `01_Canonical_White_Paper_v7.0_EN.docx` | 442199 | `1bd348bf…c221bd0f` ✓ |
+| `02_Canonical_White_Paper_FULL_v7.0_EN.docx` | 475852 | `17e06917…b4b30bf8` ✓ |
+| `03_Canonical_White_Paper_FULL_CORPUS_v7.0.1_EN.docx` | 3881717 | `c9e31b60…5833b63d` ✓ |
+| `04_Master_Audit_Prompt_DEFINITIVE_v7.0.3_EN.md` | 11239 | `e5ac8407…034bb935` ✓ |
+
+So the runtime's boot-time fail-closed integrity gate points at a genuine,
+internally-coherent `v7.0.x` document set — not phantom paths. This confirms the
+"mapped, not merged" posture: the v7.0.x documentary track is real and verifiable, and
+subordinate to the v1.1 Genesis canon authority.
+
+## Optional future follow-up (steward-owned, not blocking)
+
+These v7.0.x boot documents are distinct from the published `v1.1.2-genesis` white paper
+(different content, different hashes). Re-anchoring the runtime to verify the v1.1 canon
+documents *directly* would require the actual v1.1 canon DOCX set + regenerated hashes —
+a canon-custody + deploy-mounting decision, deliberately **not** inferred or fabricated
+here. Until then the mapping (v7.0.x runtime track ⊂ v1.1 canon authority) is the
+governing arrangement.
 
 ## Rule going forward
 
