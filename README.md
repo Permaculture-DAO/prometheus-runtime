@@ -1,10 +1,10 @@
 # Prometheus runtime
 
-Development runtime candidate for the Prometheus v1.1 Genesis canon (`PROMETHEUS-CANON-ROOT-v1.1`).
+Development runtime candidate. **Canon authority is the Prometheus v1.1 Genesis line** (`PROMETHEUS-CANON-ROOT-v1.1`, `Permaculture-DAO/prometheus-canon`, signed `v1.1.2-genesis`). This runtime executes an **internal `v7.0.x` documentary track** (`PROMETHEUS-CANON-ROOT-v7.0`) that is **subordinate to and mapped onto** the v1.1 canon — it does not redefine it. See [`docs/CANONICAL_LINEAGE_RECONCILIATION.md`](docs/CANONICAL_LINEAGE_RECONCILIATION.md).
 
 Status: `development runtime; production admission gated`.
 
-This repository candidate is generated from the internal v7.0.3 runtime deployment layer and sanitized according to the internal v7.0.4 Runtime Resynchronization Roadmap S0 requirements. Those `v7.0.x` labels are internal runtime build/process identifiers only; canon authority is the v1.1 Genesis line. See [`docs/CANONICAL_LINEAGE_RECONCILIATION.md`](docs/CANONICAL_LINEAGE_RECONCILIATION.md).
+This repository candidate is generated from the internal v7.0.3 runtime deployment layer and sanitized according to the internal v7.0.4 Runtime Resynchronization Roadmap S0 requirements.
 
 ## Not to be confused with `prometheus-happ`
 
