@@ -1,7 +1,8 @@
 {
-  "canonical_root": "PROMETHEUS-CANON-ROOT-v1.1",
-  "canonical_release": "v1.1.2-genesis",
-  "canonical_root_note": "canonical_root/canonical_release are the sole canon-authority references in this file and track the org's signed Genesis line (Permaculture-DAO/prometheus-canon, Permaculture-DAO/prometheus-canonical-releases/CURRENT_RELEASE). All other v7.0.x-labelled fields below are internal runtime build/documentary tracking identifiers only and do not assert canon authority; see docs/CANONICAL_LINEAGE_RECONCILIATION.md.",
+  "canonical_root": "PROMETHEUS-CANON-ROOT-v7.0",
+  "canonical_release": "PROMETHEUS-CWP-v7.0-20260704",
+  "canon_authority": "PROMETHEUS-CANON-ROOT-v1.1 (Permaculture-DAO/prometheus-canon, signed v1.1.2-genesis)",
+  "canonical_root_note": "canonical_root/canonical_release identify the runtime's INTERNAL v7.0.x documentary track, which the runtime verifies at boot (see config/document_integrity.json). Canon AUTHORITY is the org's signed v1.1 Genesis line (canon_authority above); the v7.0.x track is subordinate to and mapped onto it. Neither redefines the other. Mapping and rationale: docs/CANONICAL_LINEAGE_RECONCILIATION.md.",
   "runtime_build": "PROMETHEUS-RUNTIME-v7.0.1-20260704",
   "build_date": "2026-07-04",
   "authority_rule": "the lowest unresolved gate controls the permitted claim",

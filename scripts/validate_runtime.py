@@ -54,8 +54,10 @@ if env.get("HOLOCHAIN_REQUIRED_VERSION") != "0.6.1":
     errors.append("Holochain baseline must be 0.6.1 until hn-introspect supersedes it")
 
 release = json.loads((root / "config/canonical_release.json").read_text(encoding="utf-8"))
-if release.get("canonical_root") != "PROMETHEUS-CANON-ROOT-v1.1":
+if release.get("canonical_root") != "PROMETHEUS-CANON-ROOT-v7.0":
     errors.append("canonical root mismatch")
+if release.get("canon_authority", "").split()[0] != "PROMETHEUS-CANON-ROOT-v1.1":
+    errors.append("canon authority must map to v1.1 Genesis line")
 if release.get("runtime_stage") != "development":
     errors.append("runtime stage must be development")
 for key in ["production_admitted", "legal_admitted", "market_admitted"]:
