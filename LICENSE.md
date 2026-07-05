@@ -1,7 +1,7 @@
 # License
 
-Copyright © 2026 Uwohali Tuccio, operating as h•eart•h intelligence — Prometheus
-(Permaculture-DAO). All rights reserved.
+Copyright © 2022–2026 Permaculture DAO LLC (a Florida limited liability company),
+h•eart•h intelligence — Prometheus. All rights reserved.
 
 ## 1. Proprietary — value / claim tier
 
@@ -13,11 +13,10 @@ admission is gated.
 
 Prometheus separates the **proof** from the **power**:
 
-- **Verification / methodology tier** — the canon prose in `prometheus-canon` and the
-  MRV / pre-registration / methodology materials — is released separately under the
-  open-source Cryptographic Autonomy License v1.0 (CAL-1.0). That is a separate act in
-  those repositories; this paragraph is a **description of intent, not a present grant**
-  of any right over the code in this repository.
+- **Verification / methodology tier** — the canon prose and methodology materials —
+  is open: prose/text under **CC-BY-SA-4.0**, and any open-sourced code under
+  **CAL-1.0**, in their own repositories. This paragraph is a **description of intent,
+  not a present grant** of any right over the code in this repository.
 - **Value / claim tier** — the runtime code here (gated ingestion, normalization,
   evidence packaging, and any logic that produces value or claims) — remains
   proprietary and gate-bound.
@@ -61,6 +60,6 @@ internal `v7.0.x` documentary track mapped onto it (see
 [`docs/CANONICAL_LINEAGE_RECONCILIATION.md`](docs/CANONICAL_LINEAGE_RECONCILIATION.md)).
 
 ---
-*Legal wording — template for qualified counsel review before merge. Not legal
-advice. The copyright holder shown is derived from the project's signing identity;
-confirm the natural person or registered entity that should hold these rights.*
+*Legal template. Not legal advice. A one-time IP/commercial counsel review is
+recommended before the first paying customer, any investor/token step, or IP
+assignment to the LLC (see PUBLICATION_BOUNDARY.md).*
