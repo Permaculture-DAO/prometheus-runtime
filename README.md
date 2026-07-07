@@ -26,3 +26,8 @@ Start with:
 - `docs/S6_EVIDENCE_BATCH_PACKAGING.md`
 
 Do not commit `.env.local`. Copy `.env.example` locally and generate fresh secrets.
+
+## Sprint 0 deployment baseline
+
+Candidate controls: [Sprint 0 Holochain integration contract](docs/SPRINT0_HOLOCHAIN_INTEGRATION_CONTRACT.md). This section is implementation governance only and does not promote release or validation status.
+

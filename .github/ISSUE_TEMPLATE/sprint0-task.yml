@@ -1,0 +1,23 @@
+name: Sprint 0 task
+description: Repository truth reset or deployment bootstrap task
+title: "[Sprint 0] "
+labels: ["sprint-0", "deployment-bootstrap"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Required evidence
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Canonical and claim boundaries
+    validations:
+      required: true
