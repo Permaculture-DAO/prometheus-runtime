@@ -8,7 +8,7 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@holochain/client": "0.20.7",
+    "@holochain/client": "0.21.0",
     "express": "5.2.1"
   }
 }
