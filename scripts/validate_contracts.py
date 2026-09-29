@@ -37,18 +37,24 @@ checks = [
     ("device.registry.schema.json", "device_registry.synthetic.json"),
     ("decoder.registry.schema.json", "decoder_registry.synthetic.json"),
     ("sensor.event.schema.json", "sensor_event.synthetic.json"),
+    ("claim.schema.json", "claim_uid.synthetic.json"),
+    ("observation.schema.json", "observation.synthetic.json"),
+    ("relationship.assertion.schema.json", "relationship_context.synthetic.json"),
+    ("disturbance.schema.json", "disturbance.synthetic.json"),
 ]
 
 errors = []
+format_checker = jsonschema.FormatChecker()
 
 for schema_name, fixture_name in checks:
     schema = load_json(CONTRACTS / schema_name)
     fixture = load_json(FIXTURES / fixture_name)
     try:
-        jsonschema.validate(instance=fixture, schema=schema)
+        jsonschema.validate(instance=fixture, schema=schema, format_checker=format_checker)
     except jsonschema.ValidationError as exc:
         errors.append(f"{fixture_name}: {exc.message}")
 
+# Existing sensor-event identity and authority boundaries.
 event = load_json(FIXTURES / "sensor_event.synthetic.json")
 if event["event_id"] != canonical_event_id(event):
     errors.append("sensor_event.synthetic.json event_id does not match canonical identity policy")
@@ -62,6 +68,42 @@ if event["source_system"] == "synthetic" and (
     errors.append("synthetic fixture must not include live Holochain commitments")
 if event["holochain"]["commit_policy"] == "do_not_commit_raw" and event["holochain"]["entry_ref"]:
     errors.append("do_not_commit_raw events must not include Holochain entry references")
+
+# P0.3 semantic firewalls.
+claim = load_json(FIXTURES / "claim_uid.synthetic.json")
+if claim["claim_uid"].startswith("C-"):
+    errors.append("claim_uid must be semantic and immutable; bare legacy C-numbers are forbidden as global IDs")
+
+relationship = load_json(FIXTURES / "relationship_context.synthetic.json")
+if relationship["zero_weight_for_pru"] is not True:
+    errors.append("relationship assertions must default to zero PRU weight")
+
+observation_schema = load_json(CONTRACTS / "observation.schema.json")
+invalid_observation = {
+    "observation_uid": "obs_invalid_missing_context",
+    "subject_uid": "ohe_sicily_genesis",
+    "method_uid": "method-x",
+    "observed_at": "2026-09-29T10:00:00Z",
+    "source_class": "sensor",
+    "observer_or_instrument_uid": "sensor-x",
+    "management_state_version": "ms-v0.1",
+    "raw_evidence_refs": ["sha256:x"],
+    "statement": "observation_not_verified_indicator"
+}
+try:
+    jsonschema.validate(instance=invalid_observation, schema=observation_schema, format_checker=format_checker)
+    errors.append("fail-closed test failed: observation without place/system-boundary context was accepted")
+except jsonschema.ValidationError:
+    pass
+
+relationship_schema = load_json(CONTRACTS / "relationship.assertion.schema.json")
+invalid_relationship = dict(relationship)
+invalid_relationship["zero_weight_for_pru"] = False
+try:
+    jsonschema.validate(instance=invalid_relationship, schema=relationship_schema, format_checker=format_checker)
+    errors.append("fail-closed test failed: relationship assertion with PRU weight was accepted")
+except jsonschema.ValidationError:
+    pass
 
 print(json.dumps({"status": "FAIL" if errors else "PASS", "errors": errors}, indent=2))
 sys.exit(1 if errors else 0)
