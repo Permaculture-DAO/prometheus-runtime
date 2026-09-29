@@ -62,6 +62,7 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
                 "evidence_packages": db.query(EvidencePackageRecord).count(),
                 "review_attestations": db.query(ReviewAttestationRecord).count(),
                 "admissibility_decisions": db.query(AdmissibilityDecisionRecord).count(),
+                "holochain_committed_packages": db.query(EvidencePackageRecord).filter(EvidencePackageRecord.holochain_commit_status == "committed").count(),
             },
             "flow": [
                 "observation",
@@ -118,6 +119,8 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
             "package_hash": package_hash,
             "claims_registry_hash": item.claims_registry_hash,
             "status": item.status,
+            "holochain_commit_status": item.holochain_commit_status,
+            "holochain_entry_ref": item.holochain_entry_ref,
             "authoritative_for_mrv": False,
             "statement": settings.runtime_statement,
         }
@@ -140,6 +143,8 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
             "missing_data_statement": item.missing_data_statement,
             "adverse_event_statement": item.adverse_event_statement,
             "status": item.status,
+            "holochain_commit_status": item.holochain_commit_status,
+            "holochain_entry_ref": item.holochain_entry_ref,
             "authoritative_for_mrv": False,
             "statement": settings.runtime_statement,
         }
