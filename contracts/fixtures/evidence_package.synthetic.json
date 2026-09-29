@@ -8,6 +8,7 @@
   "method_refs":["method-soil-moisture-v0.1"],
   "raw_data_hashes":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],
   "transformed_data_hashes":[],
+  "claims_registry_hash":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "missing_data_statement":"synthetic fixture; no missing observations",
   "adverse_event_statement":"synthetic fixture; no adverse event claim",
   "authoritative_for_mrv":false,
