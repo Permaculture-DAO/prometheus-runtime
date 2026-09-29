@@ -105,6 +105,7 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
             raw_data_hashes=payload.raw_data_hashes,
             transformed_data_hashes=payload.transformed_data_hashes,
             package_hash=package_hash,
+            claims_registry_hash=_claims_registry_hash(settings) or "",
             missing_data_statement=payload.missing_data_statement,
             adverse_event_statement=payload.adverse_event_statement,
             status="candidate",
@@ -115,6 +116,7 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
         return {
             "package_uid": item.id,
             "package_hash": package_hash,
+            "claims_registry_hash": item.claims_registry_hash,
             "status": item.status,
             "authoritative_for_mrv": False,
             "statement": settings.runtime_statement,
@@ -134,6 +136,7 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
             "observation_refs": item.observation_refs,
             "method_refs": item.method_refs,
             "package_hash": item.package_hash,
+            "claims_registry_hash": item.claims_registry_hash,
             "missing_data_statement": item.missing_data_statement,
             "adverse_event_statement": item.adverse_event_statement,
             "status": item.status,
