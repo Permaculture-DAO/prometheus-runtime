@@ -18,6 +18,7 @@ from .schemas import EvidenceCandidateIn, EvaluationRequest, EvaluationResponse
 from .security import require_write_key
 from .ingestion import adapter_by_id, ingestion_gate_status
 from .evidence_batch import verify_synthetic_evidence_batch
+from .evidence_spine_routes import build_evidence_spine_router
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -77,6 +78,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="h•eart•h Prometheus Runtime", version="7.0.3", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=list(settings.allowed_origins), allow_credentials=False, allow_methods=["GET","POST"], allow_headers=["Content-Type","X-API-Key"])
+    app.include_router(build_evidence_spine_router(settings, SessionLocal))
 
     def get_db():
         db = SessionLocal()
