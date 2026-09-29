@@ -54,6 +54,8 @@ class EvidencePackageRecord(Base):
     transformed_data_hashes: Mapped[list] = mapped_column(JSON, default=list)
     package_hash: Mapped[str] = mapped_column(String(64), index=True)
     claims_registry_hash: Mapped[str] = mapped_column(String(64), index=True)
+    holochain_commit_status: Mapped[str] = mapped_column(String(32), default="not_committed", index=True)
+    holochain_entry_ref: Mapped[str | None] = mapped_column(Text, nullable=True)
     missing_data_statement: Mapped[str] = mapped_column(Text)
     adverse_event_statement: Mapped[str] = mapped_column(Text)
     status: Mapped[str] = mapped_column(String(32), default="candidate", index=True)
