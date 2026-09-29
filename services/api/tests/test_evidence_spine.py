@@ -37,7 +37,10 @@ def test_p2_2_spine_package_review_and_blocked_admissibility(client):
     package = client.post("/v1/evidence/packages", json=package_payload(), headers=headers)
     assert package.status_code == 201
     assert package.json()["authoritative_for_mrv"] is False
+    assert package.json()["holochain_commit_status"] == "not_committed"
+    assert package.json()["holochain_entry_ref"] is None
     assert len(package.json()["package_hash"]) == 64
+    assert len(package.json()["claims_registry_hash"]) == 64
 
     review = client.post("/v1/reviews", json=review_payload(), headers=headers)
     assert review.status_code == 201
