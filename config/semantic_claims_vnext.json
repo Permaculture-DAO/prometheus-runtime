@@ -1,0 +1,127 @@
+{
+  "registry_version": "0.2-candidate",
+  "status": "candidate_not_canonical",
+  "authority_note": "Semantic migration sidecar; does not supersede the signed Canon until ratified.",
+  "claims": [
+    {
+      "claim_uid": "prometheus.architecture.candidate_regenerative_infrastructure",
+      "legacy_aliases": [
+        "v8:C-001",
+        "v7:C-001"
+      ],
+      "status": "architectural"
+    },
+    {
+      "claim_uid": "prometheus.ohe.minimum_deployable_auditable_unit",
+      "legacy_aliases": [
+        "v8-rel:C-002",
+        "v8:C-002",
+        "v7:C-002"
+      ],
+      "status": "architectural"
+    },
+    {
+      "claim_uid": "prometheus.ontology.human_participation_endogenous",
+      "legacy_aliases": [
+        "v8-rel:C-013"
+      ],
+      "status": "candidate_methodological_amendment"
+    },
+    {
+      "claim_uid": "prometheus.context.conditions_interpretation_transferability",
+      "legacy_aliases": [
+        "v8-rel:C-014"
+      ],
+      "status": "candidate_methodological_amendment"
+    },
+    {
+      "claim_uid": "prometheus.pru.analytical_interface_no_rights",
+      "legacy_aliases": [
+        "v8:C-003",
+        "v7:C-003"
+      ],
+      "status": "specified"
+    },
+    {
+      "claim_uid": "prometheus.rap.portfolio_readability_not_market_admission",
+      "legacy_aliases": [
+        "v8:C-004",
+        "v7:C-004"
+      ],
+      "status": "specified"
+    },
+    {
+      "claim_uid": "prometheus.hypothesis.h5_cooperative_syntropic_surplus",
+      "legacy_aliases": [
+        "v8:C-005",
+        "v7:C-005",
+        "bridge:H5"
+      ],
+      "status": "hypothesis"
+    },
+    {
+      "claim_uid": "prometheus.science.external_literature_prior_plausibility",
+      "legacy_aliases": [
+        "v7:C-006"
+      ],
+      "status": "external_evidence"
+    },
+    {
+      "claim_uid": "prometheus.ai.assistive_non_authoritative",
+      "legacy_aliases": [
+        "v8:C-010",
+        "v7:C-008"
+      ],
+      "status": "architectural"
+    },
+    {
+      "claim_uid": "prometheus.digital_provenance.traceability_not_truth",
+      "legacy_aliases": [
+        "v8:C-011",
+        "v7:C-007"
+      ],
+      "status": "architectural"
+    },
+    {
+      "claim_uid": "prometheus.frontier_research.zero_weight_until_admitted",
+      "legacy_aliases": [
+        "v8:C-012",
+        "v7:C-020"
+      ],
+      "status": "research_only"
+    },
+    {
+      "claim_uid": "prometheus.token.access_utility_candidate",
+      "legacy_aliases": [
+        "v8:C-008",
+        "bridge:TRBK-1"
+      ],
+      "status": "design_legal_gated"
+    },
+    {
+      "claim_uid": "prometheus.investment_exposure.separate_legal_instrument",
+      "legacy_aliases": [
+        "v8:C-009",
+        "v7:C-015"
+      ],
+      "status": "pre_instrument"
+    },
+    {
+      "claim_uid": "prometheus.site.validation_not_established",
+      "legacy_aliases": [
+        "bridge:SITE-1"
+      ],
+      "status": "pilot_required"
+    },
+    {
+      "claim_uid": "prometheus.runtime.evaluation_not_certification",
+      "legacy_aliases": [],
+      "status": "architectural"
+    },
+    {
+      "claim_uid": "prometheus.review.independence_scope_separation",
+      "legacy_aliases": [],
+      "status": "methodological"
+    }
+  ]
+}
