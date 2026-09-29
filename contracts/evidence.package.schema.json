@@ -1,0 +1,23 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://heart-intelligence.earth/schemas/evidence.package.schema.json",
+  "title":"Prometheus Evidence Package",
+  "type":"object",
+  "required":["package_uid","subject_uid","claim_uids","place_context_version","system_boundary_version","observation_refs","method_refs","raw_data_hashes","transformed_data_hashes","missing_data_statement","adverse_event_statement","authoritative_for_mrv","statement"],
+  "additionalProperties":false,
+  "properties":{
+    "package_uid":{"type":"string","pattern":"^ep_[A-Za-z0-9_-]+$"},
+    "subject_uid":{"type":"string","minLength":1},
+    "claim_uids":{"type":"array","minItems":1,"items":{"type":"string","pattern":"^prometheus\\.[a-z0-9_.-]+$"}},
+    "place_context_version":{"type":"string","minLength":1},
+    "system_boundary_version":{"type":"string","minLength":1},
+    "observation_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+    "method_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+    "raw_data_hashes":{"type":"array","minItems":1,"items":{"type":"string","pattern":"^[a-f0-9]{64}$"}},
+    "transformed_data_hashes":{"type":"array","items":{"type":"string","pattern":"^[a-f0-9]{64}$"}},
+    "missing_data_statement":{"type":"string","minLength":1},
+    "adverse_event_statement":{"type":"string","minLength":1},
+    "authoritative_for_mrv":{"type":"boolean","const":false},
+    "statement":{"type":"string","const":"evaluation, not certification"}
+  }
+}
