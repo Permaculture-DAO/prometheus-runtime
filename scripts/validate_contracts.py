@@ -41,6 +41,7 @@ checks = [
     ("observation.schema.json", "observation.synthetic.json"),
     ("relationship.assertion.schema.json", "relationship_context.synthetic.json"),
     ("disturbance.schema.json", "disturbance.synthetic.json"),
+    ("evidence.package.schema.json", "evidence_package.synthetic.json"),
 ]
 
 errors = []
@@ -104,6 +105,14 @@ try:
     errors.append("fail-closed test failed: relationship assertion with PRU weight was accepted")
 except jsonschema.ValidationError:
     pass
+
+
+# P2.2 schema integrity: review/admissibility contracts must themselves be valid JSON Schema.
+for schema_name in ["review.attestation.schema.json", "admissibility.decision.schema.json"]:
+    try:
+        jsonschema.Draft202012Validator.check_schema(load_json(CONTRACTS / schema_name))
+    except Exception as exc:
+        errors.append(f"{schema_name}: invalid JSON Schema: {exc}")
 
 print(json.dumps({"status": "FAIL" if errors else "PASS", "errors": errors}, indent=2))
 sys.exit(1 if errors else 0)
