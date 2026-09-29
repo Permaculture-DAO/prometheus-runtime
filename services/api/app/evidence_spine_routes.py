@@ -24,6 +24,14 @@ def _package_hash(payload: EvidencePackageIn) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+
+def _known_claim_uids(settings) -> set[str]:
+    try:
+        registry = json.loads(settings.semantic_claims_registry_path.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    return {item.get("claim_uid") for item in registry.get("claims", []) if item.get("claim_uid")}
+
 def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
     router = APIRouter()
 
@@ -60,12 +68,23 @@ def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
             "authoritative": False,
             "certification": False,
             "statement": settings.runtime_statement,
+            "semantic_claim_registry": {
+                "available": bool(_known_claim_uids(settings)),
+                "known_claims": len(_known_claim_uids(settings)),
+                "status": "candidate_not_canonical",
+            },
         }
 
     @router.post("/v1/evidence/packages", dependencies=[Depends(require_write_key(settings))], status_code=201)
     def create_evidence_package(payload: EvidencePackageIn, db: Session = Depends(get_db)):
         if db.get(EvidencePackageRecord, payload.package_uid) is not None:
             raise HTTPException(status_code=409, detail="evidence package already exists")
+        known = _known_claim_uids(settings)
+        if not known:
+            raise HTTPException(status_code=503, detail="semantic claim registry unavailable")
+        unknown = [uid for uid in payload.claim_uids if uid not in known]
+        if unknown:
+            raise HTTPException(status_code=422, detail={"unknown_claim_uids": unknown})
         package_hash = _package_hash(payload)
         item = EvidencePackageRecord(
             id=payload.package_uid,
