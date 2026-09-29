@@ -53,6 +53,7 @@ class EvidencePackageRecord(Base):
     raw_data_hashes: Mapped[list] = mapped_column(JSON, default=list)
     transformed_data_hashes: Mapped[list] = mapped_column(JSON, default=list)
     package_hash: Mapped[str] = mapped_column(String(64), index=True)
+    claims_registry_hash: Mapped[str] = mapped_column(String(64), index=True)
     missing_data_statement: Mapped[str] = mapped_column(Text)
     adverse_event_statement: Mapped[str] = mapped_column(Text)
     status: Mapped[str] = mapped_column(String(32), default="candidate", index=True)
