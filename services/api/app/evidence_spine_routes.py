@@ -32,6 +32,14 @@ def _known_claim_uids(settings) -> set[str]:
         return set()
     return {item.get("claim_uid") for item in registry.get("claims", []) if item.get("claim_uid")}
 
+
+def _claims_registry_hash(settings) -> str | None:
+    try:
+        raw = settings.semantic_claims_registry_path.read_bytes()
+    except Exception:
+        return None
+    return hashlib.sha256(raw).hexdigest()
+
 def build_evidence_spine_router(settings, SessionLocal) -> APIRouter:
     router = APIRouter()
 
