@@ -76,6 +76,12 @@ if any(not uid or not uid.startswith("prometheus.") for uid in semantic_uids):
     errors.append("semantic claim registry contains invalid claim_uid")
 if len(semantic_uids) != len(set(semantic_uids)):
     errors.append("semantic claim registry contains duplicate claim_uid")
+deprecated = semantic_registry.get("deprecated_claims", [])
+if any(item.get("claim_uid") in semantic_uids for item in deprecated):
+    errors.append("deprecated claim_uid must not appear among active claims")
+active_aliases = {alias for item in semantic_registry.get("claims", []) for alias in item.get("legacy_aliases", [])}
+if any(alias in active_aliases for item in deprecated for alias in item.get("legacy_aliases", [])):
+    errors.append("alias of a deprecated claim is attached to an active claim_uid")
 
 conductor = (root / "services/holochain/conductor-config.yaml").read_text(encoding="utf-8")
 if ("allowed_origins: " + "'*'") in conductor or ("allowed_origins: " + '"*"') in conductor:

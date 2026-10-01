@@ -107,8 +107,8 @@
     {
       "claim_uid": "prometheus.trbk.external_interface_no_prometheus_rights",
       "legacy_aliases": [
-        "v8:C-008",
-        "bridge:TRBK-1"
+        "v1.2.0-rc.2:C-008",
+        "bridge:TRBK-2"
       ],
       "status": "interim_boundary_TOD-001"
     },
@@ -136,6 +136,18 @@
       "claim_uid": "prometheus.review.independence_scope_separation",
       "legacy_aliases": [],
       "status": "methodological"
+    }
+  ],
+  "deprecated_claims": [
+    {
+      "claim_uid": "prometheus.token.access_utility_candidate",
+      "status": "deprecated_declined_ARD-001",
+      "superseded_by": "prometheus.trbk.external_interface_no_prometheus_rights",
+      "legacy_aliases": [
+        "v8:C-008",
+        "bridge:TRBK-1"
+      ],
+      "note": "Tombstone only. Encoded the A-002 classification (consumptive access utility) declined under ARD-001. Never resolve as an active claim; its aliases must not be attached to any active claim_uid."
     }
   ]
 }
