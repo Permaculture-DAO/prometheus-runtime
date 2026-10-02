@@ -51,15 +51,6 @@
       "status": "specified"
     },
     {
-      "claim_uid": "prometheus.hypothesis.h5_cooperative_syntropic_surplus",
-      "legacy_aliases": [
-        "v8:C-005",
-        "v7:C-005",
-        "bridge:H5"
-      ],
-      "status": "hypothesis"
-    },
-    {
       "claim_uid": "prometheus.science.external_literature_prior_plausibility",
       "legacy_aliases": [
         "v7:C-006"
@@ -139,6 +130,17 @@
     }
   ],
   "deprecated_claims": [
+    {
+      "claim_uid": "prometheus.hypothesis.h5_cooperative_syntropic_surplus",
+      "status": "deprecated_successor_candidate_v1.2.0-rc.2",
+      "superseded_by": null,
+      "legacy_aliases": [
+        "v8:C-005",
+        "v7:C-005",
+        "bridge:H5"
+      ],
+      "note": "Tombstone only, derived from successor candidate v1.2.0-rc.2 section W at f6f8ae2. Never resolve or rebind this uid or its aliases to H5a/H5b/H5c. No successor hypothesis is activated by this runtime change. Signed v1.1.2 remains in force; public H5 is governed by signed C-005 with unresolved uid."
+    },
     {
       "claim_uid": "prometheus.token.access_utility_candidate",
       "status": "deprecated_declined_ARD-001",

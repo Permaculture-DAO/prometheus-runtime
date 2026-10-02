@@ -1,4 +1,8 @@
 from datetime import datetime, timezone
+import json
+from pathlib import Path
+
+import pytest
 
 
 def package_payload():
@@ -98,3 +102,30 @@ def test_legacy_claim_id_rejected_at_package_boundary(client):
     payload["claim_uids"] = ["C-013"]
     response = client.post("/v1/evidence/packages", json=payload, headers=headers)
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize("claim_uid", [
+    "prometheus.hypothesis.h5_cooperative_syntropic_surplus",
+    "prometheus.token.access_utility_candidate",
+])
+def test_retired_uids_cannot_create_evidence_packages(client, claim_uid):
+    payload = package_payload()
+    payload["claim_uids"] = [claim_uid]
+    response = client.post("/v1/evidence/packages", json=payload, headers={"X-API-Key": "test-key"})
+    assert response.status_code == 422
+    assert response.json()["detail"]["unknown_claim_uids"] == [claim_uid]
+    assert client.get("/v1/evidence/spine/status").json()["counts"]["evidence_packages"] == 0
+
+
+def test_h5_tombstone_preserves_identity_without_activating_successors():
+    root = Path(__file__).resolve().parents[3]
+    registry = json.loads((root / "config/semantic_claims_vnext.json").read_text(encoding="utf-8"))
+    old_uid = "prometheus.hypothesis.h5_cooperative_syntropic_surplus"
+    tombstone = next(item for item in registry["deprecated_claims"] if item["claim_uid"] == old_uid)
+    assert tombstone["superseded_by"] is None
+    assert tombstone["legacy_aliases"] == ["v8:C-005", "v7:C-005", "bridge:H5"]
+    active_uids = {item["claim_uid"] for item in registry["claims"]}
+    active_aliases = {alias for item in registry["claims"] for alias in item["legacy_aliases"]}
+    assert old_uid not in active_uids
+    assert not active_aliases.intersection(tombstone["legacy_aliases"])
+    assert not any(uid.startswith(("prometheus.hypothesis.h5a_", "prometheus.hypothesis.h5b_", "prometheus.hypothesis.h5c_")) for uid in active_uids)
