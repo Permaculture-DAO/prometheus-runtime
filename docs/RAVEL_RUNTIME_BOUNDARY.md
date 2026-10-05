@@ -43,6 +43,9 @@ Self-transfers, duplicate contracts and contradictory common-control mappings ar
 rejected. Every final bearer requires an economic-group mapping. Incomplete
 allocation/residual exposure prevents URBC success; it must not be reported as
 verified diversification. Loss-conservation violations stop the API response.
+Roundoff-only residuals within the declared numerical tolerance are not material
+unallocated exposures. Chained protection/reinsurance is rejected in either JSON
+order: it requires a separate explicit ordering model, not implicit array order.
 
 Net additions: HTTP regression cases and explicit provenance output are justified
 by reproduced false-positive diagnostics. No new capital-facing capability.

@@ -179,6 +179,8 @@ def allocate_waterfall(loss: float, layers: Sequence[CapitalLayer]) -> dict:
             by_bearer[layer.bearer_id] = by_bearer.get(layer.bearer_id, 0.0) + allocated
     allocated_total = sum(by_bearer.values())
     residual = max(0.0, loss - allocated_total)
+    if residual <= 1e-9 * max(1.0, loss):
+        residual = 0.0
     if residual > 0:
         by_bearer["UNALLOCATED_RESIDUAL"] = residual
     return {
@@ -207,14 +209,20 @@ def apply_transfers(
     transfers: list[dict] = []
     seen: set[str] = set()
     before_total = sum(losses.values())
+    if any(c.provider_bearer_id == c.receiver_bearer_id for c in contracts):
+        raise RavelModelError("self-transfer cannot reduce receiver loss")
+    providers = {c.provider_bearer_id for c in contracts}
+    receivers = {c.receiver_bearer_id for c in contracts}
+    if providers & receivers:
+        raise RavelModelError("chained protection requires an explicit admitted ordering model")
     for c in contracts:
         if not c.contract_id or not c.provider_bearer_id or not c.receiver_bearer_id:
             raise RavelModelError("protection contract identifiers must be non-empty")
         if c.contract_id in seen:
             raise RavelModelError("protection contract identifiers must be unique")
         seen.add(c.contract_id)
-        if c.provider_bearer_id == c.receiver_bearer_id:
-            raise RavelModelError("self-transfer cannot reduce receiver loss")
+        if "UNALLOCATED_RESIDUAL" in (c.provider_bearer_id, c.receiver_bearer_id):
+            raise RavelModelError("UNALLOCATED_RESIDUAL is a reserved bearer id")
         _finite_nonnegative("attachment", c.attachment)
         _finite_nonnegative("limit", c.limit)
         if c.limit <= 0:

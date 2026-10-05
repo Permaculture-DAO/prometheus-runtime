@@ -153,3 +153,30 @@ def test_unknown_scenario_fields_are_not_silently_ignored_http(client):
     body = request_body()
     body["baseline_scenarios"][0]["unrecognised_units"] = "USD"
     assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+
+
+def test_reserved_protection_provider_rejected_http(client):
+    body = request_body()
+    body["transfer_contracts"] = [{"contract_id": "p", "provider_bearer_id": "UNALLOCATED_RESIDUAL", "receiver_bearer_id": "A", "attachment": 0, "limit": 50,
+                "effectiveness": 1, "basis_factor": 1, "counterparty_factor": 1, "legal_factor": 1}]
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+
+
+def test_roundoff_does_not_manufacture_unknown_risk_bearer_http(client):
+    body = request_body()
+    body["allocation_loss"] = 0.9
+    body["capital_layers"] = [{"bearer_id": str(i), "economic_group_id": "G", "layer_type": "synthetic", "attachment": a, "limit": l, "priority": i}
+                             for i, (a, l) in enumerate([(0, 0.1), (0.1, 0.7), (0.8, 0.1)])]
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 200
+    assert response.json()["allocation"]["urbc"] == 1
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_chained_transfers_cannot_depend_on_json_order(reverse):
+    contracts = [ProtectionContract("p1", "B", "A", 0, 50, 1, 1, 1, 1),
+                 ProtectionContract("p2", "C", "B", 0, 50, 1, 1, 1, 1)]
+    if reverse:
+        contracts.reverse()
+    with pytest.raises(RavelModelError, match="chained protection"):
+        apply_transfers({"A": 100}, contracts)
