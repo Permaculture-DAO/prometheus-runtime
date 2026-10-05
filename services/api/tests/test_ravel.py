@@ -136,6 +136,15 @@ def request_body():
                 {"bearer_id": "B", "economic_group_id": "G", "layer_type": "senior", "attachment": 50, "limit": 50, "priority": 1}]}
 
 
+def test_reference_shadow_assessment_repeats_byte_for_byte_http(client):
+    body = request_body()
+    first = client.post("/v1/ravel/shadow", json=body)
+    second = client.post("/v1/ravel/shadow", json=body)
+    assert first.status_code == second.status_code == 200
+    assert first.content == second.content
+    assert first.json()["baseline"]["vrrc"] == 0
+
+
 def test_conflicting_common_control_is_rejected_http(client):
     body = request_body()
     body["bearer_to_group"] = {"B": "H"}
