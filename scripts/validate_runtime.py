@@ -12,6 +12,9 @@ required = [
     root / "services/holochain/conductor-config.yaml",
     root / "services/holochain/entrypoint.sh",
     root / "config/canonical_release.json",
+    root / "config/ravel_profile.json",
+    root / "services/api/app/ravel.py",
+    root / "services/api/app/ravel_schemas.py",
 ]
 for p in required:
     if not p.exists():
@@ -65,6 +68,16 @@ for key in ["production_admitted", "legal_admitted", "market_admitted"]:
         errors.append(f"{key} must be false")
 if release.get("independent_assurance") != "unsigned":
     errors.append("independent assurance must be unsigned")
+
+
+ravel = json.loads((root / "config/ravel_profile.json").read_text(encoding="utf-8"))
+if ravel.get("mode") != "shadow_underwriting":
+    errors.append("RAVEL mode must remain shadow_underwriting")
+if ravel.get("vrrc") != 0.0 or ravel.get("vrrc_status") != "not_admitted":
+    errors.append("RAVEL VRRC must remain zero/not_admitted in candidate runtime")
+for key in ["authoritative", "certification", "underwriting_approval", "capital_facing"]:
+    if ravel.get(key) is not False:
+        errors.append(f"RAVEL {key} must remain false")
 
 conductor = (root / "services/holochain/conductor-config.yaml").read_text(encoding="utf-8")
 if ("allowed_origins: " + "'*'") in conductor or ("allowed_origins: " + '"*"') in conductor:
