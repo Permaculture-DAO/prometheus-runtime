@@ -220,9 +220,14 @@ def apply_transfers(
         losses[c.provider_bearer_id] = losses.get(c.provider_bearer_id, 0.0) + effective
         transfers.append({
             "contract_id": c.contract_id,
+            "receiver_bearer_id": c.receiver_bearer_id,
+            "provider_bearer_id": c.provider_bearer_id,
+            "receiver_loss_before": receiver_loss,
+            "receiver_loss_after": losses[c.receiver_bearer_id],
             "nominal_payout": nominal,
             "effective_payout": effective,
             "combined_effectiveness": combined,
+            "rte_loss_share": 0.0 if receiver_loss <= 0 else effective / receiver_loss,
         })
     after_total = sum(losses.values())
     return {
