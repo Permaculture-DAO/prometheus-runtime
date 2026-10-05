@@ -32,6 +32,8 @@ from .ravel import (
     urbc,
 )
 from .ravel_schemas import RavelShadowRequest, RavelShadowResponse
+from .evidence_spine_routes import build_evidence_spine_router
+from .review_routes import build_review_router
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -91,6 +93,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="h•eart•h Prometheus Runtime", version="7.0.3", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=list(settings.allowed_origins), allow_credentials=False, allow_methods=["GET","POST"], allow_headers=["Content-Type","X-API-Key"])
+    app.include_router(build_evidence_spine_router(settings, SessionLocal))
+    app.include_router(build_review_router(settings, SessionLocal))
 
     def get_db():
         db = SessionLocal()

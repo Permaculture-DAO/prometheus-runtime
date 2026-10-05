@@ -26,6 +26,7 @@ class Settings:
     document_root: Path = Path(os.getenv("DOCUMENT_ROOT", "/documents"))
     evidence_storage_path: Path = Path(os.getenv("EVIDENCE_STORAGE_PATH", "/tmp/prometheus-evidence"))
     claims_register_path: Path = Path(os.getenv("CLAIMS_REGISTER_PATH", "/app/config/claims_register.json"))
+    semantic_claims_registry_path: Path = Path(os.getenv("SEMANTIC_CLAIMS_REGISTRY_PATH", "/app/config/semantic_claims_vnext.json"))
     gate_status_path: Path = Path(os.getenv("GATE_STATUS_PATH", "/app/config/gate_status.json"))
     canonical_release_path: Path = Path(os.getenv("CANONICAL_RELEASE_PATH", "/app/config/canonical_release.json"))
     document_integrity_manifest_path: Path = Path(os.getenv("DOCUMENT_INTEGRITY_MANIFEST_PATH", "/app/config/document_integrity.json"))

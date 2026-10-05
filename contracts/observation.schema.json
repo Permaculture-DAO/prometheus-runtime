@@ -1,0 +1,26 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://heart-intelligence.earth/schemas/observation.schema.json",
+  "title":"Prometheus Observation",
+  "type":"object",
+  "required":["observation_uid","subject_uid","place_context_version","system_boundary_version","method_uid","observed_at","source_class","observer_or_instrument_uid","management_state_version","raw_evidence_refs","statement"],
+  "additionalProperties":false,
+  "properties":{
+    "observation_uid":{"type":"string","pattern":"^obs_[A-Za-z0-9_-]+$"},
+    "subject_uid":{"type":"string","minLength":1},
+    "place_context_version":{"type":"string","minLength":1},
+    "system_boundary_version":{"type":"string","minLength":1},
+    "method_uid":{"type":"string","minLength":1},
+    "observed_at":{"type":"string","format":"date-time"},
+    "location_ref":{"type":["string","null"]},
+    "source_class":{"type":"string","enum":["sensor","lab","earth_observation","human_observation","operational_log","derived_model"]},
+    "observer_or_instrument_uid":{"type":"string","minLength":1},
+    "management_state_version":{"type":"string","minLength":1},
+    "disturbance_uid":{"type":["string","null"]},
+    "raw_evidence_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+    "conflict_or_positionality_note":{"type":["string","null"]},
+    "uncertainty_note":{"type":["string","null"]},
+    "zero_weight_for_pru":{"type":"boolean"},
+    "statement":{"type":"string","const":"observation_not_verified_indicator"}
+  }
+}
