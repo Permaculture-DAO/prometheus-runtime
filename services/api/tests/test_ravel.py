@@ -58,6 +58,9 @@ def test_transfer_moves_but_does_not_erase_loss():
     assert abs(sum(out["by_bearer"].values()) - sum(before.values())) < 1e-9
     assert out["by_bearer"]["insurer"] == 16.0
     assert out["by_bearer"]["senior"] == 9.0
+    assert abs(out["transfers"][0]["rte_loss_share"] - (16.0 / 25.0)) < 1e-9
+    assert out["transfers"][0]["receiver_loss_before"] == 25.0
+    assert out["transfers"][0]["receiver_loss_after"] == 9.0
 
 
 def test_affiliates_aggregate_before_urbc():
