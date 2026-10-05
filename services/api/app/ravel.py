@@ -35,10 +35,10 @@ class ProtectionContract:
     receiver_bearer_id: str
     attachment: float
     limit: float
-    effectiveness: float = 1.0
-    basis_factor: float = 1.0
-    counterparty_factor: float = 1.0
-    legal_factor: float = 1.0
+    effectiveness: float
+    basis_factor: float
+    counterparty_factor: float
+    legal_factor: float
 
 
 def _finite_nonnegative(name: str, value: float) -> None:
@@ -64,7 +64,7 @@ def normalise_scenarios(scenarios: Sequence[ScenarioLoss]) -> list[ScenarioLoss]
         if s.recovery_value is not None:
             _finite_nonnegative("recovery_value", s.recovery_value)
         total += s.probability
-    if total <= 0:
+    if not isfinite(total) or total <= 0:
         raise RavelModelError("scenario probabilities must sum to > 0")
     return [
         ScenarioLoss(
@@ -147,9 +147,15 @@ def validate_layers(layers: Sequence[CapitalLayer]) -> list[CapitalLayer]:
         raise RavelModelError("at least one capital layer is required")
     ordered = sorted(layers, key=lambda x: (x.attachment, x.priority, x.bearer_id))
     previous_end = 0.0
+    groups: dict[str, str] = {}
     for layer in ordered:
         if not layer.bearer_id or not layer.economic_group_id or not layer.layer_type:
             raise RavelModelError("capital layer identifiers must be non-empty")
+        if layer.bearer_id == "UNALLOCATED_RESIDUAL":
+            raise RavelModelError("UNALLOCATED_RESIDUAL is a reserved bearer id")
+        if layer.bearer_id in groups and groups[layer.bearer_id] != layer.economic_group_id:
+            raise RavelModelError("a bearer cannot belong to conflicting economic groups")
+        groups[layer.bearer_id] = layer.economic_group_id
         _finite_nonnegative("attachment", layer.attachment)
         _finite_nonnegative("limit", layer.limit)
         if layer.limit <= 0:
@@ -157,6 +163,8 @@ def validate_layers(layers: Sequence[CapitalLayer]) -> list[CapitalLayer]:
         if layer.attachment + 1e-9 < previous_end:
             raise RavelModelError("capital layers overlap; v0.1 requires non-overlapping attachments")
         previous_end = max(previous_end, layer.attachment + layer.limit)
+        if not isfinite(previous_end):
+            raise RavelModelError("capital layer end must be finite")
     return ordered
 
 
@@ -197,10 +205,16 @@ def apply_transfers(
             raise RavelModelError("bearer id must be non-empty")
         _finite_nonnegative(f"loss[{bearer}]", loss)
     transfers: list[dict] = []
+    seen: set[str] = set()
     before_total = sum(losses.values())
     for c in contracts:
         if not c.contract_id or not c.provider_bearer_id or not c.receiver_bearer_id:
             raise RavelModelError("protection contract identifiers must be non-empty")
+        if c.contract_id in seen:
+            raise RavelModelError("protection contract identifiers must be unique")
+        seen.add(c.contract_id)
+        if c.provider_bearer_id == c.receiver_bearer_id:
+            raise RavelModelError("self-transfer cannot reduce receiver loss")
         _finite_nonnegative("attachment", c.attachment)
         _finite_nonnegative("limit", c.limit)
         if c.limit <= 0:
@@ -255,6 +269,18 @@ def aggregate_by_economic_group(
         _finite_nonnegative(f"loss[{bearer}]", float(loss))
         group = bearer_to_group.get(bearer, bearer)
         groups[group] = groups.get(group, 0.0) + float(loss)
+    return groups
+
+
+def reconcile_economic_groups(layers: Sequence[CapitalLayer], declared: Mapping[str, str]) -> dict[str, str]:
+    """Do not silently override the capital stack's common-control declarations."""
+    groups = {layer.bearer_id: layer.economic_group_id for layer in validate_layers(layers)}
+    for bearer, group in declared.items():
+        if not bearer or not group:
+            raise RavelModelError("economic group identifiers must be non-empty")
+        if bearer in groups and groups[bearer] != group:
+            raise RavelModelError("economic group mapping conflicts with capital layer")
+        groups[bearer] = group
     return groups
 
 

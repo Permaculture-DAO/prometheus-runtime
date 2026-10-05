@@ -10,7 +10,9 @@ from app.ravel import (
     shadow_state,
     aggregate_by_economic_group,
     urbc,
+    RavelModelError,
 )
+import pytest
 
 
 def test_expected_loss_and_tail():
@@ -79,3 +81,75 @@ def test_vrrc_is_zero_in_shadow_state():
     assert out["vrrc"] == 0.0
     assert out["vrrc_status"] == "not_admitted"
     assert out["authority_boundary"] == "evaluation_not_certification"
+
+
+def request_body():
+    scenario = {"scenario_id": "TEST-s1", "probability": 1, "gross_loss": 100, "mitigated_loss": 100,
+                "horizon": "1y", "model_version": "synthetic-v0.1", "evidence_refs": ["TEST-fixture"]}
+    return {"baseline_scenarios": [scenario.copy()], "regenerative_scenarios": [scenario.copy()],
+            "allocation_loss": 100, "capital_layers": [
+                {"bearer_id": "A", "economic_group_id": "G", "layer_type": "equity", "attachment": 0, "limit": 50, "priority": 0},
+                {"bearer_id": "B", "economic_group_id": "G", "layer_type": "senior", "attachment": 50, "limit": 50, "priority": 1}]}
+
+
+def test_conflicting_common_control_is_rejected_http(client):
+    body = request_body()
+    body["bearer_to_group"] = {"B": "H"}
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+    body["bearer_to_group"] = {"B": "G"}
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 200
+    assert response.json()["allocation"]["urbc"] == 1
+
+
+def test_self_transfer_rejected():
+    with pytest.raises(RavelModelError, match="self-transfer"):
+        apply_transfers({"A": 100}, [ProtectionContract("p", "A", "A", 0, 100, 1, 1, 1, 1)])
+
+
+def test_reserved_bearer_rejected_http(client):
+    body = request_body()
+    body["capital_layers"] = [{"bearer_id": "UNALLOCATED_RESIDUAL", "economic_group_id": "G", "layer_type": "equity", "attachment": 0, "limit": 40, "priority": 0}]
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 422
+    assert "reserved" in response.json()["detail"]
+
+
+@pytest.mark.parametrize("factor", ["effectiveness", "basis_factor", "counterparty_factor", "legal_factor"])
+def test_omitted_protection_factor_is_rejected_http(client, factor):
+    body = request_body()
+    contract = {"contract_id": "p", "provider_bearer_id": "C", "receiver_bearer_id": "A", "attachment": 0, "limit": 50,
+                "effectiveness": 1, "basis_factor": 1, "counterparty_factor": 1, "legal_factor": 1}
+    del contract[factor]
+    body["transfer_contracts"] = [contract]
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+
+
+def test_provenance_preserved_and_mismatched_horizons_rejected_http(client):
+    body = request_body()
+    body["regenerative_scenarios"][0]["horizon"] = "10y"
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+    body["regenerative_scenarios"][0]["horizon"] = "1y"
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 200
+    assert response.json()["scenario_provenance"]["baseline"][0]["evidence_refs"] == ["TEST-fixture"]
+    assert response.json()["scenario_provenance"]["verification_status"] == "caller_declared_not_verified"
+
+
+def test_missing_provider_group_or_unallocated_loss_blocks_urbc_http(client):
+    body = request_body()
+    body["transfer_contracts"] = [{"contract_id": "p", "provider_bearer_id": "C", "receiver_bearer_id": "A", "attachment": 0, "limit": 50,
+                "effectiveness": 1, "basis_factor": 1, "counterparty_factor": 1, "legal_factor": 1}]
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+    body["bearer_to_group"] = {"C": "G"}
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 200
+    assert response.json()["allocation"]["urbc"] == 1
+    body["allocation_loss"] = 200
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422
+
+
+def test_unknown_scenario_fields_are_not_silently_ignored_http(client):
+    body = request_body()
+    body["baseline_scenarios"][0]["unrecognised_units"] = "USD"
+    assert client.post("/v1/ravel/shadow", json=body).status_code == 422

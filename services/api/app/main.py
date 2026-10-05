@@ -28,6 +28,7 @@ from .ravel import (
     allocate_waterfall,
     apply_transfers,
     aggregate_by_economic_group,
+    reconcile_economic_groups,
     urbc,
 )
 from .ravel_schemas import RavelShadowRequest, RavelShadowResponse
@@ -326,9 +327,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                     for x in payload.transfer_contracts
                 ]
                 after_transfer = apply_transfers(waterfall["by_bearer"], contracts)
-                bearer_to_group = {
-                    x.bearer_id: x.economic_group_id for x in layers
-                } | payload.bearer_to_group
+                bearer_to_group = reconcile_economic_groups(layers, payload.bearer_to_group)
+                # Missing provider ownership cannot be interpreted as diversification.
+                unknown = set(after_transfer["by_bearer"]) - set(bearer_to_group) - {"UNALLOCATED_RESIDUAL"}
+                if unknown:
+                    raise RavelModelError("economic group required for every risk bearer")
+                tolerance = 1e-9 * max(1.0, payload.allocation_loss)
+                if waterfall["conservation_error"] > tolerance or after_transfer["conservation_error"] > tolerance:
+                    raise RavelModelError("loss conservation failed")
+                if waterfall["residual"] > 0:
+                    raise RavelModelError("URBC requires complete allocation; residual loss is unresolved")
                 group_losses = aggregate_by_economic_group(
                     after_transfer["by_bearer"], bearer_to_group
                 )
@@ -344,9 +352,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 regenerative=regenerative_state,
                 rr_delta=delta,
                 allocation=allocation,
+                scenario_provenance={
+                    "baseline": [{"scenario_id": s.scenario_id, "horizon": s.horizon, "model_version": s.model_version, "evidence_refs": s.evidence_refs} for s in payload.baseline_scenarios],
+                    "regenerative": [{"scenario_id": s.scenario_id, "horizon": s.horizon, "model_version": s.model_version, "evidence_refs": s.evidence_refs} for s in payload.regenerative_scenarios],
+                    "verification_status": "caller_declared_not_verified",
+                },
                 assumptions=[
                     "candidate methodology; not validated underwriting",
                     "scenario probabilities are normalized within each supplied distribution",
+                    "shared horizon and provenance are caller-declared; causal baseline matching is not verified",
                     "VRRC remains zero/not-admitted",
                     "no model output creates legal or capital consequences",
                 ],

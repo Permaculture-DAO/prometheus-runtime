@@ -1,17 +1,24 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
-class RavelScenarioIn(BaseModel):
+class RavelInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+
+
+class RavelScenarioIn(RavelInput):
     scenario_id: str = Field(min_length=1, max_length=128)
-    probability: float = Field(ge=0)
+    probability: float = Field(ge=0, le=1)
     gross_loss: float = Field(ge=0)
     mitigated_loss: float = Field(ge=0)
     recovery_value: float | None = Field(default=None, ge=0)
+    horizon: str = Field(min_length=1, max_length=128)
+    model_version: str = Field(min_length=1, max_length=128)
+    evidence_refs: list[str] = Field(min_length=1, max_length=1000)
 
 
-class RavelCapitalLayerIn(BaseModel):
+class RavelCapitalLayerIn(RavelInput):
     bearer_id: str = Field(min_length=1, max_length=128)
     economic_group_id: str = Field(min_length=1, max_length=128)
     layer_type: str = Field(min_length=1, max_length=80)
@@ -20,19 +27,19 @@ class RavelCapitalLayerIn(BaseModel):
     priority: int = Field(ge=0)
 
 
-class RavelProtectionContractIn(BaseModel):
+class RavelProtectionContractIn(RavelInput):
     contract_id: str = Field(min_length=1, max_length=128)
     provider_bearer_id: str = Field(min_length=1, max_length=128)
     receiver_bearer_id: str = Field(min_length=1, max_length=128)
     attachment: float = Field(ge=0)
     limit: float = Field(gt=0)
-    effectiveness: float = Field(default=1.0, ge=0, le=1)
-    basis_factor: float = Field(default=1.0, ge=0, le=1)
-    counterparty_factor: float = Field(default=1.0, ge=0, le=1)
-    legal_factor: float = Field(default=1.0, ge=0, le=1)
+    effectiveness: float = Field(ge=0, le=1)
+    basis_factor: float = Field(ge=0, le=1)
+    counterparty_factor: float = Field(ge=0, le=1)
+    legal_factor: float = Field(ge=0, le=1)
 
 
-class RavelShadowRequest(BaseModel):
+class RavelShadowRequest(RavelInput):
     baseline_scenarios: list[RavelScenarioIn] = Field(min_length=1, max_length=10000)
     regenerative_scenarios: list[RavelScenarioIn] = Field(min_length=1, max_length=10000)
     alpha_values: list[float] = Field(default_factory=lambda: [0.95, 0.99], min_length=1, max_length=10)
@@ -45,6 +52,11 @@ class RavelShadowRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_pairing(self):
+        scenarios = self.baseline_scenarios + self.regenerative_scenarios
+        if len({s.horizon for s in scenarios}) != 1:
+            raise ValueError("baseline and regenerative scenarios require the same declared horizon")
+        if any(not ref.strip() for s in scenarios for ref in s.evidence_refs):
+            raise ValueError("evidence_refs must contain non-empty identifiers")
         if (self.initial_capital is None) != (self.impairment_threshold is None):
             raise ValueError("initial_capital and impairment_threshold must be supplied together")
         if self.allocation_loss is not None and not self.capital_layers:
@@ -72,3 +84,4 @@ class RavelShadowResponse(BaseModel):
     rr_delta: dict
     allocation: dict | None = None
     assumptions: list[str] = Field(default_factory=list)
+    scenario_provenance: dict = Field(default_factory=dict)
