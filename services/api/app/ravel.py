@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import isfinite
+from math import fsum, isfinite
 from typing import Iterable, Mapping, Sequence
 
 
@@ -41,41 +41,35 @@ class ProtectionContract:
     legal_factor: float
 
 
+PROBABILITY_SUM_TOLERANCE = 1e-9
+
+
 def _finite_nonnegative(name: str, value: float) -> None:
     if not isfinite(value) or value < 0:
         raise RavelModelError(f"{name} must be finite and >= 0")
 
 
 def normalise_scenarios(scenarios: Sequence[ScenarioLoss]) -> list[ScenarioLoss]:
+    """Validate declared probabilities; never reinterpret them as relative weights."""
     if not scenarios:
         raise RavelModelError("at least one scenario is required")
-    total = 0.0
     seen: set[str] = set()
     for s in scenarios:
         if not s.scenario_id or s.scenario_id in seen:
             raise RavelModelError("scenario_id must be non-empty and unique")
         seen.add(s.scenario_id)
-        if not isfinite(s.probability) or s.probability < 0:
-            raise RavelModelError("scenario probability must be finite and >= 0")
+        if not isfinite(s.probability) or not 0 <= s.probability <= 1:
+            raise RavelModelError("scenario probability must be finite and in [0,1]")
         _finite_nonnegative("gross_loss", s.gross_loss)
         _finite_nonnegative("mitigated_loss", s.mitigated_loss)
         if s.mitigated_loss > s.gross_loss + 1e-9:
             raise RavelModelError("mitigated_loss cannot exceed gross_loss in v0.1")
         if s.recovery_value is not None:
             _finite_nonnegative("recovery_value", s.recovery_value)
-        total += s.probability
-    if not isfinite(total) or total <= 0:
-        raise RavelModelError("scenario probabilities must sum to > 0")
-    return [
-        ScenarioLoss(
-            scenario_id=s.scenario_id,
-            probability=s.probability / total,
-            gross_loss=s.gross_loss,
-            mitigated_loss=s.mitigated_loss,
-            recovery_value=s.recovery_value,
-        )
-        for s in scenarios
-    ]
+    total = fsum(s.probability for s in scenarios)
+    if abs(total - 1.0) > PROBABILITY_SUM_TOLERANCE:
+        raise RavelModelError(f"scenario probabilities must sum to 1 within {PROBABILITY_SUM_TOLERANCE}")
+    return list(scenarios)
 
 
 def expected_loss(scenarios: Sequence[ScenarioLoss], field: str = "mitigated_loss") -> float:
@@ -265,7 +259,9 @@ def risk_transfer_effectiveness(*, before_metric: float, after_metric: float) ->
     if before_metric <= 0:
         raise RavelModelError("RTE is undefined when before_metric <= 0")
     value = 1.0 - after_metric / before_metric
-    return max(0.0, min(1.0, value))
+    if not isfinite(value):
+        raise RavelModelError("RTE must be finite")
+    return value
 
 
 def aggregate_by_economic_group(

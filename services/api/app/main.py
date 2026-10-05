@@ -363,7 +363,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 },
                 assumptions=[
                     "candidate methodology; not validated underwriting",
-                    "scenario probabilities are normalized within each supplied distribution",
+                    "each scenario distribution must sum to 1 within absolute tolerance 1e-9; it is never rescaled",
                     "shared horizon and provenance are caller-declared; causal baseline matching is not verified",
                     "VRRC remains zero/not-admitted",
                     "no model output creates legal or capital consequences",

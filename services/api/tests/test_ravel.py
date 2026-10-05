@@ -11,8 +11,52 @@ from app.ravel import (
     aggregate_by_economic_group,
     urbc,
     RavelModelError,
+    normalise_scenarios,
+    risk_transfer_effectiveness,
 )
 import pytest
+
+
+@pytest.mark.parametrize("probabilities", [[0.2, 0.3], [0.7, 0.7], [0.0], [1.2], [-0.2], [float("nan")], [float("inf")]])
+def test_declared_probabilities_are_not_relative_weights(probabilities):
+    scenarios = [ScenarioLoss(str(i), p, 10, 10) for i, p in enumerate(probabilities)]
+    with pytest.raises(RavelModelError, match="probabilit"):
+        expected_loss(scenarios)
+
+
+def test_probability_roundoff_is_accepted_without_rescaling():
+    scenarios = [ScenarioLoss("a", 0.1, 10, 10), ScenarioLoss("b", 0.2, 10, 10),
+                 ScenarioLoss("c", 0.7000000000000001, 10, 10)]
+    assert normalise_scenarios(scenarios) == scenarios
+
+
+def test_declared_probability_sum_tolerance_boundary():
+    near = [ScenarioLoss("a", 0.5, 10, 10), ScenarioLoss("b", 0.5 + 0.5e-9, 10, 10)]
+    assert normalise_scenarios(near) == near
+    beyond = [near[0], ScenarioLoss("b", 0.5 + 2e-9, 10, 10)]
+    with pytest.raises(RavelModelError, match="sum to 1"):
+        normalise_scenarios(beyond)
+
+
+@pytest.mark.parametrize("field", ["baseline_scenarios", "regenerative_scenarios"])
+def test_incomplete_probability_distribution_rejected_http(client, field):
+    body = request_body()
+    body[field][0]["probability"] = 0.5
+    response = client.post("/v1/ravel/shadow", json=body)
+    assert response.status_code == 422
+    assert "sum to 1" in response.json()["detail"]
+
+
+@pytest.mark.parametrize("after, expected", [(0, 1), (80, 0.2), (100, 0), (150, -0.5)])
+def test_rte_preserves_adverse_risk_changes(after, expected):
+    assert risk_transfer_effectiveness(before_metric=100, after_metric=after) == pytest.approx(expected)
+
+
+def test_rte_rejects_zero_baseline_and_overflow():
+    with pytest.raises(RavelModelError, match="undefined"):
+        risk_transfer_effectiveness(before_metric=0, after_metric=1)
+    with pytest.raises(RavelModelError, match="finite"):
+        risk_transfer_effectiveness(before_metric=1e-308, after_metric=1e308)
 
 
 def test_expected_loss_and_tail():
