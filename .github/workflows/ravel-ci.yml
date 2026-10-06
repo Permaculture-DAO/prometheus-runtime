@@ -11,9 +11,11 @@ on:
       - "services/api/tests/test_ravel.py"
       - "services/api/tests/test_controls.py"
       - "services/api/tests/test_pru.py"
+      - "services/api/tests/test_context_manifest.py"
       - "services/api/requirements*.lock"
       - "config/ravel_profile.json"
       - "scripts/validate_runtime.py"
+      - "scripts/build_context_manifest.py"
       - ".github/workflows/ravel-ci.yml"
   push:
     branches:

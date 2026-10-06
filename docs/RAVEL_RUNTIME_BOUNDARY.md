@@ -90,6 +90,18 @@ and lifecycle regressions in the reconciled gap map. Removal trigger: remove thi
 prototype if the reviewed source rejects its vocabulary or an existing control
 component provides the same semantics. Cross-review remains pending Claude.
 
+### Existing context inbox manifest (internal only)
+
+scripts/build_context_manifest.py derives a sorted metadata-only JSON inventory
+from an existing dated INDEX.md + SHA256SUMS.txt. All bytes must match; malformed,
+duplicate, escaping/symlinked-outside or missing entries fail closed. Output is
+created only at a fresh explicit path. No source content is imported, executed,
+published or promoted: each source remains context_only, authority layer 7 and
+canonical=false. Byte verification is not source truth, decision authentication
+or financial validity. The manifest does not replace signed release custody or
+the future schema lift into canonicals. One CLI/test pair closes the machine
+inventory gap without a source-registry service, new authority or duplicate inbox.
+
 ### 2. PRU zero conditions and deterministic golden replay
 
 `app/pru.py` is a pure internal synthetic arithmetic helper, not an HTTP service.
