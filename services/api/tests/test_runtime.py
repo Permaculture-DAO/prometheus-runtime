@@ -1,4 +1,35 @@
 from datetime import datetime, timezone
+from dataclasses import replace
+from pathlib import Path
+import sqlite3
+import pytest
+from fastapi.testclient import TestClient
+from app.main import create_app
+from app.settings import Settings
+
+
+@pytest.mark.parametrize("field", ["canonical_root", "canonical_release"])
+def test_release_transition_requires_explicit_migration(tmp_path: Path, field):
+    database = tmp_path / "release.db"
+    settings = Settings(database_url=f"sqlite:///{database}",
+                        evidence_storage_path=tmp_path / "evidence",
+                        document_integrity_manifest_path=tmp_path / "absent.json",
+                        document_integrity_required=False)
+    with TestClient(create_app(settings)) as client:
+        assert client.get("/health/ready").status_code == 200
+    with sqlite3.connect(database) as db:
+        before = list(db.iterdump())
+    changed = replace(settings, **{field: "TEST-successor-not-ratified"})
+    with pytest.raises(RuntimeError, match="release-state mismatch.*reviewed migration"):
+        with TestClient(create_app(changed)):
+            pytest.fail("mismatched release must not serve requests")
+    with sqlite3.connect(database) as db:
+        assert list(db.iterdump()) == before
+    # A rejected transition must leave the original release usable and idempotent.
+    with TestClient(create_app(settings)) as client:
+        assert client.get("/health/ready").json()["canonical_root"] == settings.canonical_root
+    with sqlite3.connect(database) as db:
+        assert list(db.iterdump()) == before
 
 def test_health_and_invariant(client):
     assert client.get('/health/live').status_code == 200
