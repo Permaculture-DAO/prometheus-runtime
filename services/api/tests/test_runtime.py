@@ -44,6 +44,27 @@ def test_health_and_invariant(client):
     assert status['market_admitted'] is False
     assert status['independent_assurance'] == 'unsigned'
 
+
+def test_rejected_release_does_not_expand_older_database_schema(tmp_path: Path):
+    database = tmp_path / "older.db"
+    settings = Settings(database_url=f"sqlite:///{database}",
+                        evidence_storage_path=tmp_path / "evidence",
+                        document_integrity_manifest_path=tmp_path / "absent.json",
+                        document_integrity_required=False)
+    with TestClient(create_app(settings)):
+        pass
+    with sqlite3.connect(database) as db:
+        db.execute("DROP TABLE audit_log")
+        db.commit()
+        before = list(db.iterdump())
+    changed = replace(settings, canonical_root="TEST-rejected-successor")
+    with pytest.raises(RuntimeError, match="release-state mismatch"):
+        with TestClient(create_app(changed)):
+            pytest.fail("mismatched older schema must not be upgraded")
+    with sqlite3.connect(database) as db:
+        assert list(db.iterdump()) == before
+        assert db.execute("SELECT name FROM sqlite_master WHERE name='audit_log'").fetchone() is None
+
 def test_write_requires_key(client):
     payload={"site_id":"site-1","evidence_type":"soil","source_uri":"file://sample.csv","sha256":"a"*64,"method_id":"soil-v1","captured_at":datetime.now(timezone.utc).isoformat(),"metadata":{}}
     assert client.post('/v1/evidence/candidates',json=payload).status_code == 401
