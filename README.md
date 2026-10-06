@@ -17,6 +17,7 @@ Both are subordinate to [`prometheus-canon`](https://github.com/Permaculture-DAO
 
 Start with:
 
+- `docs/RAVEL_RUNTIME_BOUNDARY.md` — candidate shadow-underwriting reference implementation; VRRC remains zero/not-admitted.
 - `docs/S0_FREEZE_ROTATE_RECORD.md`
 - `docs/RUNTIME_BOUNDARY.md`
 - `docs/S2_REMOTE_PUBLICATION_CHECKLIST.md`

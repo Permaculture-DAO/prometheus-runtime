@@ -18,6 +18,22 @@ from .schemas import EvidenceCandidateIn, EvaluationRequest, EvaluationResponse
 from .security import require_write_key
 from .ingestion import adapter_by_id, ingestion_gate_status
 from .evidence_batch import verify_synthetic_evidence_batch
+from .ravel import (
+    ScenarioLoss,
+    CapitalLayer,
+    ProtectionContract,
+    RavelModelError,
+    shadow_state,
+    rr_delta,
+    allocate_waterfall,
+    apply_transfers,
+    aggregate_by_economic_group,
+    reconcile_economic_groups,
+    urbc,
+)
+from .ravel_schemas import RavelShadowRequest, RavelShadowResponse
+from .evidence_spine_routes import build_evidence_spine_router
+from .review_routes import build_review_router
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -77,6 +93,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="h•eart•h Prometheus Runtime", version="7.0.3", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=list(settings.allowed_origins), allow_credentials=False, allow_methods=["GET","POST"], allow_headers=["Content-Type","X-API-Key"])
+    app.include_router(build_evidence_spine_router(settings, SessionLocal))
+    app.include_router(build_review_router(settings, SessionLocal))
 
     def get_db():
         db = SessionLocal()
@@ -206,6 +224,153 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             if claim is None: blockers.append("claim ID is absent from the current register")
             elif claim.get("status","").lower() in {"pilot-required","design; no-go live","pre-instrument"}: blockers.append(f"claim status remains {claim.get('status')}")
         return EvaluationResponse(result="candidate review package prepared; no admission decision made", blockers=blockers)
+
+    @app.get("/v1/ravel/status")
+    def ravel_status():
+        return {
+            "name": "PROMETHEUS RAVEL",
+            "expansion": "Risk Allocation, Vulnerability, Exposure & Loss",
+            "mode": "shadow_underwriting",
+            "methodology_status": "candidate",
+            "authoritative": False,
+            "certification": False,
+            "underwriting_approval": False,
+            "capital_facing": False,
+            "vrrc": 0.0,
+            "vrrc_status": "not_admitted",
+            "invariants": [
+                "loss reduction != loss allocation",
+                "no risk disappears through representation",
+                "no regenerative risk credit without causal evidence",
+                "RAVEL signals/calculates; governance decides",
+            ],
+            "statement": settings.runtime_statement,
+        }
+
+    @app.post("/v1/ravel/shadow", response_model=RavelShadowResponse)
+    def ravel_shadow(payload: RavelShadowRequest):
+        try:
+            baseline = [
+                ScenarioLoss(
+                    scenario_id=x.scenario_id,
+                    probability=x.probability,
+                    gross_loss=x.gross_loss,
+                    mitigated_loss=x.mitigated_loss,
+                    recovery_value=x.recovery_value,
+                )
+                for x in payload.baseline_scenarios
+            ]
+            regenerative = [
+                ScenarioLoss(
+                    scenario_id=x.scenario_id,
+                    probability=x.probability,
+                    gross_loss=x.gross_loss,
+                    mitigated_loss=x.mitigated_loss,
+                    recovery_value=x.recovery_value,
+                )
+                for x in payload.regenerative_scenarios
+            ]
+            baseline_state = shadow_state(
+                baseline,
+                alpha_values=payload.alpha_values,
+                initial_capital=payload.initial_capital,
+                impairment_threshold=payload.impairment_threshold,
+            )
+            regenerative_state = shadow_state(
+                regenerative,
+                alpha_values=payload.alpha_values,
+                initial_capital=payload.initial_capital,
+                impairment_threshold=payload.impairment_threshold,
+            )
+            delta = {
+                "expected_loss": rr_delta(
+                    baseline_metric=baseline_state["expected_loss"],
+                    regenerative_metric=regenerative_state["expected_loss"],
+                )
+            }
+            for alpha in payload.alpha_values:
+                key = f"{alpha:.4f}"
+                delta[f"expected_shortfall_{key}"] = rr_delta(
+                    baseline_metric=baseline_state["expected_shortfall"][key],
+                    regenerative_metric=regenerative_state["expected_shortfall"][key],
+                )
+            if baseline_state.get("ppci") is not None and baseline_state["ppci"] > 0:
+                delta["ppci"] = rr_delta(
+                    baseline_metric=baseline_state["ppci"],
+                    regenerative_metric=regenerative_state["ppci"],
+                )
+            else:
+                delta["ppci"] = None
+
+            allocation = None
+            if payload.allocation_loss is not None:
+                layers = [
+                    CapitalLayer(
+                        bearer_id=x.bearer_id,
+                        economic_group_id=x.economic_group_id,
+                        layer_type=x.layer_type,
+                        attachment=x.attachment,
+                        limit=x.limit,
+                        priority=x.priority,
+                    )
+                    for x in payload.capital_layers
+                ]
+                waterfall = allocate_waterfall(payload.allocation_loss, layers)
+                contracts = [
+                    ProtectionContract(
+                        contract_id=x.contract_id,
+                        provider_bearer_id=x.provider_bearer_id,
+                        receiver_bearer_id=x.receiver_bearer_id,
+                        attachment=x.attachment,
+                        limit=x.limit,
+                        effectiveness=x.effectiveness,
+                        basis_factor=x.basis_factor,
+                        counterparty_factor=x.counterparty_factor,
+                        legal_factor=x.legal_factor,
+                    )
+                    for x in payload.transfer_contracts
+                ]
+                after_transfer = apply_transfers(waterfall["by_bearer"], contracts)
+                bearer_to_group = reconcile_economic_groups(layers, payload.bearer_to_group)
+                # Missing provider ownership cannot be interpreted as diversification.
+                unknown = set(after_transfer["by_bearer"]) - set(bearer_to_group) - {"UNALLOCATED_RESIDUAL"}
+                if unknown:
+                    raise RavelModelError("economic group required for every risk bearer")
+                tolerance = 1e-9 * max(1.0, payload.allocation_loss)
+                if waterfall["conservation_error"] > tolerance or after_transfer["conservation_error"] > tolerance:
+                    raise RavelModelError("loss conservation failed")
+                if waterfall["residual"] > 0:
+                    raise RavelModelError("URBC requires complete allocation; residual loss is unresolved")
+                group_losses = aggregate_by_economic_group(
+                    after_transfer["by_bearer"], bearer_to_group
+                )
+                allocation = {
+                    "waterfall": waterfall,
+                    "after_transfer": after_transfer,
+                    "ultimate_risk_bearer_groups": group_losses,
+                    "urbc": urbc(group_losses),
+                }
+
+            return RavelShadowResponse(
+                baseline=baseline_state,
+                regenerative=regenerative_state,
+                rr_delta=delta,
+                allocation=allocation,
+                scenario_provenance={
+                    "baseline": [{"scenario_id": s.scenario_id, "horizon": s.horizon, "model_version": s.model_version, "evidence_refs": s.evidence_refs} for s in payload.baseline_scenarios],
+                    "regenerative": [{"scenario_id": s.scenario_id, "horizon": s.horizon, "model_version": s.model_version, "evidence_refs": s.evidence_refs} for s in payload.regenerative_scenarios],
+                    "verification_status": "caller_declared_not_verified",
+                },
+                assumptions=[
+                    "candidate methodology; not validated underwriting",
+                    "each scenario distribution must sum to 1 within absolute tolerance 1e-9; it is never rescaled",
+                    "shared horizon and provenance are caller-declared; causal baseline matching is not verified",
+                    "VRRC remains zero/not-admitted",
+                    "no model output creates legal or capital consequences",
+                ],
+            )
+        except RavelModelError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     @app.get("/metrics", response_class=PlainTextResponse)
     def metrics(db: Session = Depends(get_db)):
