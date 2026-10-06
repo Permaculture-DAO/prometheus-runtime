@@ -30,14 +30,18 @@ All outputs remain subordinate to the signed Prometheus canon, the current succe
 
 ## Architecture follow-up — three bounded work items (2026-10-06)
 
-### 1. Gate and evidence engine: specification awaiting Claude's canon PR
+### 1. Internal candidate gate/evidence engine and Risk Record
 
-The architecture intake is context, not an adopted state vocabulary. GitHub
-intake found no open gate-vocabulary PR in canon. Do not convert legacy
-GREEN/YELLOW/RED or a caller's boolean to PASSED. `/v1/gates` remains documentary;
-`/v1/runtime/evaluate` remains a review-package builder, not PRU computation.
+The architecture intake is context, not an adopted state vocabulary. Under the
+steward's temporary assignment during Claude's absence, canon candidate commit
+`0857425c14179d4f063953f74dc7fcc5b47dc1c8` proposes the ordinary methodological
+vocabulary in RAVEL_FORMAL_SPEC_v0.1 section 13. This is not ratification.
+`app/controls.py` derives a pure shadow evaluator and typed transitions from
+that proposal. Do not convert GREEN/YELLOW/RED or a caller boolean to PASSED.
+`/v1/gates` remains documentary; `/v1/runtime/evaluate` remains a review-package
+builder, not PRU computation. No route or database schema is changed.
 
-Candidate contract for Claude's review (no production enum or route added):
+Candidate contract for Claude's return review (no production enum or route added):
 - gate record: stable gate UID, specification/version/hash, defined use,
   prerequisite UIDs, evidence references/hashes, decision reference and reviewer,
   effective time/expiry, state, reasons and superseded decision reference;
@@ -60,11 +64,31 @@ edge, missing decision, unknown evidence, stale hashes, rejected evidence,
 expiry at the exact boundary, suspension cascade, dependency cycles, duplicate
 IDs, input-order independence, repeated evaluation, caller-forged PASSED,
 and an upstream failure preventing all materially dependent advancement.
-Expiry boundary, reviewer qualifications, revocation and appeal semantics must
-be settled in the candidate source; code must not invent them.
+The candidate specifies as_of >= expiry and prohibits future decisions.
+The evaluator binds each declared decision to a canonical snapshot SHA256,
+checks evidence hashes, explicit scope/validity and revocation references, then
+cascades blocked prerequisites. Unknown/untyped or REJECTED evidence states
+block even if the content hash matches. Non-rejected evidence is not thereby
+admissible: stage requirements remain the declared specification's review policy,
+not an inferred upward promotion. A forged PASSED without a matching decision
+snapshot fails. Both catalogs are caller-declared too: forging the entire
+snapshot/catalog together is outside this integrity check, not authentication.
+Custody, reviewer qualifications, appeal and legal authority are not implemented.
+Output always says references are not authenticated and denies authority,
+certification, capital/underwriting admission and rights.
 
-Risk Record source schema belongs to Claude first. Only add runtime fields with
-an actual use; do not create nine services or duplicate source definitions.
+`ShadowRiskRecord` in existing ravel_schemas.py is an internal intake envelope
+for declared risk, subject, hazard/exposure/vulnerability, financial state,
+model/evidence/bearers, assumptions and missing data. It rejects extra rating or
+human-weight fields, coercion of authority flags and nonzero VRRC. It neither
+verifies nor stores a new record type. Machine-schema lifting to canonicals waits
+for textual freeze; no nine-service architecture is introduced.
+
+Net addition: one pure internal controls module and one exhaustive test module;
+existing schema/docs/CI amended. Justification: missing deterministic gate checks
+and lifecycle regressions in the reconciled gap map. Removal trigger: remove this
+prototype if the reviewed source rejects its vocabulary or an existing control
+component provides the same semantics. Cross-review remains pending Claude.
 
 ### 2. PRU zero conditions and deterministic golden replay
 
