@@ -82,14 +82,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         settings.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         app.state.document_integrity = verify_document_integrity(settings)
         Base.metadata.create_all(engine)
-        with SessionLocal() as db:
-            existing = db.scalar(select(ReleaseState).where(ReleaseState.canonical_root == settings.canonical_root))
-            if existing is None:
-                db.add(ReleaseState(canonical_root=settings.canonical_root, canonical_release=settings.canonical_release, runtime_build_id=settings.runtime_build_id, runtime_statement=settings.runtime_statement))
-                db.add(AuditLog(event_type="runtime_started", payload={"runtime_build_id": settings.runtime_build_id, "admission_mode": settings.admission_mode}))
-                db.commit()
-        yield
-        engine.dispose()
+        try:
+            with SessionLocal() as db:
+                existing = db.scalar(select(ReleaseState))
+                if existing is not None and (
+                    existing.canonical_root != settings.canonical_root
+                    or existing.canonical_release != settings.canonical_release
+                ):
+                    raise RuntimeError(
+                        "release-state mismatch: configured canonical root/release differs "
+                        "from the stored database; explicit reviewed migration or a separate "
+                        "database is required; existing release and evidence were not changed"
+                    )
+                if existing is None:
+                    db.add(ReleaseState(canonical_root=settings.canonical_root, canonical_release=settings.canonical_release, runtime_build_id=settings.runtime_build_id, runtime_statement=settings.runtime_statement))
+                    db.add(AuditLog(event_type="runtime_started", payload={"runtime_build_id": settings.runtime_build_id, "admission_mode": settings.admission_mode}))
+                    db.commit()
+            yield
+        finally:
+            engine.dispose()
 
     app = FastAPI(title="h•eart•h Prometheus Runtime", version="7.0.3", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=list(settings.allowed_origins), allow_credentials=False, allow_methods=["GET","POST"], allow_headers=["Content-Type","X-API-Key"])
