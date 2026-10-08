@@ -34,6 +34,7 @@ def canonical_event_id(event: dict) -> str:
 
 
 checks = [
+    ("rtc_os.dossier.schema.json", "rtc_os.synthetic.json"),
     ("device.registry.schema.json", "device_registry.synthetic.json"),
     ("decoder.registry.schema.json", "decoder_registry.synthetic.json"),
     ("sensor.event.schema.json", "sensor_event.synthetic.json"),

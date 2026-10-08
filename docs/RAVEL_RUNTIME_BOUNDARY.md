@@ -56,7 +56,7 @@ Candidate contract for Claude's return review (no production enum or route added
   direct SUSPENDED/EXPIRED -> PASSED. This edge policy is PROPOSED, not adopted;
 - evidence draft sequence RAW -> IDENTIFIED -> PROVENANCE_BOUND -> QA_QC_CHECKED
   -> REVIEWABLE -> VERIFIED_INDICATOR_CANDIDATE -> ADMISSIBLE/REJECTED.
-  No status inheritance into PRU/RAVEL/RAP/legal eligibility; those are separate
+  No status inheritance into PRU/Ravel/RAP/legal eligibility; those are separate
   gate evaluations, not a single upward evidence enum. Preserve rejected records.
 
 Acceptance matrix after source PR: every allowed edge, every skipped/reversed

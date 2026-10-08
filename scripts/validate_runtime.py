@@ -73,12 +73,12 @@ if release.get("independent_assurance") != "unsigned":
 
 ravel = json.loads((root / "config/ravel_profile.json").read_text(encoding="utf-8"))
 if ravel.get("mode") != "shadow_underwriting":
-    errors.append("RAVEL mode must remain shadow_underwriting")
+    errors.append("Ravel mode must remain shadow_underwriting")
 if ravel.get("vrrc") != 0.0 or ravel.get("vrrc_status") != "not_admitted":
-    errors.append("RAVEL VRRC must remain zero/not_admitted in candidate runtime")
+    errors.append("Ravel VRRC must remain zero/not_admitted in candidate runtime")
 for key in ["authoritative", "certification", "underwriting_approval", "capital_facing"]:
     if ravel.get(key) is not False:
-        errors.append(f"RAVEL {key} must remain false")
+        errors.append(f"Ravel {key} must remain false")
 semantic_registry = json.loads((root / "config/semantic_claims_vnext.json").read_text(encoding="utf-8"))
 semantic_uids = [item.get("claim_uid") for item in semantic_registry.get("claims", [])]
 if not semantic_uids:

@@ -1,0 +1,1363 @@
+{
+  "$defs": {
+    "Alternative": {
+      "additionalProperties": false,
+      "properties": {
+        "option_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Option Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "NO_ACTION",
+            "LEAN_INTERVENTION",
+            "REGENERATIVE",
+            "OTHER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "constraints": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Constraints",
+          "type": "array"
+        },
+        "maintenance_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Maintenance Ref"
+        }
+      },
+      "required": [
+        "option_id",
+        "kind",
+        "constraints",
+        "maintenance_ref"
+      ],
+      "title": "Alternative",
+      "type": "object"
+    },
+    "BioregionalStrategyProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "strategy_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Strategy Id",
+          "type": "string"
+        },
+        "boundary_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Boundary Refs",
+          "type": "array"
+        },
+        "reference_class_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Reference Class Refs",
+          "type": "array"
+        },
+        "applicability": {
+          "enum": [
+            "CONTEXTUAL",
+            "EXPLORATORY",
+            "UNKNOWN"
+          ],
+          "title": "Applicability",
+          "type": "string"
+        },
+        "conflicts": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Conflicts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "strategy_id",
+        "boundary_refs",
+        "reference_class_refs",
+        "applicability"
+      ],
+      "title": "BioregionalStrategyProfile",
+      "type": "object"
+    },
+    "ClaimReference": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_uid": {
+          "pattern": "^prometheus\\.[a-z0-9_.]+$",
+          "title": "Claim Uid",
+          "type": "string"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Evidence Uids",
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "OBSERVATION",
+            "IMPROVEMENT",
+            "RISK"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "proposed_wording": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Proposed Wording",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_uid",
+        "evidence_uids",
+        "kind",
+        "proposed_wording"
+      ],
+      "title": "ClaimReference",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_uid": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Evidence Uid",
+          "type": "string"
+        },
+        "site_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Site Id",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "method_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Method Id",
+          "type": "string"
+        },
+        "method_version": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Method Version",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "RAW",
+            "IDENTIFIED",
+            "PROVENANCE_BOUND",
+            "QA_QC_CHECKED",
+            "REVIEWABLE",
+            "VERIFIED_INDICATOR_CANDIDATE",
+            "ADMISSIBLE",
+            "REJECTED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "measurement_status": {
+          "enum": [
+            "UNKNOWN",
+            "INVALID",
+            "REVIEW_PENDING",
+            "DECLARED_VALID"
+          ],
+          "title": "Measurement Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_uid",
+        "site_id",
+        "sha256",
+        "method_id",
+        "method_version",
+        "state",
+        "measurement_status"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "GateDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_uid": {
+          "pattern": "^prometheus\\.runtime\\.G[0-7]@candidate-v0\\.1$",
+          "title": "Gate Uid",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "UNSPECIFIED",
+            "SPECIFIED",
+            "READY_FOR_TEST",
+            "PASSED",
+            "FAILED",
+            "SUSPENDED",
+            "EXPIRED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "spec_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Spec Ref"
+        },
+        "decision_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Decision Ref"
+        },
+        "issued_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Issued At"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expires At"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Evidence Uids",
+          "type": "array"
+        },
+        "prerequisites": {
+          "items": {
+            "pattern": "^prometheus\\.runtime\\.G[0-7]@candidate-v0\\.1$",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Prerequisites",
+          "type": "array"
+        }
+      },
+      "required": [
+        "gate_uid",
+        "state",
+        "spec_ref",
+        "decision_ref",
+        "issued_at",
+        "expires_at",
+        "evidence_uids",
+        "prerequisites"
+      ],
+      "title": "GateDeclaration",
+      "type": "object"
+    },
+    "LossGeneration": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "risk_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Risk Id",
+          "type": "string"
+        },
+        "hazard": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Hazard",
+          "type": "string"
+        },
+        "trigger": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Trigger",
+          "type": "string"
+        },
+        "gross_loss": {
+          "anyOf": [
+            {
+              "pattern": "^(0|[1-9][0-9]{0,17})(\\.[0-9]{1,12})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gross Loss"
+        },
+        "mitigated_loss": {
+          "anyOf": [
+            {
+              "pattern": "^(0|[1-9][0-9]{0,17})(\\.[0-9]{1,12})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mitigated Loss"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "horizon": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Horizon",
+          "type": "string"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "title": "Evidence Uids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_id",
+        "risk_id",
+        "hazard",
+        "trigger",
+        "gross_loss",
+        "mitigated_loss",
+        "currency",
+        "horizon",
+        "evidence_uids"
+      ],
+      "title": "LossGeneration",
+      "type": "object"
+    },
+    "PartnerCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "check_id": {
+          "pattern": "^T(0[1-9]|[1-3][0-9]|40)$",
+          "title": "Check Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "OBSERVED",
+            "DOCUMENTED",
+            "THIRD_PARTY_VERIFIED",
+            "ASSUMED",
+            "UNKNOWN",
+            "INCOMPATIBLE"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Evidence Uids",
+          "type": "array"
+        },
+        "reviewer_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reviewer Ref"
+        }
+      },
+      "required": [
+        "check_id",
+        "state",
+        "evidence_uids",
+        "reviewer_ref"
+      ],
+      "title": "PartnerCheck",
+      "type": "object"
+    },
+    "RTCQuantRequest": {
+      "additionalProperties": false,
+      "description": "Narrow ledger-bound baseline arithmetic, NOT the full /ravel/shadow contract.",
+      "properties": {
+        "horizon": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Horizon",
+          "type": "string"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/RTCScenario"
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "title": "Scenarios",
+          "type": "array"
+        },
+        "alpha_values": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Alpha Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "horizon",
+        "scenarios",
+        "alpha_values"
+      ],
+      "title": "RTCQuantRequest",
+      "type": "object"
+    },
+    "RTCScenario": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "probability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Probability",
+          "type": "number"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "title": "Evidence Uids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_id",
+        "probability",
+        "evidence_uids"
+      ],
+      "title": "RTCScenario",
+      "type": "object"
+    },
+    "Reviewer": {
+      "additionalProperties": false,
+      "properties": {
+        "reviewer_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reviewer Id",
+          "type": "string"
+        },
+        "design_provider_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Design Provider Id",
+          "type": "string"
+        },
+        "economic_group_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Economic Group Id",
+          "type": "string"
+        },
+        "provider_economic_group_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Provider Economic Group Id",
+          "type": "string"
+        },
+        "qualification_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Qualification Ref"
+        },
+        "mandate_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mandate Ref"
+        },
+        "conflict_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Conflict Ref"
+        }
+      },
+      "required": [
+        "reviewer_id",
+        "design_provider_id",
+        "economic_group_id",
+        "provider_economic_group_id",
+        "qualification_ref",
+        "mandate_ref",
+        "conflict_ref"
+      ],
+      "title": "Reviewer",
+      "type": "object"
+    },
+    "RightRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "LAND",
+            "WATER",
+            "DATA",
+            "CONSENT",
+            "STEWARDSHIP",
+            "CASHFLOW",
+            "INSURANCE"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "holder_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Holder Id",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Jurisdiction",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "UNKNOWN",
+            "DISPUTED",
+            "DOCUMENTED",
+            "REVOKED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "instrument_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Instrument Ref"
+        },
+        "review_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Review Ref"
+        }
+      },
+      "required": [
+        "kind",
+        "holder_id",
+        "jurisdiction",
+        "status",
+        "instrument_ref",
+        "review_ref"
+      ],
+      "title": "RightRecord",
+      "type": "object"
+    },
+    "RiskAllocation": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "bearer_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Bearer Id",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "pattern": "^(0|[1-9][0-9]{0,17})(\\.[0-9]{1,12})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Amount"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "horizon": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Horizon",
+          "type": "string"
+        },
+        "treatment": {
+          "enum": [
+            "RETAINED",
+            "TRANSFERRED",
+            "EXTERNALISED"
+          ],
+          "title": "Treatment",
+          "type": "string"
+        },
+        "contract_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Contract Ref"
+        },
+        "recoverability": {
+          "enum": [
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "DOCUMENTED"
+          ],
+          "title": "Recoverability",
+          "type": "string"
+        },
+        "evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 1,
+          "title": "Evidence Uids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_id",
+        "bearer_id",
+        "amount",
+        "currency",
+        "horizon",
+        "treatment",
+        "contract_ref",
+        "recoverability",
+        "evidence_uids"
+      ],
+      "title": "RiskAllocation",
+      "type": "object"
+    },
+    "ScaleConflict": {
+      "additionalProperties": false,
+      "properties": {
+        "conflict_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Conflict Id",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "affected_claim_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Affected Claim Uids",
+          "type": "array"
+        },
+        "material": {
+          "title": "Material",
+          "type": "boolean"
+        },
+        "reason": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reason",
+          "type": "string"
+        },
+        "reviewer_id": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reviewer Id"
+        },
+        "dissent": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Dissent",
+          "type": "string"
+        },
+        "resolved": {
+          "default": false,
+          "title": "Resolved",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "conflict_id",
+        "source_ids",
+        "affected_claim_uids",
+        "material",
+        "reason",
+        "reviewer_id",
+        "dissent"
+      ],
+      "title": "ScaleConflict",
+      "type": "object"
+    },
+    "ScaleVector": {
+      "additionalProperties": false,
+      "properties": {
+        "E": {
+          "enum": [
+            "PASSED",
+            "HOLD",
+            "REJECT",
+            "UNKNOWN"
+          ],
+          "title": "E",
+          "type": "string"
+        },
+        "P": {
+          "enum": [
+            "PASSED",
+            "HOLD",
+            "REJECT",
+            "UNKNOWN"
+          ],
+          "title": "P",
+          "type": "string"
+        },
+        "B": {
+          "enum": [
+            "PASSED",
+            "EXPLORATORY",
+            "HOLD",
+            "UNKNOWN"
+          ],
+          "title": "B",
+          "type": "string"
+        },
+        "L": {
+          "enum": [
+            "PASSED",
+            "HOLD",
+            "REJECT",
+            "UNKNOWN"
+          ],
+          "title": "L",
+          "type": "string"
+        }
+      },
+      "required": [
+        "E",
+        "P",
+        "B",
+        "L"
+      ],
+      "title": "ScaleVector",
+      "type": "object"
+    },
+    "SiteProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "site_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Site Id",
+          "type": "string"
+        },
+        "territory_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Territory Id",
+          "type": "string"
+        },
+        "operator_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Operator Id",
+          "type": "string"
+        },
+        "lawful_data_access_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lawful Data Access Ref"
+        },
+        "baseline_evidence_uids": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Baseline Evidence Uids",
+          "type": "array"
+        },
+        "counterfactual_ref": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Counterfactual Ref"
+        }
+      },
+      "required": [
+        "site_id",
+        "territory_id",
+        "operator_id",
+        "lawful_data_access_ref",
+        "baseline_evidence_uids",
+        "counterfactual_ref"
+      ],
+      "title": "SiteProfile",
+      "type": "object"
+    },
+    "SourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "record_key": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Record Key",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_key",
+        "sha256"
+      ],
+      "title": "SourceReference",
+      "type": "object"
+    },
+    "TerritoryProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "territory_id": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Territory Id",
+          "type": "string"
+        },
+        "boundary_ref": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Boundary Ref",
+          "type": "string"
+        },
+        "jurisdictions": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Jurisdictions",
+          "type": "array"
+        },
+        "bioregions": {
+          "items": {
+            "$ref": "#/$defs/BioregionalStrategyProfile"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Bioregions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "territory_id",
+        "boundary_ref",
+        "jurisdictions",
+        "bioregions"
+      ],
+      "title": "TerritoryProfile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "dataset": {
+      "const": "SYNTHETIC_NON_CAPITAL_FACING",
+      "title": "Dataset",
+      "type": "string"
+    },
+    "dossier_id": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Dossier Id",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "as_of": {
+      "format": "date-time",
+      "title": "As Of",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "previous_audit_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Previous Audit Sha256"
+    },
+    "source_root_state": {
+      "enum": [
+        "VALID_CANDIDATE",
+        "INVALID",
+        "DEGRADED",
+        "UNKNOWN"
+      ],
+      "title": "Source Root State",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceReference"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "territory": {
+      "$ref": "#/$defs/TerritoryProfile"
+    },
+    "site": {
+      "$ref": "#/$defs/SiteProfile"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceReference"
+      },
+      "maxItems": 1000,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/ClaimReference"
+      },
+      "maxItems": 1000,
+      "title": "Claims",
+      "type": "array"
+    },
+    "rights": {
+      "items": {
+        "$ref": "#/$defs/RightRecord"
+      },
+      "maxItems": 1000,
+      "title": "Rights",
+      "type": "array"
+    },
+    "scales": {
+      "$ref": "#/$defs/ScaleVector"
+    },
+    "scale_conflicts": {
+      "items": {
+        "$ref": "#/$defs/ScaleConflict"
+      },
+      "maxItems": 100,
+      "title": "Scale Conflicts",
+      "type": "array"
+    },
+    "alternatives": {
+      "items": {
+        "$ref": "#/$defs/Alternative"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Alternatives",
+      "type": "array"
+    },
+    "loss_generation": {
+      "items": {
+        "$ref": "#/$defs/LossGeneration"
+      },
+      "maxItems": 1000,
+      "title": "Loss Generation",
+      "type": "array"
+    },
+    "risk_allocation": {
+      "items": {
+        "$ref": "#/$defs/RiskAllocation"
+      },
+      "maxItems": 1000,
+      "title": "Risk Allocation",
+      "type": "array"
+    },
+    "reviewer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Reviewer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "partner_checks": {
+      "items": {
+        "$ref": "#/$defs/PartnerCheck"
+      },
+      "maxItems": 40,
+      "title": "Partner Checks",
+      "type": "array"
+    },
+    "compute_mode": {
+      "enum": [
+        "D",
+        "P",
+        "H",
+        "Q"
+      ],
+      "title": "Compute Mode",
+      "type": "string"
+    },
+    "deterministic_receipt_ref": {
+      "anyOf": [
+        {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Deterministic Receipt Ref"
+    },
+    "proposal": {
+      "additionalProperties": true,
+      "title": "Proposal",
+      "type": "object"
+    },
+    "gate_declarations": {
+      "items": {
+        "$ref": "#/$defs/GateDeclaration"
+      },
+      "maxItems": 100,
+      "title": "Gate Declarations",
+      "type": "array"
+    },
+    "decision_hashes": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Decision Hashes",
+      "type": "object"
+    },
+    "revoked_decisions": {
+      "items": {
+        "maxLength": 2048,
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "maxItems": 100,
+      "title": "Revoked Decisions",
+      "type": "array"
+    },
+    "ravel_request": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RTCQuantRequest"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset",
+    "dossier_id",
+    "revision",
+    "as_of",
+    "expires_at",
+    "previous_audit_sha256",
+    "source_root_state",
+    "sources",
+    "territory",
+    "site",
+    "evidence",
+    "claims",
+    "rights",
+    "scales",
+    "alternatives",
+    "loss_generation",
+    "risk_allocation",
+    "reviewer",
+    "compute_mode",
+    "deterministic_receipt_ref",
+    "proposal"
+  ],
+  "title": "RTCInput",
+  "type": "object"
+}

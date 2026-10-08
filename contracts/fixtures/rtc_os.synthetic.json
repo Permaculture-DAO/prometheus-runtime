@@ -1,0 +1,282 @@
+{
+  "schema_version": "0.2",
+  "dataset": "SYNTHETIC_NON_CAPITAL_FACING",
+  "dossier_id": "synthetic-tdd-01",
+  "revision": 1,
+  "as_of": "2026-10-08T10:00:00Z",
+  "expires_at": "2027-01-01T00:00:00Z",
+  "previous_audit_sha256": null,
+  "source_root_state": "VALID_CANDIDATE",
+  "sources": [
+    {
+      "record_key": "PRM-CANON-SIGNED@v1.1.2-genesis",
+      "sha256": "f3862005bc4d6e8e4cba0f2a7646e67dff758fcd28c8411046eb5d04875f9540"
+    },
+    {
+      "record_key": "PRM-RTC-APP-001@0.1",
+      "sha256": "c868662c12b9f0e9c8ee1af938c277042a087adb415f9f70dd6d4480e2c2712f"
+    },
+    {
+      "record_key": "PRM-ARCH-DET-002@2.0",
+      "sha256": "83f42dcac3f9053b011eeb2b2963862d23c9ab0be35ee467499c99dcafd1e1c7"
+    },
+    {
+      "record_key": "PRM-RISK-AETERNA-001@1.1",
+      "sha256": "1fc0656f60a73ef6c067e7a1a15e83e28dfdddd68575202ce47ad5e0ebd767d3"
+    },
+    {
+      "record_key": "PRM-RISK-RAVEL-OP-002@1.1",
+      "sha256": "ea5c228ff48ca1e30738aaa2eea8cf88e8c70c38726096ba43c0a6f03f3a9ff5"
+    },
+    {
+      "record_key": "PRM-CIV-APP-006@6.2",
+      "sha256": "3710dbc02b63f43d74b7aa03fd2fa584e27ef26a9e0866add2139a296ea99ece"
+    }
+  ],
+  "territory": {
+    "territory_id": "synthetic-territory",
+    "boundary_ref": "synthetic-geometry",
+    "jurisdictions": [
+      "synthetic-jurisdiction"
+    ],
+    "bioregions": [
+      {
+        "strategy_id": "synthetic-mediterranean",
+        "boundary_refs": [
+          "synthetic-watershed"
+        ],
+        "reference_class_refs": [
+          "synthetic-comparator"
+        ],
+        "applicability": "CONTEXTUAL",
+        "conflicts": []
+      }
+    ]
+  },
+  "site": {
+    "site_id": "synthetic-01",
+    "territory_id": "synthetic-territory",
+    "operator_id": "operator-01",
+    "lawful_data_access_ref": "synthetic-permission",
+    "baseline_evidence_uids": [
+      "synthetic-baseline"
+    ],
+    "counterfactual_ref": "synthetic-comparator"
+  },
+  "evidence": [
+    {
+      "evidence_uid": "synthetic-baseline",
+      "site_id": "synthetic-01",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "method_id": "synthetic-method",
+      "method_version": "0.1",
+      "state": "ADMISSIBLE",
+      "measurement_status": "DECLARED_VALID"
+    }
+  ],
+  "claims": [
+    {
+      "claim_uid": "prometheus.ai.assistive_non_authoritative",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ],
+      "kind": "OBSERVATION",
+      "proposed_wording": "Synthetic example only; software does not decide."
+    }
+  ],
+  "rights": [
+    {
+      "kind": "LAND",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-land",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "WATER",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-water",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "DATA",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-data",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "CONSENT",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-consent",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "STEWARDSHIP",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-stewardship",
+      "review_ref": "synthetic-counsel-declaration"
+    }
+  ],
+  "scales": {
+    "E": "PASSED",
+    "P": "PASSED",
+    "B": "PASSED",
+    "L": "PASSED"
+  },
+  "scale_conflicts": [],
+  "alternatives": [
+    {
+      "option_id": "synthetic-option-0",
+      "kind": "NO_ACTION",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    },
+    {
+      "option_id": "synthetic-option-1",
+      "kind": "LEAN_INTERVENTION",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    },
+    {
+      "option_id": "synthetic-option-2",
+      "kind": "REGENERATIVE",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    }
+  ],
+  "loss_generation": [
+    {
+      "event_id": "synthetic-loss",
+      "risk_id": "synthetic-drought",
+      "hazard": "drought",
+      "trigger": "synthetic-dry-season",
+      "gross_loss": "100",
+      "mitigated_loss": "80",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    }
+  ],
+  "risk_allocation": [
+    {
+      "event_id": "synthetic-loss",
+      "bearer_id": "synthetic-sponsor",
+      "amount": "50",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "treatment": "RETAINED",
+      "contract_ref": null,
+      "recoverability": "UNKNOWN",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    },
+    {
+      "event_id": "synthetic-loss",
+      "bearer_id": "synthetic-community",
+      "amount": "30",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "treatment": "EXTERNALISED",
+      "contract_ref": null,
+      "recoverability": "UNKNOWN",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    }
+  ],
+  "reviewer": {
+    "reviewer_id": "synthetic-reviewer",
+    "design_provider_id": "synthetic-provider",
+    "economic_group_id": "synthetic-independent-group",
+    "provider_economic_group_id": "synthetic-provider-group",
+    "qualification_ref": "synthetic-qualification",
+    "mandate_ref": "synthetic-mandate",
+    "conflict_ref": "synthetic-coi"
+  },
+  "partner_checks": [],
+  "compute_mode": "D",
+  "deterministic_receipt_ref": "synthetic-receipt",
+  "gate_declarations": [],
+  "decision_hashes": {},
+  "revoked_decisions": [],
+  "proposal": {
+    "profile_id": "CIV-TOPOS-001-synthetic",
+    "territory": {
+      "site_id": "synthetic-01",
+      "boundary_ref": "e-geo-01",
+      "operator": "operator-01"
+    },
+    "rights": {
+      "land_control_evidence_ref": "e-title",
+      "water_access_review_ref": "e-water"
+    },
+    "evidence": {
+      "baseline_refs": [
+        "e-soil"
+      ],
+      "source_refs": [
+        "e-field"
+      ],
+      "provenance_method": "signed",
+      "comparator_design": "matched-plot",
+      "mrv_review_ref": "review-mrv",
+      "causal_review_ref": "review-causal"
+    },
+    "method": {
+      "version": "0.1",
+      "scenario_design": "A/B"
+    },
+    "risk": {
+      "risk_ids": [
+        "risk-drought"
+      ],
+      "ultimate_bearers": [
+        "site-sponsor",
+        "community"
+      ],
+      "loss_generation_ledger_ref": "e-loss-01",
+      "risk_allocation_ledger_ref": "e-allocation-01"
+    },
+    "governance": {
+      "design_provider_id": "agency-01",
+      "independent_reviewer_id": "reviewer-02",
+      "consent_ref": "e-consent",
+      "conflict_register_ref": "e-conflicts"
+    },
+    "finance": {
+      "payer_id": "payer",
+      "base_case_ref": "cashflow-01",
+      "liquidity_stress_ref": "stress-01",
+      "base_case_assumptions": {}
+    },
+    "capital": {
+      "instrument_type": "none"
+    },
+    "simplicity_comparator": {
+      "protocol_ref": "a-b-test",
+      "cost_baseline_ref": "bench-01",
+      "kill_conditions": [
+        "no benefit"
+      ]
+    }
+  }
+}
+

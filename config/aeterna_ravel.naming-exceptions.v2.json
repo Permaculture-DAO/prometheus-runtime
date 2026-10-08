@@ -1,0 +1,71 @@
+{
+  "version": "2.0",
+  "status": "PROPOSED_REVIEW_REQUIRED",
+  "review_scope": "Internal engineering classification only; not independent approval or global migration completion",
+  "exceptions": [
+    {
+      "path": "contracts/fixtures/rtc_os.quant.synthetic.expected.json",
+      "word": "\u0041ETERNA",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in quantified synthetic output; preserved wire/reference identity, not display text.",
+      "sha256": "5c049d60a262b37ce77722c93d96cc6ab86b57265c9ff57c0a6c9009c5ddfcce",
+      "expected_count": 1
+    },
+    {
+      "path": "contracts/fixtures/rtc_os.quant.synthetic.expected.json",
+      "word": "\u0052AVEL",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in quantified synthetic output; preserved wire/reference identity, not display text.",
+      "sha256": "5c049d60a262b37ce77722c93d96cc6ab86b57265c9ff57c0a6c9009c5ddfcce",
+      "expected_count": 1
+    },
+    {
+      "path": "contracts/fixtures/rtc_os.synthetic.expected.json",
+      "word": "\u0041ETERNA",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "7f71a6f325a1ab68afbd0b05f5bd0c05170464f5a6c5976f9799a754fbc8ae06",
+      "expected_count": 1
+    },
+    {
+      "path": "contracts/fixtures/rtc_os.synthetic.expected.json",
+      "word": "\u0052AVEL",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "7f71a6f325a1ab68afbd0b05f5bd0c05170464f5a6c5976f9799a754fbc8ae06",
+      "expected_count": 1
+    },
+    {
+      "path": "contracts/fixtures/rtc_os.synthetic.json",
+      "word": "\u0041ETERNA",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "5afc3a9d3a9f9abebd8773a86d355cb8ccbd04e5087061a6ea14a098a0963819",
+      "expected_count": 1
+    },
+    {
+      "path": "contracts/fixtures/rtc_os.synthetic.json",
+      "word": "\u0052AVEL",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "5afc3a9d3a9f9abebd8773a86d355cb8ccbd04e5087061a6ea14a098a0963819",
+      "expected_count": 1
+    },
+    {
+      "path": "services/api/app/rtc_os.py",
+      "word": "\u0041ETERNA",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "0effe7f8c95b6ad19d7e9959cc4c2f06a0d928eec516130afaa0c531a5d748e1",
+      "expected_count": 1
+    },
+    {
+      "path": "services/api/app/rtc_os.py",
+      "word": "\u0052AVEL",
+      "classification": "TECHNICAL_IDENTIFIER",
+      "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
+      "sha256": "0effe7f8c95b6ad19d7e9959cc4c2f06a0d928eec516130afaa0c531a5d748e1",
+      "expected_count": 1
+    }
+  ]
+}
