@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://heart-intelligence.earth/contracts/territorial.decision.schema.json",
+  "title": "PROMETHEUS RTC-OS Shadow Territorial Decision Packet",
+  "description": "Application-level shadow input. Document references are assertions, not independent validation. No capital release or certification.",
+  "type": "object",
+  "required": ["profile_id", "territory", "evidence", "rights", "method", "risk", "governance", "finance", "capital", "simplicity_comparator"],
+  "properties": {
+    "profile_id": {"type": "string", "minLength": 1},
+    "territory": {"type": "object", "properties": {"site_id": {"type": "string"}, "boundary_ref": {"type": "string"}, "operator": {"type": "string"}}},
+    "evidence": {"type": "object", "properties": {"baseline_refs": {"type": "array", "items": {"type": "string"}}, "source_refs": {"type": "array", "items": {"type": "string"}}, "provenance_method": {"type": "string"}, "comparator_design": {"type": "string"}, "mrv_review_ref": {"type": "string"}, "causal_review_ref": {"type": "string"}}},
+    "rights": {"type": "object", "properties": {"land_control_evidence_ref": {"type": "string"}, "water_access_review_ref": {"type": "string"}}},
+    "method": {"type": "object", "properties": {"version": {"type": "string"}, "scenario_design": {"type": "string"}}},
+    "risk": {"type": "object", "properties": {"risk_ids": {"type": "array", "items": {"type": "string"}}, "ultimate_bearers": {"type": "array", "items": {"type": "string"}}, "loss_generation_ledger_ref": {"type": "string"}, "risk_allocation_ledger_ref": {"type": "string"}}},
+    "governance": {"type": "object", "properties": {"design_provider_id": {"type": "string"}, "independent_reviewer_id": {"type": "string"}, "consent_ref": {"type": "string"}, "conflict_register_ref": {"type": "string"}}},
+    "finance": {"type": "object", "properties": {"payer_id": {"type": "string"}, "base_case_ref": {"type": "string"}, "liquidity_stress_ref": {"type": "string"}, "base_case_assumptions": {"type": "object"}}},
+    "capital": {"type": "object", "properties": {"instrument_type": {"enum": ["none", "private", "public_retail_debt", "grant", "concession"]}, "issuer_id": {"type": "string"}, "legal_review_ref": {"type": "string"}, "investor_or_beneficiary_protection_ref": {"type": "string"}, "public_issuer_authority_ref": {"type": "string"}, "debt_sustainability_ref": {"type": "string"}}},
+    "simplicity_comparator": {"type": "object", "properties": {"protocol_ref": {"type": "string"}, "cost_baseline_ref": {"type": "string"}, "kill_conditions": {"type": "array", "items": {"type": "string"}}}}
+  },
+  "additionalProperties": false
+}

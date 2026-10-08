@@ -1,4 +1,4 @@
-name: RAVEL CI
+name: Ravel CI
 
 on:
   pull_request:
@@ -36,7 +36,7 @@ jobs:
         run: |
           pip install -r services/api/requirements-dev.lock
           pip install pyyaml==6.0.3
-      - name: Run RAVEL, PRU and candidate control tests
+      - name: Run Ravel, PRU and candidate control tests
         env:
           PYTHONPATH: services/api
         run: pytest -q services/api/tests

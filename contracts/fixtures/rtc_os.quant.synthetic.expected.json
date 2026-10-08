@@ -1,0 +1,443 @@
+{
+  "engine": "RTC-OS-SHADOW-0.2",
+  "dataset": "SYNTHETIC_NON_CAPITAL_FACING",
+  "dossier_id": "synthetic-tdd-01",
+  "revision": 1,
+  "as_of": "2026-10-08T10:00:00+00:00",
+  "expires_at": "2027-01-01T00:00:00+00:00",
+  "input_sha256": "2b074f2aeb27747bd8a42d07b8f1140f349bbd04eda602922bf95e5bd8035168",
+  "source_pins": {
+    "PRM-CANON-SIGNED@v1.1.2-genesis": "f3862005bc4d6e8e4cba0f2a7646e67dff758fcd28c8411046eb5d04875f9540",
+    "PRM-RTC-APP-001@0.1": "c868662c12b9f0e9c8ee1af938c277042a087adb415f9f70dd6d4480e2c2712f",
+    "PRM-ARCH-DET-002@2.0": "83f42dcac3f9053b011eeb2b2963862d23c9ab0be35ee467499c99dcafd1e1c7",
+    "PRM-RISK-AETERNA-001@1.1": "1fc0656f60a73ef6c067e7a1a15e83e28dfdddd68575202ce47ad5e0ebd767d3",
+    "PRM-RISK-RAVEL-OP-002@1.1": "ea5c228ff48ca1e30738aaa2eea8cf88e8c70c38726096ba43c0a6f03f3a9ff5",
+    "PRM-CIV-APP-006@6.2": "3710dbc02b63f43d74b7aa03fd2fa584e27ef26a9e0866add2139a296ea99ece"
+  },
+  "source_custody": "PROPOSED_NOT_ADOPTED; signed Canon alone remains governing",
+  "scales": {
+    "E": "PASSED",
+    "P": "PASSED",
+    "B": "PASSED",
+    "L": "PASSED"
+  },
+  "evidence_spine": [
+    {
+      "evidence_uid": "synthetic-baseline",
+      "site_id": "synthetic-01",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "method_id": "synthetic-method",
+      "method_version": "0.1",
+      "state": "ADMISSIBLE",
+      "measurement_status": "DECLARED_VALID"
+    }
+  ],
+  "territory": {
+    "territory_id": "synthetic-territory",
+    "boundary_ref": "synthetic-geometry",
+    "jurisdictions": [
+      "synthetic-jurisdiction"
+    ],
+    "bioregions": [
+      {
+        "strategy_id": "synthetic-mediterranean",
+        "boundary_refs": [
+          "synthetic-watershed"
+        ],
+        "reference_class_refs": [
+          "synthetic-comparator"
+        ],
+        "applicability": "CONTEXTUAL",
+        "conflicts": []
+      }
+    ]
+  },
+  "site": {
+    "site_id": "synthetic-01",
+    "territory_id": "synthetic-territory",
+    "operator_id": "operator-01",
+    "lawful_data_access_ref": "synthetic-permission",
+    "baseline_evidence_uids": [
+      "synthetic-baseline"
+    ],
+    "counterfactual_ref": "synthetic-comparator"
+  },
+  "alternatives": [
+    {
+      "option_id": "synthetic-option-0",
+      "kind": "NO_ACTION",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    },
+    {
+      "option_id": "synthetic-option-1",
+      "kind": "LEAN_INTERVENTION",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    },
+    {
+      "option_id": "synthetic-option-2",
+      "kind": "REGENERATIVE",
+      "constraints": [
+        "synthetic-water-budget"
+      ],
+      "maintenance_ref": "synthetic-maintenance"
+    }
+  ],
+  "source_conflicts": [
+    "source21_upstream_pins_vs_source_root_patch_candidates_unreconciled",
+    "source21_TRBK_consumptive_utility_proposal_excluded_by_ARD001_TOD001",
+    "source21_application_gate_ordinals_not_equivalent_to_runtime_gate_taxonomy"
+  ],
+  "scale_conflicts": [],
+  "rights_map": [
+    {
+      "kind": "LAND",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-land",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "WATER",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-water",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "DATA",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-data",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "CONSENT",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-consent",
+      "review_ref": "synthetic-counsel-declaration"
+    },
+    {
+      "kind": "STEWARDSHIP",
+      "holder_id": "synthetic-steward",
+      "jurisdiction": "synthetic-jurisdiction",
+      "status": "DOCUMENTED",
+      "instrument_ref": "synthetic-stewardship",
+      "review_ref": "synthetic-counsel-declaration"
+    }
+  ],
+  "claims": [
+    {
+      "claim_uid": "prometheus.ai.assistive_non_authoritative",
+      "state": "REVIEW_REQUIRED",
+      "reasons": [],
+      "publication_authorised": false
+    }
+  ],
+  "application_screening": {
+    "engine": "RTC-OS-SHADOW-0.1",
+    "profile_id": "CIV-TOPOS-001-synthetic",
+    "input_sha256": "4afe0cd27ac9a0b1c7b128e1f88126185f58ebee0e6ffb2c6002fa52f4e863f2",
+    "mode": "SHADOW_NON_AUTHORITATIVE",
+    "evaluation": "REVIEW_PACKET_PRESENT_ONLY",
+    "capital_authorised": false,
+    "ecological_certified": false,
+    "independent_accreditation": false,
+    "legal_opinion_created": false,
+    "gate_results": {
+      "G0_SITE_RIGHTS": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G1_EVIDENCE": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G2_DESIGN_RISK": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G3_CAUSAL_MRV": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G4_INDEPENDENCE_GOVERNANCE": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G5_BASE_ECONOMICS": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      },
+      "G6_LEGAL_CAPITAL": {
+        "status": "NOT_APPLICABLE",
+        "issues": []
+      },
+      "G7_SIMPLICITY_FALSIFIABILITY": {
+        "status": "REVIEW_REQUIRED",
+        "issues": []
+      }
+    },
+    "blocking_gates": [],
+    "permitted_action": "INDEPENDENT_HUMAN_REVIEW_ONLY",
+    "claims_policy": "EVALUATION_NOT_CERTIFICATION"
+  },
+  "runtime_gate_declarations": null,
+  "gate_taxonomy": {
+    "id": "prometheus.runtime@candidate-v0.1",
+    "source": "runtime/config/gate_status.json",
+    "ordinal_crosswalk_authorised": false
+  },
+  "loss_generation_ledger": [
+    {
+      "event_id": "synthetic-loss",
+      "risk_id": "synthetic-drought",
+      "hazard": "drought",
+      "trigger": "synthetic-dry-season",
+      "gross_loss": "100",
+      "mitigated_loss": "80",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    }
+  ],
+  "risk_allocation_ledger": [
+    {
+      "event_id": "synthetic-loss",
+      "bearer_id": "synthetic-sponsor",
+      "amount": "50",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "treatment": "RETAINED",
+      "contract_ref": null,
+      "recoverability": "UNKNOWN",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    },
+    {
+      "event_id": "synthetic-loss",
+      "bearer_id": "synthetic-community",
+      "amount": "30",
+      "currency": "EUR",
+      "horizon": "one-synthetic-year",
+      "treatment": "EXTERNALISED",
+      "contract_ref": null,
+      "recoverability": "UNKNOWN",
+      "evidence_uids": [
+        "synthetic-baseline"
+      ]
+    }
+  ],
+  "ultimate_bearers": [
+    "synthetic-community",
+    "synthetic-sponsor"
+  ],
+  "risk_state": "NR",
+  "ravel_shadow": {
+    "expected_loss": "80.0",
+    "var": {
+      "0.5000": "80.0"
+    },
+    "expected_shortfall": {
+      "0.5000": "80.0"
+    },
+    "vrrc": "0.0",
+    "vrrc_status": "not_admitted",
+    "authority_boundary": "evaluation_not_certification",
+    "ppci": null,
+    "currency": "EUR",
+    "numeric_encoding": "decimal_strings_from_declared_float_arithmetic"
+  },
+  "external_partner_checks": {
+    "T01": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T02": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T03": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T04": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T05": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T06": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T07": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T08": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T09": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T10": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T11": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T12": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T13": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T14": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T15": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T16": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T17": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T18": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T19": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T20": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T21": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T22": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T23": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T24": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T25": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T26": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T27": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T28": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T29": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T30": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T31": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T32": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T33": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T34": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T35": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T36": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T37": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T38": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T39": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    },
+    "T40": {
+      "state": "UNKNOWN",
+      "references_status": "caller_declared_not_authenticated"
+    }
+  },
+  "topos_partnership": "UNKNOWN",
+  "capital_readiness": "HOLD",
+  "hold_reasons": [
+    "probability_calibration_independent_review_pending",
+    "runtime_candidate_gate_declarations_missing",
+    "source_adoption_and_reconciliation_pending"
+  ],
+  "reject_reasons": [],
+  "authoritative": false,
+  "certification": false,
+  "capital_authorised": false,
+  "creates_rights": false,
+  "material_gate_effects_allowed": false,
+  "production_admitted": false,
+  "publication_authorised": false,
+  "previous_audit_sha256": null,
+  "audit_sha256": "f43ab2c2d9da18609dc6efb0b241c1a89850b94b5afb24ff755c84ffd0677c89"
+}
