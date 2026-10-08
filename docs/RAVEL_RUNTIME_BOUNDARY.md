@@ -1,6 +1,6 @@
-# RAVEL Runtime Boundary
+# Ravel Runtime Boundary
 
-RAVEL in this repository is a **candidate shadow-underwriting reference implementation**.
+Ravel in this repository is a **candidate shadow-underwriting reference implementation**.
 
 It may:
 - compute deterministic loss statistics from supplied scenarios;
