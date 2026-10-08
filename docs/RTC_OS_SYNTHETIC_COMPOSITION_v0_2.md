@@ -43,3 +43,5 @@ No real territorial pilot, title/water opinion, baseline field validation, causa
 ## Rollback
 
 No persistent migration or external API change exists. Revert this candidate's composition/fixtures/CLI and console viewer commits on review branches; retain compatible existing imports, routes and historical source identifiers. Do not delete or replace signed tags or old source bundles.
+
+Candidate security CI reuses the checksum-pinned OSS secret scanner already used in the Canon/other lanes, with read-only repository permissions and redacted findings. It scans checked-out candidate files, not Git history or deployed services; success is not comprehensive security assurance. One workflow addition is justified by the previously missing runtime secret-scan gate.
