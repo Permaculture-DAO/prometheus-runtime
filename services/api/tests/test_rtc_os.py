@@ -354,6 +354,22 @@ def test_quant_wire_decimal_strings_and_currency_are_explicit():
     assert canonical_bytes(out) == canonical_bytes(expected)
 
 
+@pytest.mark.parametrize("alphas", [[0.50001,0.50002], [0.50002,0.50001], [0.5,0.5],
+                                  [0.00001], [0.99999], [0.123456]])
+def test_quant_alpha_identity_rounding_and_collisions_are_refused(alphas):
+    p = quant_packet(); p["ravel_request"]["alpha_values"] = alphas
+    with pytest.raises(ValueError, match="alpha identities"):
+        evaluate(p)
+
+
+def test_quant_alpha_levels_preserve_each_result_independent_of_request_order():
+    p = quant_packet(); p["ravel_request"]["alpha_values"] = [0.5,0.5001]
+    out = evaluate(p)["ravel_shadow"]
+    assert set(out["var"]) == set(out["expected_shortfall"]) == {"0.5000","0.5001"}
+    p["ravel_request"]["alpha_values"].reverse()
+    assert evaluate(p)["ravel_shadow"] == out
+
+
 def test_golden_synthetic_output_exact_and_complete():
     expected = json.loads((ROOT / "contracts/fixtures/rtc_os.synthetic.expected.json").read_text())
     assert canonical_bytes(evaluate()) == canonical_bytes(expected)

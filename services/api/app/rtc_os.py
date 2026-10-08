@@ -198,6 +198,10 @@ class RTCQuantRequest(Record):
             raise ValueError("duplicate quantitative event")
         if any(not 0 < alpha < 1 for alpha in self.alpha_values):
             raise ValueError("alpha must be strictly between zero and one")
+        keys = [f"{alpha:.4f}" for alpha in self.alpha_values]
+        if (len(set(keys)) != len(keys) or any(
+                Decimal(str(alpha)) != Decimal(key) for alpha, key in zip(self.alpha_values, keys))):
+            raise ValueError("alpha identities require distinct exact four-decimal levels")
         if abs(sum(s.probability for s in self.scenarios) - 1) > 1e-9:
             raise ValueError("scenario probability sum must equal one")
         return self

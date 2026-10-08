@@ -56,7 +56,7 @@
       "word": "\u0041ETERNA",
       "classification": "TECHNICAL_IDENTIFIER",
       "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
-      "sha256": "0effe7f8c95b6ad19d7e9959cc4c2f06a0d928eec516130afaa0c531a5d748e1",
+      "sha256": "a9922f06905192eafffec2924c655b8495418c0824f7f39fc408d202e4b1d4bc",
       "expected_count": 1
     },
     {
@@ -64,7 +64,7 @@
       "word": "\u0052AVEL",
       "classification": "TECHNICAL_IDENTIFIER",
       "reason": "Exact legacy source-registry identity in synthetic input/output/code; preserved for byte-compatible reference resolution, not display naming.",
-      "sha256": "0effe7f8c95b6ad19d7e9959cc4c2f06a0d928eec516130afaa0c531a5d748e1",
+      "sha256": "a9922f06905192eafffec2924c655b8495418c0824f7f39fc408d202e4b1d4bc",
       "expected_count": 1
     }
   ]

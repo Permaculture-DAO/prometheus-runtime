@@ -20,6 +20,8 @@ Signed Canon v1.1.2-genesis remains governing. Canon #20 and #21 are draft propo
 
 All outputs retain literal false authority/certification/rights/capital/production/publication flags. Caller declarations and reference strings are not authenticated provenance or independently qualified review. Root adoption/reconciliation is unconditionally HOLD in this candidate. Mathematical success cannot remove it.
 
+RTC alpha levels must be distinct and exactly representable at four decimal places, matching the reused arithmetic's metric-key contract. Other levels and duplicate/rounded identities fail validation; requested results must not silently overwrite one another. This is a narrow RTC intake constraint, not a change to the existing API or canonical risk mathematics. Successful CLI execution means compilation, never admission.
+
 ## Run locally (WSL, repository root)
 
 Use the already prepared Python environment with requirements.lock and requirements-dev.lock. From repository root:
