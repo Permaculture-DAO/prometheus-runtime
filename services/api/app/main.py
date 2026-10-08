@@ -239,7 +239,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/v1/ravel/status")
     def ravel_status():
         return {
-            "name": "PROMETHEUS RAVEL",
+            "name": "PROMETHEUS Ravel",
             "expansion": "Risk Allocation, Vulnerability, Exposure & Loss",
             "mode": "shadow_underwriting",
             "methodology_status": "candidate",
@@ -253,7 +253,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 "loss reduction != loss allocation",
                 "no risk disappears through representation",
                 "no regenerative risk credit without causal evidence",
-                "RAVEL signals/calculates; governance decides",
+                "Ravel signals/calculates; governance decides",
             ],
             "statement": settings.runtime_statement,
         }
