@@ -6,7 +6,7 @@ from typing import Iterable, Mapping, Sequence
 
 
 class RavelModelError(ValueError):
-    """Raised when a RAVEL shadow-underwriting input violates v0.1 invariants."""
+    """Raised when a Ravel shadow-underwriting input violates v0.1 invariants."""
 
 
 @dataclass(frozen=True)
