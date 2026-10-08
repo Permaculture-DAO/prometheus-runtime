@@ -1,7 +1,7 @@
 import copy
 import json
 import pytest
-from territorial_capital import review_territorial_proposal, TerritorialInputError
+from app.territorial_capital import review_territorial_proposal, TerritorialInputError
 
 
 def complete_packet():
