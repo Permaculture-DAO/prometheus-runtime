@@ -8,7 +8,7 @@ import hashlib
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select, text
+from sqlalchemy import inspect, select, text
 from sqlalchemy.orm import Session
 
 from .settings import Settings
@@ -81,8 +81,21 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(app: FastAPI):
         settings.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         app.state.document_integrity = verify_document_integrity(settings)
-        Base.metadata.create_all(engine)
         try:
+            # Inspect a stored release before any schema DDL. A rejected canon
+            # transition must not add tables to an older database either.
+            if inspect(engine).has_table(ReleaseState.__tablename__):
+                with SessionLocal() as db:
+                    stored = db.scalar(select(ReleaseState))
+                    if stored is not None and (
+                        stored.canonical_root != settings.canonical_root
+                        or stored.canonical_release != settings.canonical_release
+                    ):
+                        raise RuntimeError(
+                            "release-state mismatch: explicit reviewed migration or a "
+                            "separate database is required; stored schema was not changed"
+                        )
+            Base.metadata.create_all(engine)
             with SessionLocal() as db:
                 existing = db.scalar(select(ReleaseState))
                 if existing is not None and (

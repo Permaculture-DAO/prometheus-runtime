@@ -1,10 +1,58 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class RavelInput(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+
+
+class ShadowRiskRecord(RavelInput):
+    """Internal candidate intake envelope, not a rating or a persisted new service.
+
+    Source: canon candidate 0857425, RAVEL_FORMAL_SPEC_v0.1 section 13.
+    Financial/model fields are explicit declarations; source truth is not inferred.
+    """
+    risk_uid: str = Field(min_length=1, max_length=128)
+    subject_uid: str = Field(min_length=1, max_length=128)
+    hazard: str = Field(min_length=1, max_length=2048)
+    exposure: str = Field(min_length=1, max_length=2048)
+    vulnerability: str = Field(min_length=1, max_length=2048)
+    financial_state: str = Field(min_length=1, max_length=2048)
+    model_version: str = Field(min_length=1, max_length=128)
+    evidence_refs: list[str] = Field(min_length=1, max_length=1000)
+    ultimate_bearers: list[str] = Field(min_length=1, max_length=1000)
+    assumptions: list[str] = Field(max_length=1000)
+    missing_data_statement: str = Field(min_length=1, max_length=2048)
+    mode: Literal["shadow_underwriting"] = "shadow_underwriting"
+    authority: Literal["evaluation_not_certification"] = "evaluation_not_certification"
+    vrrc: float = Field(default=0.0, ge=0, le=0, strict=True)
+    vrrc_status: Literal["not_admitted"] = "not_admitted"
+    underwriting_approval: Literal[False] = False
+    capital_admission: Literal[False] = False
+
+    @model_validator(mode="before")
+    @classmethod
+    def no_authority_coercion(cls, data):
+        if isinstance(data, dict):
+            for field in ("underwriting_approval", "capital_admission"):
+                if field in data and data[field] is not False:
+                    raise ValueError("authority flags must be literal false")
+            if isinstance(data.get("vrrc"), bool):
+                raise ValueError("VRRC must be numeric policy-zero, not a boolean")
+        return data
+
+    @model_validator(mode="after")
+    def explicit_declarations(self):
+        text_fields = (self.risk_uid, self.subject_uid, self.hazard, self.exposure,
+                       self.vulnerability, self.financial_state, self.model_version,
+                       self.missing_data_statement)
+        if any(not value.strip() for value in (*text_fields, *self.evidence_refs,
+                                              *self.ultimate_bearers, *self.assumptions)):
+            raise ValueError("explicit nonblank declarations required")
+        return self
 
 
 class RavelScenarioIn(RavelInput):
