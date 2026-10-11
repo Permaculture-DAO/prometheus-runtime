@@ -2,8 +2,8 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 RUN groupadd --system app && useradd --system --gid app --create-home app
 WORKDIR /app
-COPY services/api/requirements.lock ./
-RUN pip install --requirement requirements.lock
+COPY services/api/requirements.txt ./
+RUN pip install --requirement requirements.txt
 COPY services/api/app ./app
 COPY config ./config
 COPY evidence ./evidence
