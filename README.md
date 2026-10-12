@@ -27,3 +27,8 @@ Start with:
 - `docs/S6_EVIDENCE_BATCH_PACKAGING.md`
 
 Do not commit `.env.local`. Copy `.env.example` locally and generate fresh secrets.
+
+Python pins live in `services/api/requirements.txt` and `requirements-dev.txt`,
+which Dependabot can discover. The existing `.lock` paths remain pip-compatible
+include wrappers; they do not duplicate pins. This filename correction changes no
+package version and does not admit or deploy the runtime candidate.

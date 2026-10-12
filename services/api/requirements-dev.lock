@@ -1,4 +1,2 @@
--r requirements.lock
-pytest==9.0.2
-httpx==0.28.1
-jsonschema==4.26.0
+# Compatibility entry point; pins live only in the Dependabot-visible manifest.
+-r requirements-dev.txt
