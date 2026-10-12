@@ -99,8 +99,9 @@ def test_frozen_gate_decision_and_literal_golden_output():
     record = gate()
     frozen = "e3dc9c499adf0c85afd2d113188dafecc1dbdd321def9c1267d941aae39bb998"
     assert decision_digest(record) == frozen
-    expected = {"method_version": "candidate-controls-v0.1",
+    expected = {"method_version": "candidate-controls-v0.2",
         "as_of": "2026-10-06T12:00:00+00:00", "scope": "synthetic-use-v1",
+        "min_evidence_state": "REVIEWABLE",
         "gates": {"mrv": {"state": "PASSED", "candidate_eligible": True,
                             "reasons": [], "blocked_by": []}},
         "references_status": "caller_declared_not_authenticated",
@@ -190,7 +191,8 @@ RISK = dict(risk_uid="TEST-risk", subject_uid="TEST-site", hazard="declared drou
     exposure="synthetic crop", vulnerability="uncalibrated", financial_state="unknown",
     model_version="v0.1-synthetic", evidence_refs=["synthetic-not-field-evidence"],
     ultimate_bearers=["declared-not-legally-verified"], assumptions=["synthetic only"],
-    missing_data_statement="No site calibration, contract or underwriting decision")
+    missing_data_statement="No site calibration, contract or underwriting decision",
+    residual_risk="not assessed", unmodelled_risk="not assessed: no site model exists")
 
 
 def test_risk_envelope_preserves_unknown_and_policy_zero():
@@ -204,7 +206,34 @@ def test_risk_envelope_preserves_unknown_and_policy_zero():
     {"underwriting_approval": True}, {"capital_admission": 0}, {"capital_admission": "false"},
     {"authority": "certified"}, {"mode": "production"}, {"rating": "AAA-R"},
     {"human_state_weight": 1}, {"missing_data_statement": " "},
+    {"residual_risk": " "}, {"unmodelled_risk": ""},
     {"ultimate_bearers": []}, {"evidence_refs": [" "]}])
 def test_risk_envelope_rejects_authority_coercion_and_blank_fields(change):
     with pytest.raises(ValidationError):
         ShadowRiskRecord(**(RISK | change))
+
+
+@pytest.mark.parametrize("state", [EvidenceState.RAW, EvidenceState.IDENTIFIED,
+    EvidenceState.PROVENANCE_BOUND, EvidenceState.QA_QC_CHECKED])
+def test_evidence_below_policy_floor_blocks_gate_and_downstream(state):
+    result = evaluate((gate(), gate("ravel", prerequisites=("mrv",))),
+                      evidence_states={"synthetic-evidence": state})
+    assert "evidence_below_policy_state" in result["gates"]["mrv"]["reasons"]
+    assert result["gates"]["ravel"]["blocked_by"] == ["mrv"]
+
+
+def test_policy_floor_is_typed_and_can_only_be_set_explicitly():
+    assert evaluate((gate(),), evidence_states={"synthetic-evidence": EvidenceState.REVIEWABLE}
+                    )["gates"]["mrv"]["candidate_eligible"]
+    strict = evaluate((gate(),), evidence_states={"synthetic-evidence": EvidenceState.REVIEWABLE},
+                      min_evidence_state=EvidenceState.ADMISSIBLE)
+    assert strict["gates"]["mrv"]["reasons"] == ["evidence_below_policy_state"]
+    for bad in ("RAW", EvidenceState.REJECTED, None):
+        with pytest.raises(ValueError):
+            evaluate((gate(),), min_evidence_state=bad)
+
+
+def test_risk_envelope_requires_residual_and_unmodelled_declarations():
+    for field in ("residual_risk", "unmodelled_risk"):
+        with pytest.raises(ValidationError):
+            ShadowRiskRecord(**{k: v for k, v in RISK.items() if k != field})

@@ -26,6 +26,10 @@ class ShadowRiskRecord(RavelInput):
     ultimate_bearers: list[str] = Field(min_length=1, max_length=1000)
     assumptions: list[str] = Field(max_length=1000)
     missing_data_statement: str = Field(min_length=1, max_length=2048)
+    # Two-ledger discipline: residual and unmodelled risk are explicit
+    # declarations ("not assessed" is allowed; absence is not). UNKNOWN != ZERO.
+    residual_risk: str = Field(min_length=1, max_length=2048)
+    unmodelled_risk: str = Field(min_length=1, max_length=2048)
     mode: Literal["shadow_underwriting"] = "shadow_underwriting"
     authority: Literal["evaluation_not_certification"] = "evaluation_not_certification"
     vrrc: float = Field(default=0.0, ge=0, le=0, strict=True)
@@ -48,7 +52,7 @@ class ShadowRiskRecord(RavelInput):
     def explicit_declarations(self):
         text_fields = (self.risk_uid, self.subject_uid, self.hazard, self.exposure,
                        self.vulnerability, self.financial_state, self.model_version,
-                       self.missing_data_statement)
+                       self.missing_data_statement, self.residual_risk, self.unmodelled_risk)
         if any(not value.strip() for value in (*text_fields, *self.evidence_refs,
                                               *self.ultimate_bearers, *self.assumptions)):
             raise ValueError("explicit nonblank declarations required")

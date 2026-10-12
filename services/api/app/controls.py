@@ -45,6 +45,7 @@ GATE_EDGES = frozenset({
       (GateState.FAILED, GateState.SUSPENDED, GateState.EXPIRED)),
 })
 _LIFECYCLE = tuple(EvidenceState)[:-1]
+_EVIDENCE_RANK = {state: rank for rank, state in enumerate(_LIFECYCLE)}
 EVIDENCE_EDGES = frozenset(zip(_LIFECYCLE, _LIFECYCLE[1:])) | frozenset(
     (state, EvidenceState.REJECTED) for state in _LIFECYCLE[:-1])
 
@@ -127,12 +128,17 @@ def evaluate_gates(records: tuple[GateRecord, ...], *, as_of: datetime, scope: s
                    evidence_hashes: Mapping[str, str],
                    evidence_states: Mapping[str, EvidenceState],
                    decision_hashes: Mapping[str, str],
-                   revoked_decisions: frozenset[str] = frozenset()) -> dict:
+                   revoked_decisions: frozenset[str] = frozenset(),
+                   min_evidence_state: EvidenceState = EvidenceState.REVIEWABLE) -> dict:
     """Re-evaluate a frozen declaration snapshot without changing any record.
 
     The catalogs are supplied by the caller too. Matching them gives integrity
     consistency only, never reviewer qualification, custody or independent truth.
     """
+    # Defined-use policy floor (canon #17 section 13): evidence below it cannot
+    # support an eligible gate, even if hashes and decisions match.
+    if type(min_evidence_state) is not EvidenceState or min_evidence_state is EvidenceState.REJECTED:
+        raise ValueError("typed nonrejected minimum evidence state required")
     as_of_text = _utc(as_of)
     if not _text(scope) or not records or len(records) > 1000:
         raise ValueError("nonempty scope and 1..1000 records required")
@@ -182,6 +188,9 @@ def evaluate_gates(records: tuple[GateRecord, ...], *, as_of: datetime, scope: s
             if any(type(evidence_states.get(ref)) is not EvidenceState or
                    evidence_states[ref] is EvidenceState.REJECTED for ref, _ in record.evidence):
                 reasons.append("evidence_state_unusable")
+            elif any(_EVIDENCE_RANK[evidence_states[ref]] < _EVIDENCE_RANK[min_evidence_state]
+                     for ref, _ in record.evidence):
+                reasons.append("evidence_below_policy_state")
             blocked_by = sorted(dep for dep in record.prerequisites
                                 if not results[dep]["candidate_eligible"])
             if blocked_by:
@@ -189,8 +198,9 @@ def evaluate_gates(records: tuple[GateRecord, ...], *, as_of: datetime, scope: s
             results[uid] = {"state": state, "candidate_eligible": not reasons,
                             "reasons": sorted(reasons), "blocked_by": blocked_by}
             pending.remove(uid)
-    return {"method_version": "candidate-controls-v0.1", "as_of": as_of_text,
-            "scope": scope, "gates": dict(sorted(results.items())),
+    return {"method_version": "candidate-controls-v0.2", "as_of": as_of_text,
+            "scope": scope, "min_evidence_state": min_evidence_state.value,
+            "gates": dict(sorted(results.items())),
             "references_status": "caller_declared_not_authenticated",
             "authoritative": False, "capital_admission": False,
             "underwriting_approval": False, "certification": False,
