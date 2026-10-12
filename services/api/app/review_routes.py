@@ -92,6 +92,18 @@ def build_review_router(settings, SessionLocal) -> APIRouter:
         if packages and any(item is not None and payload.claim_uid not in item.claim_uids for item in packages):
             blockers.append("claim_uid is not linked by every evidence package")
 
+        # Server policy is the floor; caller values can only make the decision stricter.
+        confidence_threshold = max(payload.confidence_threshold, settings.admissibility_confidence_floor)
+        require_independent_review = (
+            payload.require_independent_review or settings.admissibility_require_independent_review
+        )
+        policy = {
+            "confidence_threshold": confidence_threshold,
+            "require_independent_review": require_independent_review,
+            "source": "server_policy_floor",
+            "legal_gate": "asserted_by_caller_not_verified",
+        }
+
         independent_pass = any(
             item is not None
             and item.independent_for_scope
@@ -99,9 +111,9 @@ def build_review_router(settings, SessionLocal) -> APIRouter:
             and item.decision == "pass"
             for item in reviews
         )
-        if payload.require_independent_review and not independent_pass:
+        if require_independent_review and not independent_pass:
             blockers.append("independent passing review not established")
-        if payload.confidence < payload.confidence_threshold:
+        if payload.confidence < confidence_threshold:
             blockers.append("confidence threshold not met")
 
         legal_gate = bool(payload.legal_gate and payload.legal_review_ref)
@@ -111,8 +123,8 @@ def build_review_router(settings, SessionLocal) -> APIRouter:
         mrv_gate = (
             all(item is not None for item in packages)
             and all(item is not None for item in reviews)
-            and (independent_pass or not payload.require_independent_review)
-            and payload.confidence >= payload.confidence_threshold
+            and (independent_pass or not require_independent_review)
+            and payload.confidence >= confidence_threshold
         )
         decision = "admissible" if legal_gate and mrv_gate and not blockers else "blocked"
 
@@ -135,6 +147,7 @@ def build_review_router(settings, SessionLocal) -> APIRouter:
             "decision": item.decision,
             "legal_gate": item.legal_gate,
             "mrv_gate": item.mrv_gate,
+            "policy": policy,
         }))
         db.commit()
         return {
@@ -144,6 +157,7 @@ def build_review_router(settings, SessionLocal) -> APIRouter:
             "mrv_gate": item.mrv_gate,
             "confidence": item.confidence,
             "blockers": item.blockers,
+            "policy": policy,
             "authority_boundary": item.authority_boundary,
             "authoritative": False,
             "certification": False,
