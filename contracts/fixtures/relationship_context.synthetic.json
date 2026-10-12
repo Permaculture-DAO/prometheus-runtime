@@ -1,0 +1,14 @@
+{
+  "relationship_uid":"rel_001",
+  "source_actor_or_method":"method-place-elicitation-v0.1",
+  "subject_uid":"ohe_sicily_genesis",
+  "predicate":"depends_on",
+  "object_uid_or_literal":"external_irrigation_supply",
+  "valid_from":"2026-09-29T10:00:00Z",
+  "valid_to":null,
+  "scope":"operational dependency",
+  "provenance_refs":["note:context-001"],
+  "uncertainty":"medium",
+  "epistemic_status":"context",
+  "zero_weight_for_pru":true
+}

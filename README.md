@@ -17,6 +17,7 @@ Both are subordinate to [`prometheus-canon`](https://github.com/Permaculture-DAO
 
 Start with:
 
+- `docs/RAVEL_RUNTIME_BOUNDARY.md` — candidate shadow-underwriting reference implementation; VRRC remains zero/not-admitted.
 - `docs/S0_FREEZE_ROTATE_RECORD.md`
 - `docs/RUNTIME_BOUNDARY.md`
 - `docs/S2_REMOTE_PUBLICATION_CHECKLIST.md`
@@ -26,3 +27,8 @@ Start with:
 - `docs/S6_EVIDENCE_BATCH_PACKAGING.md`
 
 Do not commit `.env.local`. Copy `.env.example` locally and generate fresh secrets.
+
+Python pins live in `services/api/requirements.txt` and `requirements-dev.txt`,
+which Dependabot can discover. The existing `.lock` paths remain pip-compatible
+include wrappers; they do not duplicate pins. This filename correction changes no
+package version and does not admit or deploy the runtime candidate.

@@ -12,6 +12,10 @@ required = [
     root / "services/holochain/conductor-config.yaml",
     root / "services/holochain/entrypoint.sh",
     root / "config/canonical_release.json",
+    root / "config/ravel_profile.json",
+    root / "services/api/app/ravel.py",
+    root / "services/api/app/ravel_schemas.py",
+    root / "config/semantic_claims_vnext.json",
 ]
 for p in required:
     if not p.exists():
@@ -65,6 +69,30 @@ for key in ["production_admitted", "legal_admitted", "market_admitted"]:
         errors.append(f"{key} must be false")
 if release.get("independent_assurance") != "unsigned":
     errors.append("independent assurance must be unsigned")
+
+
+ravel = json.loads((root / "config/ravel_profile.json").read_text(encoding="utf-8"))
+if ravel.get("mode") != "shadow_underwriting":
+    errors.append("RAVEL mode must remain shadow_underwriting")
+if ravel.get("vrrc") != 0.0 or ravel.get("vrrc_status") != "not_admitted":
+    errors.append("RAVEL VRRC must remain zero/not_admitted in candidate runtime")
+for key in ["authoritative", "certification", "underwriting_approval", "capital_facing"]:
+    if ravel.get(key) is not False:
+        errors.append(f"RAVEL {key} must remain false")
+semantic_registry = json.loads((root / "config/semantic_claims_vnext.json").read_text(encoding="utf-8"))
+semantic_uids = [item.get("claim_uid") for item in semantic_registry.get("claims", [])]
+if not semantic_uids:
+    errors.append("semantic claim registry must contain claims")
+if any(not uid or not uid.startswith("prometheus.") for uid in semantic_uids):
+    errors.append("semantic claim registry contains invalid claim_uid")
+if len(semantic_uids) != len(set(semantic_uids)):
+    errors.append("semantic claim registry contains duplicate claim_uid")
+deprecated = semantic_registry.get("deprecated_claims", [])
+if any(item.get("claim_uid") in semantic_uids for item in deprecated):
+    errors.append("deprecated claim_uid must not appear among active claims")
+active_aliases = {alias for item in semantic_registry.get("claims", []) for alias in item.get("legacy_aliases", [])}
+if any(alias in active_aliases for item in deprecated for alias in item.get("legacy_aliases", [])):
+    errors.append("alias of a deprecated claim is attached to an active claim_uid")
 
 conductor = (root / "services/holochain/conductor-config.yaml").read_text(encoding="utf-8")
 if ("allowed_origins: " + "'*'") in conductor or ("allowed_origins: " + '"*"') in conductor:

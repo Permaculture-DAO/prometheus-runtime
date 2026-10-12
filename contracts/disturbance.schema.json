@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://heart-intelligence.earth/schemas/disturbance.schema.json",
+  "title":"Prometheus Disturbance",
+  "type":"object",
+  "required":["disturbance_uid","type","start_time","severity_method_uid","spatial_scope","source_refs","uncertainty"],
+  "additionalProperties":false,
+  "properties":{
+    "disturbance_uid":{"type":"string","pattern":"^dist_[A-Za-z0-9_-]+$"},
+    "type":{"type":"string","enum":["drought","heatwave","extreme_rainfall","flooding","pest_or_disease","irrigation_interruption","management_change","market_or_logistics","wildfire_or_smoke","other"]},
+    "start_time":{"type":"string","format":"date-time"},
+    "end_time":{"type":["string","null"],"format":"date-time"},
+    "severity_method_uid":{"type":"string","minLength":1},
+    "severity_value":{"type":["number","string","null"]},
+    "spatial_scope":{"type":"string","minLength":1},
+    "source_refs":{"type":"array","minItems":1,"items":{"type":"string"}},
+    "management_response_refs":{"type":"array","items":{"type":"string"}},
+    "uncertainty":{"type":"string","minLength":1}
+  }
+}

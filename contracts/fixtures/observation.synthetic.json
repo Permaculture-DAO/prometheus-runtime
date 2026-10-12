@@ -1,0 +1,18 @@
+{
+  "observation_uid":"obs_sicily_001",
+  "subject_uid":"ohe_sicily_genesis",
+  "place_context_version":"pc-v0.1",
+  "system_boundary_version":"sb-v0.1",
+  "method_uid":"method-soil-moisture-v0.1",
+  "observed_at":"2026-09-29T10:00:00Z",
+  "location_ref":"plot-A",
+  "source_class":"sensor",
+  "observer_or_instrument_uid":"sensor-sm-01",
+  "management_state_version":"ms-v0.1",
+  "disturbance_uid":null,
+  "raw_evidence_refs":["sha256:synthetic"],
+  "conflict_or_positionality_note":null,
+  "uncertainty_note":"synthetic fixture",
+  "zero_weight_for_pru":false,
+  "statement":"observation_not_verified_indicator"
+}

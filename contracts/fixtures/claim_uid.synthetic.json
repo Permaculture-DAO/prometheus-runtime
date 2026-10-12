@@ -1,0 +1,11 @@
+{
+  "claim_uid":"prometheus.runtime.evaluation_not_certification",
+  "legacy_claim_id":null,
+  "lineage":"p0.3-candidate",
+  "statement":"The runtime evaluates and records; it does not certify value or ecological truth.",
+  "status":"architectural",
+  "public_use":"yes",
+  "source_refs":["canon:runtime-boundary"],
+  "permitted_wording":"evaluation, not certification",
+  "blocked_wording":["AI-certified","runtime-certified regeneration"]
+}

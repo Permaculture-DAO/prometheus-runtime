@@ -1,0 +1,44 @@
+name: RAVEL CI
+
+on:
+  pull_request:
+    paths:
+      - "services/api/app/ravel.py"
+      - "services/api/app/ravel_schemas.py"
+      - "services/api/app/controls.py"
+      - "services/api/app/pru.py"
+      - "services/api/app/main.py"
+      - "services/api/tests/test_ravel.py"
+      - "services/api/tests/test_controls.py"
+      - "services/api/tests/test_pru.py"
+      - "services/api/tests/test_context_manifest.py"
+      - "services/api/requirements*.lock"
+      - "config/ravel_profile.json"
+      - "scripts/validate_runtime.py"
+      - "scripts/build_context_manifest.py"
+      - ".github/workflows/ravel-ci.yml"
+  push:
+    branches:
+      - "feature/ravel-v2-2026-10-05"
+
+permissions:
+  contents: read
+
+jobs:
+  ravel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: |
+          pip install -r services/api/requirements-dev.lock
+          pip install pyyaml==6.0.3
+      - name: Run RAVEL, PRU and candidate control tests
+        env:
+          PYTHONPATH: services/api
+        run: pytest -q services/api/tests
+      - name: Validate runtime boundaries
+        run: python scripts/validate_runtime.py

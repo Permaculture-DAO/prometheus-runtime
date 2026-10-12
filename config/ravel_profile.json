@@ -1,0 +1,30 @@
+{
+  "name": "PROMETHEUS RAVEL",
+  "expansion": "Risk Allocation, Vulnerability, Exposure & Loss",
+  "version": "0.1-candidate",
+  "mode": "shadow_underwriting",
+  "methodology_status": "candidate",
+  "authoritative": false,
+  "certification": false,
+  "underwriting_approval": false,
+  "capital_facing": false,
+  "vrrc": 0.0,
+  "vrrc_status": "not_admitted",
+  "canon_candidate": "v1.2.0-rc.2 + RAVEL amendment v0.1",
+  "claim_uids": [
+    "prometheus.ravel.loss_generation_allocation_separation",
+    "prometheus.ravel.ultimate_risk_bearer_registry",
+    "prometheus.ravel.risk_transfer_effectiveness",
+    "prometheus.ravel.regenerative_risk_delta",
+    "prometheus.ravel.verified_regenerative_risk_credit_not_admitted",
+    "prometheus.ravel.brake_review_trigger_non_authoritative",
+    "prometheus.ravel.state_vector_not_rating",
+    "prometheus.ravel.no_risk_disappears_through_representation"
+  ],
+  "invariants": [
+    "loss reduction != loss allocation",
+    "no risk disappears through representation",
+    "no regenerative risk credit without causal evidence",
+    "RAVEL signals/calculates; governance decides"
+  ]
+}
