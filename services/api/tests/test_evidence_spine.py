@@ -129,3 +129,45 @@ def test_h5_tombstone_preserves_identity_without_activating_successors():
     assert old_uid not in active_uids
     assert not active_aliases.intersection(tombstone["legacy_aliases"])
     assert not any(uid.startswith(("prometheus.hypothesis.h5a_", "prometheus.hypothesis.h5b_", "prometheus.hypothesis.h5c_")) for uid in active_uids)
+
+
+def _decision(**overrides):
+    payload = {
+        "decision_uid": "adm_policy_001",
+        "subject_uid": "ohe_sicily_genesis",
+        "claim_uid": "prometheus.runtime.evaluation_not_certification",
+        "evidence_package_refs": ["ep_test_001"],
+        "review_attestation_refs": ["rev_test_001"],
+        "legal_gate": True,
+        "legal_review_ref": "legal-test-ref",
+        "confidence": 0.90,
+    }
+    payload.update(overrides)
+    return payload
+
+
+def test_caller_cannot_lower_confidence_threshold_below_server_floor(client):
+    headers = {"X-API-Key": "test-key"}
+    assert client.post("/v1/evidence/packages", json=package_payload(), headers=headers).status_code == 201
+    assert client.post("/v1/reviews", json=review_payload(), headers=headers).status_code == 201
+    response = client.post("/v1/admissibility/decisions",
+                           json=_decision(confidence=0.10, confidence_threshold=0.0), headers=headers)
+    assert response.status_code == 201
+    body = response.json()
+    assert body["decision"] == "blocked"
+    assert "confidence threshold not met" in body["blockers"]
+    assert body["policy"]["confidence_threshold"] == 0.85
+    assert body["policy"]["legal_gate"] == "asserted_by_caller_not_verified"
+
+
+def test_caller_cannot_waive_independent_review(client):
+    headers = {"X-API-Key": "test-key"}
+    assert client.post("/v1/evidence/packages", json=package_payload(), headers=headers).status_code == 201
+    response = client.post("/v1/admissibility/decisions",
+                           json=_decision(review_attestation_refs=[], require_independent_review=False),
+                           headers=headers)
+    assert response.status_code == 201
+    body = response.json()
+    assert body["decision"] == "blocked"
+    assert "independent passing review not established" in body["blockers"]
+    assert body["policy"]["require_independent_review"] is True
