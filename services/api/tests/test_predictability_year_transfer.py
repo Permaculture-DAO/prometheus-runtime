@@ -63,11 +63,12 @@ def test_duplicate_site_rejected():
 def test_no_matching_issue_day_refuses_inference():
     co=cohorts()
     for c in co["2025"][0].cases:
-        # Same valid ordering, but dates are in Jan rather than Apr/May/Jun.
+        # Preserve distinct Jan/Feb/Mar months rather than collapsing them.
+        # The other year's Apr/May/Jun events cannot match these calendar dates.
         for attr in ("issue_time","valid_time","observation_available_time",
                      "baseline_issue_time"):
             old=getattr(c,attr)
-            setattr(c,attr,old.replace(month=1))
+            setattr(c,attr,old.replace(month=old.month-3))
     with pytest.raises(ValueError,match="no calendar-matched"):
         year_separated_replay(co,baseline_kind="PERSISTENCE")
 
