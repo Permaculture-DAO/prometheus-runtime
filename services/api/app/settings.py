@@ -38,6 +38,7 @@ class Settings:
     p2_enabled: bool = os.getenv("P2_TRBK_ENABLED", "false").lower() == "true"
     p3_enabled: bool = os.getenv("P3_PROCESSOR_ENABLED", "false").lower() == "true"
     p4_enabled: bool = os.getenv("P4_CUSTODY_EXCHANGE_ENABLED", "false").lower() == "true"
+    predictability_shadow_enabled: bool = os.getenv("PREDICTABILITY_SHADOW_ENABLED", "false").lower() == "true"
     holochain_enabled: bool = os.getenv("HOLOCHAIN_ENABLED", "false").lower() == "true"
     s4_ingestion_enabled: bool = os.getenv("S4_INGESTION_ENABLED", "false").lower() == "true"
     s4_live_ingestion_admitted: bool = os.getenv("S4_LIVE_INGESTION_ADMITTED", "false").lower() == "true"
