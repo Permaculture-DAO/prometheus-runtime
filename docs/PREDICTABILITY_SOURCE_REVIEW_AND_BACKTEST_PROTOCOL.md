@@ -23,6 +23,9 @@ Never hardcode 129, 57 or 14 as a capability or acceptance threshold.
 - Open-Meteo Single Runs: preserves forecast issue time; stitched historical forecasts are not adequate to reconstruct a specific forecast information set without additional checks.
 - ECMWF S2S reforecasts: a separate subseasonal probabilistic task. https://www.ecmwf.int/en/research/projects/s2s
 - Prefer quality-controlled independent station observations as reference where possible. Reanalysis is a model-informed comparison, not an independent physical observation.
+- **Public NOAA alternative:** NCEI GFS operational forecasts (timestamped 00/06/12/18 UTC cycles) and NCEI Global Hourly station observations may support independent source comparisons where spatial/temporal matching and quality control are documented: https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast and https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database . NOAA data are not PROMETHEUS model outputs, and NOAA endorsement must never be implied.
+- **Open-Meteo commercial-use restriction:** Free API access is non-commercial only. Do not ingest or query that endpoint for Permaculture DAO LLC's commercial R&D without an appropriate subscription/permission or approved self-hosted arrangement. A CC BY data licence does not waive API service terms: https://open-meteo.com/en/terms .
+
 
 Check access, licence (including commercial restrictions), issue-time availability, geographic applicability, model version drift, QC flags and missingness before use.
 
