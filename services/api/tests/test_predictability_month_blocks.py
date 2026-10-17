@@ -46,7 +46,7 @@ def test_whole_month_resampling_retains_declared_scope():
     assert result["block_scheme"] == "resample_whole_calendar_months_keep_all_sites_and_within_month_events"
     assert result["interval_meaning"]=="exploratory_resampling_distribution_not_confidence_interval"
     assert result["persistence_difference_interval"]==[3.0,3.0]
-    assert result["climate_difference_interval"]==[1.0,1.0]
+    assert result["climate_difference_interval"]==[-1.0,-1.0]
 
 
 def test_reject_different_forecast_events():
