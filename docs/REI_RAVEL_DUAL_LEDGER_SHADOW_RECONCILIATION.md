@@ -29,14 +29,15 @@ The SHADOW v1 algorithm has an intentionally restricted additive ledger: single 
 
 A future qualified runtime integration may attach **verified** ledger evidence and hashes to existing REI `risk_ledger_links` and RAVEL objects without replacing them. Do NOT copy numeric fields into REI as authorized inputs merely because they balance. Keep RAVEL ownership and AETERNA methods; require explicit source steward approval, reviewer signature and source/algorithm version lock.
 
-Target test: `PYTHONPATH=services/api python -m unittest discover -s services/api/tests -p 'test_rei_ravel_ledger_shadow.py' -v`. Tests are synthetic, not externally measured.
+Target test: `PYTHONPATH=services/api python -m unittest discover -s services/api/tests -p 'test_rei_ravel_*.py' -v`. Tests are synthetic, not externally measured.
 
 ## Relevant professional background
 
-See ASOP 47 Risk Treatment in Enterprise Risk Management (basis/counterparty risk) and actuarial risk-transfer definitions. These establish the conceptual importance of transfer **contracts**; they do not certify this prototype. Related sources:
+Current U.S. actuarial ERM reference is **ASOP 58 Enterprise Risk Management (effective May 1, 2025)**; ASOP 47 and 46 were repealed. ASOP 47 is historical context ONLY. This U.S. framework does not establish actual coverage, counterparty ability-to-pay, legal transfer, actuarial price or assurance of this prototype. Primary sources:
 
-- https://www.actuarialstandardsboard.org/asops/risk-treatment-enterprise-risk-management/
-- https://www.actuarialstandardsboard.org/glossary/risk-transfer/
+- https://www.actuarialstandardsboard.org/asops/enterprise-risk-management-58/
+- https://www.actuarialstandardsboard.org/asops/asop-nos-46-47-risk-evaluation-risk-treatment-repealed/
+- Historical ASOP 47 (not current): https://www.actuarialstandardsboard.org/asops/risk-treatment-enterprise-risk-management/
 
 **GO:** source-controlled research and reproducible internal consistency.  
 **HOLD:** independent actual risk records, actuarial methodology, insurance pricing, legal risk transfer, source adoption, financial underwriting and production.

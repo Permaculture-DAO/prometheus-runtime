@@ -25,7 +25,7 @@ A baseline is NOT a counterfactual. Comparing before/after alone is not enough t
 
 ## 3. Application-specific proposed metrics; no verified performance
 
-- **Agriculture:** soil organic carbon concentration AND bulk density for stocks, depth, soil type, time, erosion, infiltration, yields net of input cost, biodiversity, water use; laboratory/field calibration and appropriate controls.
+- **Agriculture:** soil organic carbon concentration, bulk density, depth, coarse-fragment fraction, and **equivalent soil mass** for comparable stocks (especially if management changes bulk density); soil type, season and time, erosion, infiltration, yields net of input cost, biodiversity and water use; laboratory/field calibration and appropriate controls.
 - **Real estate and land:** verified physical improvement condition, building energy consumption adjusted for occupancy/weather where defensible, lifecycle maintenance, tenant well-being/access/affordability and habitat baseline. Property appreciation is not ecological causation.
 - **Energy:** metered kWh, outage/curtailment, lifecycle greenhouse gases with precise system boundary, capacity factors, energy justice/access, grid emission counterfactual. Gross generation is not net avoided emissions.
 - **Infrastructure:** delivered service reliability, maintenance downtime/cost over lifecycle, accessibility and community impacts, fiscal externalities and cost allocation; only after legally valid asset access and procurement evaluation.
@@ -58,7 +58,14 @@ A 12-month observation window can describe seasonal signals but may be insuffici
 - Claimed economic value from carbon/soil observations without market/legal appraisal -> valuation HOLD.
 - Real site raw evidence publicly exposing protected location or person data -> privacy HOLD.
 
-## 7. Next implementation only after method review
+## 7. Method anchors and effective-date caveats
+
+- IPCC 2019 Refinement, Vol. 4 chapter 2, soil carbon stock comparison and equivalent mass: https://www.ipcc-nggip.iges.or.jp/public/2019rf/vol4.html
+- ISO 14064-2:2019 remains current for project-level GHG quantification, monitoring and reporting, but reference alone is not compliance: https://www.iso.org/standard/66454.html
+- GHG Protocol Land Sector and Removals Standard (published version v1.1, effective date **2027-01-01**). Claim/applicability must be checked for the observation date: https://ghgprotocol.org/land-sector-and-removals-standard
+- An MRV protocol is not a credit issuing standard, nor independent causal evidence without a competent study design and field audit.
+
+## 8. Next implementation only after method review
 
 A future scientific data adapter may accept typed measurement records and reviewer proofs, then pass audited claims through the REI deterministic boundary, but **must not** change `regenerative_economic_intelligence.py` to accept scientific claims based solely on matching text IDs. Independent trained measurement professionals, privacy/legal specialists and scientific reviewers must sign off.
 
