@@ -114,6 +114,7 @@ class RegenerativeRealEstateTests(unittest.TestCase):
         self.assertEqual(r["status"], "HOLD")
         self.assertEqual(r["land_preflight"]["status"], "HOLD")
         self.assertIn("land_preflight:hold", r["blocks"])
+        self.assertIsNone(r["cash_outflow_local_share"]["ratio"])
 
     def test_unknown_cash_location_never_zero_filled(self):
         p = specimen()
