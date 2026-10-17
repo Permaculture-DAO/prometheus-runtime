@@ -6,7 +6,7 @@ All caller-supplied timestamps and source identities remain UNAUTHENTICATED.
 No network, scheduling, Holochain, database, capital, or public runtime writes.
 """
 from __future__ import annotations
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
 from pydantic import BaseModel, Field, ConfigDict, model_validator
@@ -99,18 +99,24 @@ def screen_event(event: ProspectiveEvent) -> dict:
         first = receipt.first_seen_utc.astimezone(timezone.utc)
         if first < issue:
             reasons.append("SOURCE_FIRST_SEEN_BEFORE_NOMINAL_INIT")
-        if first > issue.replace(hour=0) + __import__("datetime").timedelta(hours=12):
+        if first > issue + timedelta(hours=12):
             reasons.append("MODEL_CAPTURE_MORE_THAN_12H_AFTER_ISSUE")
         if first >= target:
             reasons.append("MODEL_CAPTURE_AFTER_FORECAST_VALIDITY")
-        if not receipt.source_url.startswith("https://noaa-gfs-bdp-pds.s3.amazonaws.com/"):
-            reasons.append("GFS_SOURCE_URL_UNEXPECTED")
+    expected = (
+        f"https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.{issue:%Y%m%d}/00/atmos/"
+        f"gfs.t00z.pgrb2.0p25.f{event.lead_hours:03d}"
+    )
+    if event.model_field.source_url != expected:
+        reasons.append("GFS_FIELD_NOT_FROZEN_PRODUCT")
+    if event.model_index.source_url != expected + ".idx":
+        reasons.append("GFS_INDEX_NOT_FROZEN_PRODUCT")
     # Matching snapshots does not establish source publication timing.
     if event.station_observation is not None:
         record = event.station_observation
         if record.first_seen_utc < event.station_observed_at:
             reasons.append("OBS_CAPTURE_BEFORE_MEASUREMENT")
-        if event.station_observed_at < target - __import__("datetime").timedelta(minutes=60) or event.station_observed_at > target + __import__("datetime").timedelta(minutes=60):
+        if event.station_observed_at < target - timedelta(minutes=60) or event.station_observed_at > target + __import__("datetime").timedelta(minutes=60):
             reasons.append("STATION_TIME_MISMATCH")
         if not record.source_url.startswith("https://noaa-ghcnh-pds.s3.amazonaws.com/"):
             reasons.append("STATION_SOURCE_URL_UNEXPECTED")
