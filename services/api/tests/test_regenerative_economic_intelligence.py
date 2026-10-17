@@ -156,7 +156,7 @@ class REITests(unittest.TestCase):
             with self.subTest(ids=ids):
                 out = self.evaluate(p)
                 self.assertEqual(out["status"], "HOLD")
-                self.assertIn("metric:soil-organic-carbon:unusable_evidence", out["blocks"])
+                self.assertIn("metric:soil-organic-carbon:" + ("missing_evidence" if not ids else "unusable_evidence"), out["blocks"])
 
     def test_unmeasured_observation_never_imputes_zero(self):
         p = request()
