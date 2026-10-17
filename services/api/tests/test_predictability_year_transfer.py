@@ -1,5 +1,6 @@
 """Synthetic-only year-transfer comparison must never promote skill."""
 from copy import deepcopy
+from datetime import timedelta
 import pytest
 from app.predictability_backtest import BacktestInput
 from app.predictability_year_transfer import year_separated_replay
@@ -63,12 +64,12 @@ def test_duplicate_site_rejected():
 def test_no_matching_issue_day_refuses_inference():
     co=cohorts()
     for c in co["2025"][0].cases:
-        # Shift distinct 2025 months forward by three while preserving uniqueness.
-        # The other year's Apr/May/Jun issues cannot match Jul/Aug/Sep.
+        # Move 2025 dates 100 days forward, preserving uniqueness and time order.
+        # The other year's Apr/May/Jun issues cannot match the shifted dates.
         for attr in ("issue_time","valid_time","observation_available_time",
                      "baseline_issue_time"):
             old=getattr(c,attr)
-            setattr(c,attr,old.replace(month=old.month+3))
+            setattr(c,attr,old+timedelta(days=100))
     with pytest.raises(ValueError,match="no calendar-matched"):
         year_separated_replay(co,baseline_kind="PERSISTENCE")
 
