@@ -82,7 +82,7 @@ def test_future_capture_or_wrong_source_fails():
     item.model_index=receipt("https://example.org/false.idx")
     out=screen_event(item)
     assert "MODEL_CAPTURE_AFTER_FORECAST_VALIDITY" in out["failure_codes"]
-    assert "GFS_SOURCE_URL_UNEXPECTED" in out["failure_codes"]
+    assert "GFS_INDEX_NOT_FROZEN_PRODUCT" in out["failure_codes"]
 
 def test_stale_issue_source_before_run_fails():
     item=case()
@@ -132,3 +132,17 @@ def test_no_extra_controls_accepted_by_schema():
     data["approved_by_scientist"]=True
     with pytest.raises(ValidationError):
         ProspectiveEvent.model_validate(data)
+
+def test_correct_bucket_wrong_lead_is_rejected():
+    item=case()
+    incorrect=MODEL.replace("f024", "f048")
+    item.model_field=receipt(incorrect)
+    result=screen_event(item)
+    assert result["status"]=="HOLD_INVALID_LOCAL_CHRONOLOGY"
+    assert "GFS_FIELD_NOT_FROZEN_PRODUCT" in result["failure_codes"]
+
+def test_correct_bucket_wrong_date_is_rejected():
+    item=case()
+    item.model_index=receipt(MODEL.replace("20261020", "20261021")+".idx")
+    result=screen_event(item)
+    assert "GFS_INDEX_NOT_FROZEN_PRODUCT" in result["failure_codes"]
