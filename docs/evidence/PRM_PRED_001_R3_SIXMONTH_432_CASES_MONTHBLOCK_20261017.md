@@ -45,6 +45,17 @@ With **six temporal blocks from only one year**, the output correctly states `IN
 
 Month blocks chosen with replacement, explicit deterministic seed from SHA256 of the frozen cases, 2048 draws per lead. Evidence authentication, legal rights, human authority and capital gates are unchanged.
 
+## Local evidence custody (noncanonical)
+
+Candidate full-source experimental archive on authorized workstation:
+
+`D:\\hearth intelligence – Prometheus Sovereign Syntropy\\PROMETHEUS\\Evidence_Candidates\\PRM_PRED_001_R3_6MONTH_432_SOURCEREVIEW_20261017.zip`
+
+- ZIP bytes: **86,085,773**
+- ZIP SHA-256: **1a1d3356cd477ff78ca14a35e35ac7417fa31adddbfb8fc436aacb0ef3b19887**
+- **280 individually SHA-256-catalogued source, model, station, climate normal, methodology and result files** plus candidate manifest; ZIP integrity test passed.
+- The archive does NOT establish independent scientific source authentication, external signature, authoritative registry status or the correctness of forecasts.
+
 ## Limitations / review gates
 
 - **R0 HOLD:** active machine Source Registry has not been authenticated; provisional M/X/I identifiers must be steward-reviewed.
