@@ -159,6 +159,12 @@ def evaluate_ledger_consistency(payload: dict) -> dict:
                 "transfer_contract_verified": False,
             }
 
+    # Never present a favorable per-event numeric label when any linked
+    # event/transfer/bearer declaration blocks the dossier.
+    if blocks:
+        for summary in summaries.values():
+            summary["numeric_consistency"] = "INCOMPLETE_OR_CONTRADICTORY"
+
     frozen = {
         "schema_version": SCHEMA_VERSION,
         "project_id": payload["project_id"], "as_of": payload["as_of"],
