@@ -19,6 +19,19 @@ def run(request_path: Path, source_path: Path) -> dict:
     actual_sha = hashlib.sha256(raw_source).hexdigest()
     if actual_sha != request.dataset_sha256:
         raise ValueError("source blob SHA-256 mismatch; fail closed")
+    # A digest of an unrelated file is not evidence of the scored cases.
+    # Bind every scored field to the exact local source blob before evaluation.
+    try:
+        source_document = json.loads(raw_source.decode("utf-8"))
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise ValueError("source blob must contain a UTF-8 JSON dataset") from exc
+    expected_fields = ("dataset_id", "site_id", "model_id", "model_version",
+                       "variable", "unit", "reference_source", "cases")
+    if not isinstance(source_document, dict) or set(source_document) != set(expected_fields):
+        raise ValueError("source dataset schema mismatch")
+    for field in expected_fields:
+        if source_document[field] != request_obj[field]:
+            raise ValueError("source data mismatch: scored cases are not bound to source blob")
     if request.license_declared != "PERMITTED":
         raise ValueError("source data usage rights not affirmatively declared; fail closed")
     result = backtest_shadow(request)
