@@ -138,7 +138,7 @@ def evaluate_regenerative_real_estate(payload: dict) -> dict:
     ratio = None
     numerator = None
     denominator = None
-    flow_eligible = bool(flows) and all(
+    flow_eligible = bool(flows) and not blocks and all(
         row["recipient_scope"] != "UNKNOWN" and _known_evidence(row["evidence_id"], land)
         for row in flows
     )
