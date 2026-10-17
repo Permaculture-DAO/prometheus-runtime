@@ -17,6 +17,15 @@ CURRENCY = re.compile(r"[A-Z]{3}", re.ASCII)
 UNALLOCATED = frozenset(("UNALLOCATED", "UNKNOWN", "UNALLOCATED_RESIDUAL"))
 
 
+def _declared_unallocated(value):
+    """Reject case variants of reserved non-bearer placeholders.
+
+    This is input hygiene only: any nonreserved string can still be fictitious.
+    Actual bearer identity requires an authenticated external registry/reviewer.
+    """
+    return value.upper() in UNALLOCATED
+
+
 def _amount(value):
     if value is None:
         return None
@@ -91,7 +100,7 @@ def evaluate_ledger_consistency(payload: dict) -> dict:
     for row in alloc:
         if row["event_id"] not in events:
             blocks.append(f"allocation:{row['event_id']}:unknown_event")
-        if row["bearer_id"] in UNALLOCATED:
+        if _declared_unallocated(row["bearer_id"]):
             blocks.append(f"allocation:{row['event_id']}:unallocated_bearer")
     for row in transfers:
         if row["event_id"] not in events:
@@ -99,7 +108,7 @@ def evaluate_ledger_consistency(payload: dict) -> dict:
         if ((row["event_id"], row["from_bearer_id"]) not in allocation_ids or
                 (row["event_id"], row["to_bearer_id"]) not in allocation_ids):
             blocks.append(f"transfer:{row['transfer_id']}:orphan_bearer")
-        if row["from_bearer_id"] in UNALLOCATED or row["to_bearer_id"] in UNALLOCATED:
+        if _declared_unallocated(row["from_bearer_id"]) or _declared_unallocated(row["to_bearer_id"]):
             blocks.append(f"transfer:{row['transfer_id']}:unallocated_bearer")
         if row["amount"] is None:
             blocks.append(f"transfer:{row['transfer_id']}:unknown_amount")
