@@ -16,6 +16,7 @@ required = [
     root / "services/api/app/ravel.py",
     root / "services/api/app/ravel_schemas.py",
     root / "config/semantic_claims_vnext.json",
+    root / "config/claims_registry_projection_v0_1.json",
 ]
 for p in required:
     if not p.exists():
@@ -93,6 +94,36 @@ if any(item.get("claim_uid") in semantic_uids for item in deprecated):
 active_aliases = {alias for item in semantic_registry.get("claims", []) for alias in item.get("legacy_aliases", [])}
 if any(alias in active_aliases for item in deprecated for alias in item.get("legacy_aliases", [])):
     errors.append("alias of a deprecated claim is attached to an active claim_uid")
+
+claims_projection = json.loads((root / "config/claims_registry_projection_v0_1.json").read_text(encoding="utf-8"))
+if claims_projection.get("projection_status") != "consumer_projection":
+    errors.append("claims registry projection status mismatch")
+if claims_projection.get("authoritative") is not False or claims_projection.get("projection_only") is not True:
+    errors.append("claims registry projection must remain non-authoritative and projection-only")
+src = claims_projection.get("source_registry", {})
+if src.get("snapshot_sha256") != "7b2f9b4aec2df0c1ca2262ba27725652b4c119daea754165b623e677e756edb4":
+    errors.append("claims registry projection snapshot hash mismatch")
+if src.get("merge_commit") != "0151e3f869a819b0833a046f30a92036fe0e3b4d":
+    errors.append("claims registry projection merge commit mismatch")
+if claims_projection.get("authority_boundary", {}).get("current_canonical_release") != "v1.1.2-genesis":
+    errors.append("claims registry projection must preserve current signed canon v1.1.2-genesis")
+admitted_projection = claims_projection.get("admitted_mapping_only", [])
+if len(admitted_projection) != 8:
+    errors.append("claims registry projection must contain exactly 8 admitted mapping-only records")
+projection_ids = {item.get("source_claim_id") for item in admitted_projection}
+if projection_ids != {"C-001","C-003","C-004","C-006","C-007","C-010","C-011","C-012"}:
+    errors.append("claims registry projection admitted source-claim set mismatch")
+projection_uids = [item.get("claim_uid") for item in admitted_projection]
+if any(not uid or not uid.startswith("prometheus.") for uid in projection_uids) or len(projection_uids) != len(set(projection_uids)):
+    errors.append("claims registry projection claim_uid set invalid")
+hold_ids = {item.get("source_claim_id") for item in claims_projection.get("holds", [])}
+if hold_ids != {"C-002","C-005","C-008","C-009"}:
+    errors.append("claims registry projection HOLD set mismatch")
+runtime_effect = claims_projection.get("runtime_effect", {})
+if any(runtime_effect.get(key) is not False for key in ["enables_behavior","changes_gates","changes_trbk_pathways","changes_pru_value","changes_legal_admission","changes_market_admission"]):
+    errors.append("claims registry projection must not enable runtime or admission effects")
+if claims_projection.get("semantic_candidate_separation", {}).get("status") != "separate_candidate_not_overridden":
+    errors.append("semantic candidate registry must remain separate from signed mapping projection")
 
 conductor = (root / "services/holochain/conductor-config.yaml").read_text(encoding="utf-8")
 if ("allowed_origins: " + "'*'") in conductor or ("allowed_origins: " + '"*"') in conductor:

@@ -1,0 +1,86 @@
+{
+  "projection_version": "0.1",
+  "projection_status": "consumer_projection",
+  "authoritative": false,
+  "projection_only": true,
+  "source_registry": {
+    "repository": "Permaculture-DAO/prometheus-canonical-releases",
+    "path": "registries/claims/v0.1-mapping-only/claims-registry.v0.1-mapping-only.json",
+    "merge_commit": "0151e3f869a819b0833a046f30a92036fe0e3b4d",
+    "snapshot_sha256": "7b2f9b4aec2df0c1ca2262ba27725652b4c119daea754165b623e677e756edb4",
+    "signature_fingerprint": "D20DFF6CBE331B3A4109DF848C8CB0D48C7F60DA"
+  },
+  "authority_boundary": {
+    "current_canonical_release": "v1.1.2-genesis",
+    "runtime_internal_lineage": "v7.0.x",
+    "relationship": "subordinate_mapped_not_merged",
+    "current_release_changed": false,
+    "canonical_prose_amended": false,
+    "runtime_can_create_authority": false
+  },
+  "admitted_mapping_only": [
+    {
+      "source_claim_id": "C-001",
+      "claim_uid": "prometheus.architecture.candidate_regenerative_infrastructure"
+    },
+    {
+      "source_claim_id": "C-003",
+      "claim_uid": "prometheus.pru.analytical_interface_no_rights"
+    },
+    {
+      "source_claim_id": "C-004",
+      "claim_uid": "prometheus.rap.portfolio_readability_not_market_admission"
+    },
+    {
+      "source_claim_id": "C-006",
+      "claim_uid": "prometheus.hypothesis.r1_risk_compression"
+    },
+    {
+      "source_claim_id": "C-007",
+      "claim_uid": "prometheus.hypothesis.t1_time_positive_value"
+    },
+    {
+      "source_claim_id": "C-010",
+      "claim_uid": "prometheus.ai.assistive_non_authoritative"
+    },
+    {
+      "source_claim_id": "C-011",
+      "claim_uid": "prometheus.digital_provenance.traceability_not_truth"
+    },
+    {
+      "source_claim_id": "C-012",
+      "claim_uid": "prometheus.frontier_research.zero_weight_until_admitted"
+    }
+  ],
+  "holds": [
+    {
+      "source_claim_id": "C-002",
+      "policy": "hold"
+    },
+    {
+      "source_claim_id": "C-005",
+      "policy": "hold"
+    },
+    {
+      "source_claim_id": "C-008",
+      "policy": "hold_governance_overlay"
+    },
+    {
+      "source_claim_id": "C-009",
+      "policy": "hold"
+    }
+  ],
+  "semantic_candidate_separation": {
+    "file": "config/semantic_claims_vnext.json",
+    "status": "separate_candidate_not_overridden",
+    "note": "This projection does not activate, supersede or ratify candidate semantic successor claims."
+  },
+  "runtime_effect": {
+    "enables_behavior": false,
+    "changes_gates": false,
+    "changes_trbk_pathways": false,
+    "changes_pru_value": false,
+    "changes_legal_admission": false,
+    "changes_market_admission": false
+  }
+}
