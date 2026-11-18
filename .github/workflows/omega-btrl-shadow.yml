@@ -1,0 +1,42 @@
+name: omega-btrl-shadow-candidate
+'on':
+  pull_request:
+    paths:
+      - "experiments/omega_btrl/**"
+      - ".github/workflows/omega-btrl-shadow.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-shadow-and-native-guards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install bounded test dependencies
+        run: python -m pip install -r experiments/omega_btrl/requirements-test.txt
+      - name: Shadow-only tests (includes native S6 fixture when in checkout)
+        working-directory: experiments/omega_btrl
+        env:
+          PYTHONPATH: .
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python -m pytest -q
+      - name: Native S4/S5/S6 guards remain intact
+        run: |
+          python scripts/s4_guard.py
+          python scripts/s5_guard.py
+          python scripts/s6_guard.py
+      - name: Enforce PR path allowlist (no native runtime changes)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          git diff --name-only "$BASE_SHA" HEAD | while IFS= read -r path; do
+            case "$path" in
+              experiments/omega_btrl/*|.github/workflows/omega-btrl-shadow.yml|docs/OMEGA_BTRL_M6_GITHUB_CANDIDATE.md) ;;
+              *) echo "Out-of-scope change: $path"; exit 1 ;;
+            esac
+          done

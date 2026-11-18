@@ -1,0 +1,156 @@
+{
+  "assurance_case_id": "PRM-OMEGA-FIXTURE-POSITIVE",
+  "status": "SYNTHETIC_TEST",
+  "scope": {
+    "component_id": "EXAMPLE_LOCAL_KERNEL",
+    "use_case_id": "TEST_ONLY",
+    "jurisdictions": [
+      "EU",
+      "US"
+    ]
+  },
+  "source_reconciliation": {
+    "active_manifest_hash": "SYNTHETIC_SHA256_PLACEHOLDER",
+    "registry_status": "VERIFIED",
+    "material_conflict": false,
+    "version_mismatch": false
+  },
+  "critical_dimensions": [
+    "T",
+    "DQ",
+    "EV",
+    "AI",
+    "FM",
+    "CR",
+    "CY",
+    "GV",
+    "LG",
+    "OP",
+    "RK",
+    "HU",
+    "EC"
+  ],
+  "assurance_vector": {
+    "T": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_T"
+      ]
+    },
+    "DQ": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_DQ"
+      ]
+    },
+    "EV": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_EV"
+      ]
+    },
+    "AI": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_AI"
+      ]
+    },
+    "FM": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_FM"
+      ]
+    },
+    "CR": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_CR"
+      ]
+    },
+    "CY": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_CY"
+      ]
+    },
+    "GV": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_GV"
+      ]
+    },
+    "LG": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_LG"
+      ]
+    },
+    "OP": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_OP"
+      ]
+    },
+    "RK": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_RK"
+      ]
+    },
+    "HU": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_HU"
+      ]
+    },
+    "EC": {
+      "status": "PASS",
+      "evidence_ids": [
+        "SYNTHETIC_EVIDENCE_EC"
+      ]
+    }
+  },
+  "data_controls": {
+    "calibrated": true,
+    "physical_verification": true,
+    "dataset_leakage": false,
+    "relabel_requires_gold": false
+  },
+  "formal_proof": {
+    "claimed_proved": false
+  },
+  "cryptographic_controls": {
+    "signing_key": "VALID",
+    "zkp_valid": false,
+    "fhe_correct": false
+  },
+  "agent_controls": {
+    "untrusted_instruction_requested": false,
+    "requested_privilege_escalation": false
+  },
+  "model_controls": {
+    "validated": true
+  },
+  "claims": {
+    "creates_right_from_pru_rap_trbk": false
+  },
+  "compute": {
+    "mode": "D",
+    "deterministic_verified": true
+  },
+  "human_authorisation": {
+    "approved": true,
+    "authority_id": "SYNTHETIC_HUMAN_2",
+    "reviewer_id": "SYNTHETIC_HUMAN_3",
+    "scope": "TEST_ONLY"
+  },
+  "proposer_id": "SYNTHETIC_HUMAN_1",
+  "release": {
+    "expired": false,
+    "invalidated_by_change": false
+  },
+  "runtime_action": {
+    "capital_or_physical_or_rights_action": false,
+    "executed": false
+  }
+}
