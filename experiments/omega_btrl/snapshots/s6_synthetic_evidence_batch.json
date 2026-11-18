@@ -1,0 +1,37 @@
+{
+  "batch_id": "batch_synthetic_20260704_0001",
+  "batch_type": "synthetic_evidence_reference",
+  "source_stage": "S6 draft",
+  "created_at": "2026-07-04T18:45:00Z",
+  "event_count": 3,
+  "events": [
+    {
+      "event_id": "evt_35c2eb7ecab14b8a28a77092bf463d6ef2e3690429feed24caa3188e1321dad3",
+      "source_system": "manual",
+      "event_type": "manual_observation",
+      "event_sha256": "859760b9a3b8cc5418ee7462ba7d1223bb284d80c09eb902d1d93d4b15cbf7fa"
+    },
+    {
+      "event_id": "evt_66e6f379bd0137524483a85064a5191b92a9bcf9b8005b2fe6a24367ef2c2f3c",
+      "source_system": "lab",
+      "event_type": "lab_result",
+      "event_sha256": "43c1faa827bf99a6df1d4c7652dcbf9814f9b6615ad3482201789aa65625cb95"
+    },
+    {
+      "event_id": "evt_e2818a3bf86616f1070f0179ee61c63095b880015d790a10c64d5511bab20935",
+      "source_system": "ttn",
+      "event_type": "sensor_observation",
+      "event_sha256": "766b670ca4f25fa9f14bcefbc6e9f6bcc06fc2ff1465bb47c46aedfbdf75638c"
+    }
+  ],
+  "event_ids_sha256": "8d01fd9186eb6095306e7cbf1d73a8bf9eb9cb4cfe80701b280eb6132674b4da",
+  "batch_hash": "b821a19876306bb13415ec9f0f7b3662a66a5fa8d57ed6df3ad623877e11925f",
+  "holochain_reference": {
+    "mode": "simulated_reference_only",
+    "commit_performed": false,
+    "entry_ref": null,
+    "reference_hash": "hcref_b730b81fb94d6ba84cae7777c1ed194fcd5ddcf26f956765aa4a0e1d3502b5fc"
+  },
+  "authoritative_for_mrv": false,
+  "statement": "evaluation, not certification"
+}

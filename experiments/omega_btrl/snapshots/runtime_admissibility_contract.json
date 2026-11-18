@@ -1,0 +1,23 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://heart-intelligence.earth/schemas/admissibility.decision.schema.json",
+  "title":"Prometheus Admissibility Decision",
+  "type":"object",
+  "required":["decision_uid","subject_uid","claim_uid","evidence_package_refs","review_attestation_refs","legal_gate","mrv_gate","confidence","decision","blockers","authority_boundary","authoritative","certification"],
+  "additionalProperties":false,
+  "properties":{
+    "decision_uid":{"type":"string","pattern":"^adm_[A-Za-z0-9_-]+$"},
+    "subject_uid":{"type":"string","minLength":1},
+    "claim_uid":{"type":"string","pattern":"^prometheus\\.[a-z0-9_.-]+$"},
+    "evidence_package_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+    "review_attestation_refs":{"type":"array","items":{"type":"string","minLength":1}},
+    "legal_gate":{"type":"boolean"},
+    "mrv_gate":{"type":"boolean"},
+    "confidence":{"type":"number","minimum":0,"maximum":1},
+    "decision":{"type":"string","enum":["admissible","blocked","pending"]},
+    "blockers":{"type":"array","items":{"type":"string"}},
+    "authority_boundary":{"type":"string","const":"admissibility_only_no_value"},
+    "authoritative":{"type":"boolean","const":false},
+    "certification":{"type":"boolean","const":false}
+  }
+}

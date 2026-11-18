@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:prometheus:omega:m3:synthetic-advice:v0.3",
+  "title": "PROMETHEUS Ω M3 synthetic advisory sidecar (non-authoritative)",
+  "type": "object", "additionalProperties": false,
+  "required": ["advice_uid", "case_id", "review_outcome", "issues", "mode", "authority_boundary", "action_authorised", "certification", "capital_authorised", "rights_created", "native_admissibility_written", "runtime_mutation_permitted", "authoritative"],
+  "properties": {
+    "advice_uid": {"type": "string", "pattern": "^omega_[0-9a-f]{24}$"},
+    "case_id": {"type": ["string", "null"], "maxLength": 128},
+    "review_outcome": {"enum": ["ELIGIBLE_FOR_REVIEW", "HOLD", "NO_GO"]},
+    "issues": {"type": "array", "maxItems": 100, "items": {"type": "string"}},
+    "mode": {"const": "SYNTHETIC_ONLY_READ_ONLY"},
+    "authority_boundary": {"const": "RECOMMENDATION_ONLY_NO_NATIVE_ADMISSION"},
+    "action_authorised": {"const": false},
+    "certification": {"const": false},
+    "capital_authorised": {"const": false},
+    "rights_created": {"const": false},
+    "native_admissibility_written": {"const": false},
+    "runtime_mutation_permitted": {"const": false},
+    "authoritative": {"const": false}
+  }
+}

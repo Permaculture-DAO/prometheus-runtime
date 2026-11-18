@@ -1,0 +1,91 @@
+{
+  "artifact_id": "PRM-OMEGA-M4-TLC-2026-11-18-001",
+  "date": "2026-11-18",
+  "status": "TLC_FORMAL_MODEL_VERIFIED__INTEGRATION_HOLD",
+  "source": {
+    "artifact": "PROMETHEUS_OMEGA_M3_FORMAL_COMPAT_HANDOFF_v0_3_2026-11-18.zip",
+    "tla_sha256": "900bf9d71ef9695c2eacb05bf6a76721b471d932d4c9b9d9bb4d00c3c6b6e959",
+    "cfg_sha256": "7d9eba6cae6221f0aecb079968b989ad8f58e32156b55ca08f123728641fc929"
+  },
+  "tool": {
+    "name": "TLC",
+    "version": "2026.11.15.002146",
+    "revision": "bc1b506",
+    "jar_release": "v1.8.0",
+    "jar_release_status": "rolling prerelease",
+    "jar_sha256": "7e53aa636dac8a3cb0533f343115c0548e03fc0ce5edc7739becf58d3d0fb84f",
+    "jar_bytes": 4510884,
+    "java": "Adoptium JRE 21.0.13",
+    "os": "WSL2 Ubuntu"
+  },
+  "model_check": {
+    "spec": "OmegaM3",
+    "cfg": "OmegaM3.cfg",
+    "invariants": [
+      "TypeOK",
+      "NoBypass",
+      "NeverGrantAction"
+    ],
+    "outcome": "PASS_NO_INVARIANT_ERROR",
+    "distinct_states": 30,
+    "generated_states": 165,
+    "queue_left": 0,
+    "graph_depth": 10,
+    "exit_code": 0,
+    "log_sha256": "674fdc1d4bba5110e1716f0b1e5f373c75443d862d921feb7c7ea76939007c62"
+  },
+  "negative_control": {
+    "spec": "OmegaM3Mutant",
+    "mutation": "RevokeEvidence fails to clear reviewEligible",
+    "outcome": "FAIL_AS_EXPECTED__NoBypass",
+    "error_trace_states": 10,
+    "exit_code": 12,
+    "tla_sha256": "83990fbc84b3a2edcaaa6e4b056528288d122f93a59c06adf456a69ff9b57d9c",
+    "log_sha256": "95bb221dca30c27daabf79e13ae4c40117e73f775d2787de8b57f110277d64df"
+  },
+  "native_runtime": {
+    "repository": "Permaculture-DAO/prometheus-runtime",
+    "branch": "main",
+    "commit": "1be0f20a60cf3934245d1bc76f410683c709404f",
+    "s4_guard": "PASS",
+    "s5_guard": "PASS",
+    "s6_guard": "PASS",
+    "git_clean": true,
+    "omega_integrated": false,
+    "production_tested": false
+  },
+  "prior_regression": {
+    "local_m3_pytest": "55/55 PASS",
+    "sha256_manifest": "PASS"
+  },
+  "decision": {
+    "formal_model": "PASS",
+    "negative_mutation": "PASS_EXPECTED_FAILURE",
+    "native_guards_in_isolated_checkout": "PASS",
+    "implementation_conformance": "NOT_PROVEN",
+    "source_custodian_ratification": "PENDING",
+    "staging_integration": "HOLD",
+    "production": "HOLD"
+  },
+  "remote_raw_logs": {
+    "directory": "/tmp/prometheus_omega_m4_tlc/",
+    "files": [
+      "OmegaM3_TLC_RUN.log",
+      "OmegaM3Mutant_TLC_RUN.log",
+      "S4_GUARD.log",
+      "S5_GUARD.log",
+      "S6_GUARD.log"
+    ],
+    "raw_tar_sha256": "d13fcc99e56020ed104956d99de63011f08c21cabfae4082e2b4375348977e82",
+    "raw_tar_in_this_zip": false
+  },
+  "scope_limitations": [
+    "Safety invariants only; no liveness/fairness properties proved",
+    "Boolean abstractions do not capture real cryptographic protocols",
+    "NeverGrantAction is structurally true because model has no action that ever sets actionAuthorized true",
+    "No formal refinement mapping from Python / runtime to TLA model",
+    "No adapter mounted in native S4-S6 guards",
+    "Signed JAR checksum matched GitHub release asset metadata but this is not an independent security assessment",
+    "TLC prerelease is moving; hash pin is for exact tested binary only"
+  ]
+}
