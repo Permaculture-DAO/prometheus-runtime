@@ -1,0 +1,31 @@
+{
+  "artifact": "PROMETHEUS \u03a9 M9.3 unsigned-review-branch candidate",
+  "canonical_release": "v1.1.2-genesis (unchanged)",
+  "classification": "NONCANONICAL_SYNTHETIC_ADVISORY_LAB_ONLY",
+  "github_write_authorized": false,
+  "holochain_change": false,
+  "independent_review": false,
+  "merged": false,
+  "native_admission_allowed": false,
+  "omega_orchestration_v12": "distinct; not superseded",
+  "production_deployed": false,
+  "publish_branch_proposal": "review/omega-btrl-m93-durable",
+  "signed": false,
+  "source_blob_sha1": {
+    "src/interop_advisory.py": "d5bf7f702eb9b801a8c8d7d0348e3ed5d451cee4",
+    "src/staging_shadow.py": "fbeeaa47ca48d2a6b74e46864df879619a544067",
+    "src/trust_boundary.py": "9bf153a40cd51f474486926da73d8a4642b43a40",
+    "tests/conftest.py": "e9bc9906e9944c1e2341d6fc13abd50ba0b241b1"
+  },
+  "source_file_sha256": {
+    "src/interop_advisory.py": "851bc6df6407d97197221004a2a579177b72ac0925ce34bad3b54d88a281bf29",
+    "src/staging_shadow.py": "3096a5264d31278d11ac05666301b60cf9eceb0f8d77b2b1cd9fee5315b6cf30",
+    "src/trust_boundary.py": "27f9011ffa4e2ea0106c526d6e581ff941d1eb847103a4cd03e41432860363e6",
+    "tests/conftest.py": "0030c596a4a5f8b709c13ce4aab9248aa9447a6ac756f9d9f6da987fa4869408"
+  },
+  "target_branch": "review/omega-btrl-m6-shadow",
+  "target_pr": 37,
+  "target_repository": "Permaculture-DAO/prometheus-runtime",
+  "target_sha": "0778ba2a1bf91366777d4d7911fa8dafee784f25",
+  "vps_deployment": false
+}

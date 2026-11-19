@@ -1,0 +1,8 @@
+# Dependency versions on which this exact local candidate was tested.
+# NOT a vetted production lock or SBOM; resolve approved hashes before CI/release.
+fastapi==0.128.2
+uvicorn==0.48.0
+httpx==0.28.1
+cryptography==46.0.4
+jsonschema==4.26.0
+pytest==9.0.2
