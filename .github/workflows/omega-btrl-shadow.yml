@@ -36,7 +36,7 @@ jobs:
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           git diff --name-only "$BASE_SHA" HEAD | while IFS= read -r path; do
             case "$path" in
-              experiments/omega_btrl/*|.github/workflows/omega-btrl-shadow.yml|docs/OMEGA_BTRL_M6_GITHUB_CANDIDATE.md) ;;
+              experiments/omega_btrl/*|.github/workflows/omega-btrl-shadow.yml|.github/workflows/omega-m93-review-only.yml|docs/OMEGA_BTRL_M6_GITHUB_CANDIDATE.md) ;;
               *) echo "Out-of-scope change: $path"; exit 1 ;;
             esac
           done
