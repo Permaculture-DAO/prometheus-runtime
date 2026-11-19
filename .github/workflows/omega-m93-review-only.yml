@@ -53,7 +53,7 @@ jobs:
           assert 'app = create_m92_gateway()' in app
           print('OMEGA_M93_NATIVE_BOUNDARIES_UNMODIFIED_PASS')
           PYCHECK
-      - name: Verify additive review delta against chosen PR base
+      - name: Verify bounded 37-addition + single CI-workflow compatibility delta
         if: github.event_name == 'pull_request'
         run: python experiments/omega_btrl/m93/scripts_m93/check_review_delta.py "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}"
       - name: Block unsigned head for merging (verified-commit check)
