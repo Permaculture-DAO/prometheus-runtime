@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TERRA RC4 synthetic planar geometry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mode",
+    "geometry_id",
+    "crs",
+    "unit",
+    "accuracy",
+    "source_id",
+    "ring"
+  ],
+  "properties": {
+    "mode": {
+      "const": "TEST"
+    },
+    "geometry_id": {
+      "type": "string",
+      "pattern": "^TEST-[A-Z0-9-]{1,48}$"
+    },
+    "crs": {
+      "const": "TEST_LOCAL_GRID"
+    },
+    "unit": {
+      "const": "test_unit"
+    },
+    "accuracy": {
+      "const": "UNKNOWN"
+    },
+    "source_id": {
+      "const": "TEST_GEOMETRY"
+    },
+    "ring": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 65,
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "string",
+          "pattern": "^-?[0-9]{1,6}(\\.[0-9]{1,6})?$"
+        }
+      }
+    }
+  }
+}
