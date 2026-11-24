@@ -27,14 +27,15 @@ def connector_status(source_id):
 def snapshot(envelope):
     if type(envelope) is not dict or set(envelope) != FIELDS:
         raise ValueError("exact connector envelope required")
-    if envelope["mode"] != "TEST" or envelope["workstream"] not in STREAMS:
+    if (envelope["mode"] != "TEST" or type(envelope["workstream"]) is not str
+            or envelope["workstream"] not in STREAMS):
         raise ValueError("TEST workstreams only")
     if not connector_status(envelope["source_id"])["fixture_allowed"]:
         raise ValueError("source not admitted for fixture use")
     day = _day(envelope["snapshot_on"])
     if type(envelope["scope_id"]) is not str or not re.fullmatch(r"TEST-[A-Z0-9-]{1,48}", envelope["scope_id"]):
         raise ValueError("synthetic scope required")
-    if envelope["coverage"] not in COVERAGE:
+    if type(envelope["coverage"]) is not str or envelope["coverage"] not in COVERAGE:
         raise ValueError("explicit synthetic coverage required")
     report = run_fixture(envelope["fixture"])
     observations = report["report"]["observations"]
@@ -57,6 +58,17 @@ def reconcile(envelopes, as_of, max_age_days):
         raise ValueError("bounded freshness policy required")
     if type(envelopes) is not list or not 1 <= len(envelopes) <= 30:
         raise ValueError("bounded snapshot list required")
+    # Bound raw rows before normalization, including duplicates across snapshots.
+    raw_count = 0
+    for envelope in envelopes:
+        if type(envelope) is not dict or type(envelope.get("fixture")) is not dict:
+            raise ValueError("invalid connector envelope")
+        rows = envelope["fixture"].get("observations")
+        if type(rows) is not list or not 1 <= len(rows) <= MAX_ROWS:
+            raise ValueError("bounded raw observation list required")
+        raw_count += len(rows)
+        if raw_count > MAX_ROWS:
+            raise ValueError("combined raw observation limit exceeded")
     snapshots = [snapshot(x) for x in envelopes]
     if any(_day(x["snapshot_on"]) > day for x in snapshots):
         raise ValueError("future snapshot")
