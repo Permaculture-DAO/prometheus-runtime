@@ -1,0 +1,107 @@
+{
+  "version": "0.1.0-rc.5",
+  "review_date": "2026-11-24",
+  "status": "CANDIDATE_NOT_ADMITTED",
+  "incremental_budget_usd": 0,
+  "real_ingestion_enabled": false,
+  "notes": "Public policy discovery only. No account session, dataset acquisition, authenticated permission, source artifact hash or competent review. References are URLs, not frozen receipts.",
+  "sources": [
+    {
+      "source_id": "PRYCD",
+      "type": "commercial_dataset",
+      "policy_refs": [
+        "https://www.prycd.com/faq",
+        "https://www.prycd.com/plans-pricing"
+      ],
+      "finding": "Provider describes market comparables and plan-dependent export; no automation, retention or redistribution entitlement established.",
+      "missing": "Dataset/export rights and account entitlement",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "FIRECRAWL",
+      "type": "transport_tool",
+      "policy_refs": [
+        "https://www.firecrawl.dev/terms-of-service",
+        "https://www.firecrawl.dev/pricing"
+      ],
+      "finding": "Contractual service and credit-based operations; transport does not convey upstream rights.",
+      "missing": "Account quota, cost cap, upstream permissions",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "USGS",
+      "type": "public_dataset",
+      "policy_refs": [
+        "https://www.usgs.gov/data-management/data-licensing",
+        "https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted"
+      ],
+      "finding": "USGS-authored data generally public domain; check dataset and third-party exceptions.",
+      "missing": "Dataset identity, version, metadata and exceptions",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "USDA_NRCS",
+      "type": "public_dataset",
+      "policy_refs": [
+        "https://www.nrcs.usda.gov/resources/data-and-reports/web-soil-survey"
+      ],
+      "finding": "Free public access to soil survey; scope and fitness for purpose require review.",
+      "missing": "Specific soil dataset version, coverage, rights, accuracy",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "USFWS",
+      "type": "public_dataset",
+      "policy_refs": [
+        "https://www.fws.gov/program/national-wetlands-inventory/data-download",
+        "https://www.fws.gov/page/wetlands-geodatabase-disclaimer"
+      ],
+      "finding": "Downloads available; mapped wetlands do not establish regulatory extent or absence.",
+      "missing": "Dataset vintage, coverage, authoritative determination",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "FEMA",
+      "type": "public_dataset",
+      "policy_refs": [
+        "https://www.usgs.gov/faqs/where-can-i-find-flood-maps?items_per_page=6&page=1",
+        "https://www.fema.gov/flood-maps/national-flood-hazard-layer"
+      ],
+      "finding": "Official flood map source identified; effective map and revisions require dataset-specific verification.",
+      "missing": "FIRM/NFHL edition, LOMC, coverage, access terms",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    },
+    {
+      "source_id": "COUNTY_ASSESSOR",
+      "type": "local_dataset",
+      "policy_refs": [
+        "https://www.hcpao.org/About/Legal",
+        "https://www.hcpao.org/About/FAQ"
+      ],
+      "finding": "Highlands County data intended for general information and tax roll; not title or survey.",
+      "missing": "County-specific version, rights, confidentiality and scope",
+      "state": "DOCUMENTARY_REVIEW_ONLY",
+      "real_enabled": false,
+      "permission": "UNKNOWN",
+      "review_decision": null
+    }
+  ]
+}

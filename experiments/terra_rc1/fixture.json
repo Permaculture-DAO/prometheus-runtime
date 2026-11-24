@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "TEST",
+    "state_fips": "12",
+    "county_fips": "055",
+    "apn": "TEST-0001",
+    "source_id": "TEST_ASSESSOR",
+    "observed_on": "2026-11-24",
+    "kind": "acreage",
+    "value": "5",
+    "unit": "acre"
+  },
+  {
+    "mode": "TEST",
+    "state_fips": "12",
+    "county_fips": "055",
+    "apn": "TEST-0001",
+    "source_id": "TEST_LISTING",
+    "observed_on": "2026-11-24",
+    "kind": "asking_price",
+    "value": "900",
+    "unit": "USD"
+  }
+]

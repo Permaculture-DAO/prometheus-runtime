@@ -1,0 +1,152 @@
+{
+  "registry_id": "TERRA-US-CANDIDATE-SOURCES",
+  "version": "0.1.0-rc.2",
+  "status": "PROPOSED_NOT_ADMITTED",
+  "real_ingestion_enabled": false,
+  "incremental_budget_usd": 0,
+  "sources": [
+    {
+      "source_id": "TEST_ASSESSOR",
+      "type": "fixture",
+      "field_scope": "acreage",
+      "permission": "SYNTHETIC_ONLY",
+      "licence": "LOCAL_TEST_ONLY",
+      "retention": "TEST_ONLY",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "TEST_LISTING",
+      "type": "fixture",
+      "field_scope": "asking_price",
+      "permission": "SYNTHETIC_ONLY",
+      "licence": "LOCAL_TEST_ONLY",
+      "retention": "TEST_ONLY",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "TEST_RECORDER",
+      "type": "fixture",
+      "field_scope": "recorded_sale_price",
+      "permission": "SYNTHETIC_ONLY",
+      "licence": "LOCAL_TEST_ONLY",
+      "retention": "TEST_ONLY",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "COUNTY_ASSESSOR",
+      "type": "candidate",
+      "field_scope": "parcel identity / assessment",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "COUNTY_RECORDER",
+      "type": "candidate",
+      "field_scope": "recorded instrument reference",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "COUNTY_PLANNING",
+      "type": "candidate",
+      "field_scope": "zoning / permits",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "PRYCD",
+      "type": "candidate",
+      "field_scope": "listing / market context",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "FIRECRAWL",
+      "type": "candidate_tool",
+      "field_scope": "permitted source retrieval",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "MCP",
+      "type": "candidate_tool",
+      "field_scope": "authorised connectors",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "FEMA",
+      "type": "candidate",
+      "field_scope": "flood screening",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "USGS",
+      "type": "candidate",
+      "field_scope": "terrain / hydrology",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "USDA_NRCS",
+      "type": "candidate",
+      "field_scope": "soil screening",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    },
+    {
+      "source_id": "USFWS",
+      "type": "candidate",
+      "field_scope": "wetland screening",
+      "permission": "UNKNOWN",
+      "licence": "UNKNOWN",
+      "retention": "UNKNOWN",
+      "coverage": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "live_enabled": false
+    }
+  ]
+}

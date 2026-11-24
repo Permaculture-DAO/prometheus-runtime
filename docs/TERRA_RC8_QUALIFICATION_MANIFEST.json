@@ -1,0 +1,168 @@
+{
+  "id": "TERRA-RC8-QUALIFICATION-MANIFEST",
+  "status": "UNSIGNED_TEST_ONLY",
+  "scope": "WSL tracked worktree bytes for changed paths at frozen inputs; clean tracked worktrees observed; manifest itself and later documentation excluded; not complete repo hash list, signature or admission.",
+  "repositories": [
+    {
+      "repository": "Permaculture-DAO/prometheus-runtime",
+      "commit": "8cde1e74e51e4fde8e893c22159ee208ce714cf1",
+      "files": [
+        {
+          "path": "adapters/terra_source_policy_review.candidate.json",
+          "sha256": "1d9a3f6b6c64a34be3b92234285935380a6945393ce4b4ac7453010c9ded5702"
+        },
+        {
+          "path": "adapters/terra_source_registry.candidate.json",
+          "sha256": "37d2b18a53abf9ba604c3351334fc4fdbc431cb5803073bc1c3a433f40351a63"
+        },
+        {
+          "path": "contracts/fixtures/terra_property.synthetic.json",
+          "sha256": "a6939c7e3155140550fa62cdefee36e5f8902ef0c1c624dcd3184e8e31f4d575"
+        },
+        {
+          "path": "contracts/terra.connector.envelope.schema.json",
+          "sha256": "4d15e057c7d2264756e8027a81cd9af8b62cc9d6d64e5c158696e3192bcf1015"
+        },
+        {
+          "path": "contracts/terra.geometry.synthetic.schema.json",
+          "sha256": "ecafe3acf4843b929374fc8c1596e92a8aab4f6516847f452f6316618782a678"
+        },
+        {
+          "path": "contracts/terra.property.fixture.schema.json",
+          "sha256": "0cc999507db0f7bbf3050d7f8b369017c4e93a14f89c2a149f2c7d8625f72b7f"
+        },
+        {
+          "path": "docs/TERRA_RC2_RUNTIME_INTEGRATION.md",
+          "sha256": "401b124820c3d9bf17459d21eecf81d3d5c1ba3b1e1351b160cc15619b0cd09c"
+        },
+        {
+          "path": "docs/TERRA_RC3_CONNECTOR_RECONCILIATION.md",
+          "sha256": "b43ac8e8852458cb31d49f0a4788485f9def0cd4ab6f74d988f4fddda81c3b68"
+        },
+        {
+          "path": "docs/TERRA_RC4_SEMANTIC_TERRITORIAL.md",
+          "sha256": "c6cc152f3b430081231e523b6b9ea19ec20b4693de80c3b8ac324a53574a3751"
+        },
+        {
+          "path": "docs/TERRA_RC5_REVIEW_HANDOFF.md",
+          "sha256": "d99024a1f1b1efb3e5f5c8756a376f5e10128e6f609a1f54cc8f19319f91ac53"
+        },
+        {
+          "path": "docs/TERRA_RC6_REVIEW_MANIFEST.json",
+          "sha256": "6ba36b8dfea2d1503451860d8a419912e80bb597fb800b8fde4e76536bff0b07"
+        },
+        {
+          "path": "docs/TERRA_RC7_CANDIDATE_ACCEPTANCE.md",
+          "sha256": "dfbd2ba0d87a6051e545c380f9a27bfaff00029fef31a8cade332671289e1f26"
+        },
+        {
+          "path": "docs/TERRA_RC7_WSL_ENVIRONMENT_SNAPSHOT.txt",
+          "sha256": "ca1d92b277a95ad3d23c8c5ad99ff57fe82092108dec252e28f6109c7b338b74"
+        },
+        {
+          "path": "experiments/terra_rc1/README.md",
+          "sha256": "0188c5fb28a2bb1912ae7db762de5f6f411c287166a85d60257dd057dc05b198"
+        },
+        {
+          "path": "experiments/terra_rc1/fixture.json",
+          "sha256": "f77a6a397a6e137b9a5641b631ec11b632db8b1c71f13e4de4905dcc39e18a65"
+        },
+        {
+          "path": "experiments/terra_rc1/terra.py",
+          "sha256": "1e249e8bc07646263fa3b538c9237462b5665f6cc67464e97aa868eff0d33cc4"
+        },
+        {
+          "path": "experiments/terra_rc1/test_terra.py",
+          "sha256": "b9f814f31440fe89660294d0ec76daffb27e376b5de8a7ece46279e52b86dae9"
+        },
+        {
+          "path": "scripts/terra_rc8_benchmark.py",
+          "sha256": "9aa89a0fe12bd51675cda70c14ea29affb770eb26796021191773ed040d55678"
+        },
+        {
+          "path": "services/api/app/main.py",
+          "sha256": "d683b2dbb0912996341ca4f192760a123130dfbd3916953dc102aa9e74295b45"
+        },
+        {
+          "path": "services/api/app/terra_connector.py",
+          "sha256": "7281c28b4f4d28ec3c6a321e6a83c81ee4e567eca3c694c27e1c2992bc4b9802"
+        },
+        {
+          "path": "services/api/app/terra_property.py",
+          "sha256": "d75d709a90a4fa9e1cd14aa2894e1b86e59eedd07daa1b60f5349a1a09f0a020"
+        },
+        {
+          "path": "services/api/app/terra_property_core.py",
+          "sha256": "e02c36068a481eab4ce53e096ae5772e520122baef29bbc118b113f927e65ace"
+        },
+        {
+          "path": "services/api/app/terra_semantic.py",
+          "sha256": "51a827ed480074ad8d7c358063893dd08fe3b04f207cbd0f879283f7197407d1"
+        },
+        {
+          "path": "services/api/tests/test_terra_connector.py",
+          "sha256": "a02d39cbef9fc7c6a9ce43b15501119ed98dd6a953835d69d58dfef55d87a992"
+        },
+        {
+          "path": "services/api/tests/test_terra_property.py",
+          "sha256": "7af1490c2a906697749df3355c8d2c6ecb164f421a61e363fbdc5f427c6f27ae"
+        },
+        {
+          "path": "services/api/tests/test_terra_semantic.py",
+          "sha256": "211537b0ca1f0d82f2d33c6a651bd95a92e9bb98df3ba8c917f21bbf2861f95c"
+        },
+        {
+          "path": "services/api/tests/test_terra_status_route.py",
+          "sha256": "02baedcd0a7f49231793e80f31d7fef9361d8e6cb00ac093a52e7a0b1014d72f"
+        }
+      ]
+    },
+    {
+      "repository": "Permaculture-DAO/prometheus-canon",
+      "commit": "cbfa12103460510eec255c9f5720a221f618ba5f",
+      "files": [
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC1.md",
+          "sha256": "8e9728fb4aa28118e8eae3804917c37756bf95e18ef2ed9e5e2ebcc76bddeade"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC2_DELTA.md",
+          "sha256": "a30b2a3a69bd6be0413fb68af0a283548775db0f735ad2e6c24928060cdec245"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC3_DELTA.md",
+          "sha256": "9577be9f052aa2633723dda8afbcff78f94761042f0e6196672bcbfeeaef5000"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC4_DELTA.md",
+          "sha256": "bbfc62d823cb7242b5f72494d4fb993a74389fad78f2476147558b5204ba4de4"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC5_DELTA.md",
+          "sha256": "3cb4f83a40eb337cb55134d68480f79fd6ea2e63d677aecfde2b68ecf01fda38"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC6_DELTA.md",
+          "sha256": "6b8f98655a4cd775bbf56ca8c5bd50049b17eb54ee46b5bf6eef03d82459cd79"
+        },
+        {
+          "path": "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC7_DELTA.md",
+          "sha256": "d90852987225ebdf7be94de6259ef90c5c0a600a3f9c3680f73f8b2221886ee2"
+        }
+      ]
+    }
+  ],
+  "benchmark": {
+    "script": "scripts/terra_rc8_benchmark.py",
+    "baseline": "2e216c7887a87902b23f759d4333bcf0e4c62808",
+    "first_result": "7_OF_8; oracle ordering mismatch",
+    "first_report_hash": "acd9ea2479a426b4517c43bee657c6d17dbd8e1849c2bd0edcf7172ef61e7c92",
+    "corrected_result": "8_OF_8; lexical oracle corrected, engine unchanged",
+    "report_hash": "55e620162bca484d597721ae9a8490bd3e017368330b0cf5711e644eba49b141",
+    "fixture_hash": "2bae3c724a67671a9491c1295ae3c6484d88b158847c11a2b572019945d4343d",
+    "expert_comparison": "NOT_RUN"
+  },
+  "independent_assurance": "PENDING",
+  "real_ingestion": false,
+  "production_admitted": false
+}

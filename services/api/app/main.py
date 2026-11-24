@@ -34,6 +34,7 @@ from .ravel import (
 from .ravel_schemas import RavelShadowRequest, RavelShadowResponse
 from .evidence_spine_routes import build_evidence_spine_router
 from .review_routes import build_review_router
+from .terra_semantic import status_view as terra_status_view
 
 
 def load_json(path: Path, fallback: dict) -> dict:
@@ -160,6 +161,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "gate_review": gates,
             "document_integrity": getattr(app.state, "document_integrity", {"status": "unknown"}),
         }
+
+    @app.get("/v1/terra/status")
+    def terra_status():
+        # Static candidate capability descriptor. No data, credentials or authority.
+        return terra_status_view()
 
     @app.get("/v1/integrity")
     def integrity_view():

@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TERRA RC2 synthetic property fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "adapter_id",
+    "synthetic_only",
+    "live_endpoint",
+    "statement",
+    "observations"
+  ],
+  "properties": {
+    "adapter_id": {
+      "const": "terra_property_mock"
+    },
+    "synthetic_only": {
+      "const": true
+    },
+    "live_endpoint": {
+      "type": "null"
+    },
+    "statement": {
+      "const": "evaluation, not certification"
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode",
+          "state_fips",
+          "county_fips",
+          "apn",
+          "source_id",
+          "observed_on",
+          "kind",
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "mode": {
+            "const": "TEST"
+          },
+          "state_fips": {
+            "enum": [
+              "12",
+              "13"
+            ]
+          },
+          "county_fips": {
+            "enum": [
+              "055",
+              "101",
+              "001"
+            ]
+          },
+          "apn": {
+            "type": "string",
+            "pattern": "^TEST-[A-Z0-9-]{1,48}$"
+          },
+          "source_id": {
+            "enum": [
+              "TEST_ASSESSOR",
+              "TEST_LISTING",
+              "TEST_RECORDER"
+            ]
+          },
+          "observed_on": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "kind": {
+            "enum": [
+              "acreage",
+              "asking_price",
+              "recorded_sale_price"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "pattern": "^[0-9]{1,12}(\\.[0-9]{1,6})?$"
+          },
+          "unit": {
+            "enum": [
+              "acre",
+              "sqft",
+              "USD"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state_fips": {
+                  "const": "12"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "county_fips": {
+                  "enum": [
+                    "055",
+                    "101"
+                  ]
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "county_fips": {
+                  "const": "001"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source_id": {
+                  "const": "TEST_ASSESSOR"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "acreage"
+                },
+                "unit": {
+                  "enum": [
+                    "acre",
+                    "sqft"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source_id": {
+                  "const": "TEST_LISTING"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "asking_price"
+                },
+                "unit": {
+                  "const": "USD"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source_id": {
+                  "const": "TEST_RECORDER"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "recorded_sale_price"
+                },
+                "unit": {
+                  "const": "USD"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

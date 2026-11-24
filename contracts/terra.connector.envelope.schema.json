@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TERRA RC3 synthetic connector envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mode",
+    "workstream",
+    "source_id",
+    "snapshot_on",
+    "scope_id",
+    "coverage",
+    "fixture"
+  ],
+  "properties": {
+    "mode": {
+      "const": "TEST"
+    },
+    "workstream": {
+      "enum": [
+        "BIGFOOT",
+        "FLOIE",
+        "FL-LAND"
+      ]
+    },
+    "source_id": {
+      "enum": [
+        "TEST_ASSESSOR",
+        "TEST_LISTING",
+        "TEST_RECORDER"
+      ]
+    },
+    "snapshot_on": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "scope_id": {
+      "type": "string",
+      "pattern": "^TEST-[A-Z0-9-]{1,48}$"
+    },
+    "coverage": {
+      "enum": [
+        "PARTIAL",
+        "COMPLETE_TEST"
+      ]
+    },
+    "fixture": {
+      "$ref": "terra.property.fixture.schema.json"
+    }
+  }
+}
