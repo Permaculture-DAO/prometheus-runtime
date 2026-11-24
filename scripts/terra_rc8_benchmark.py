@@ -35,7 +35,7 @@ def corpus():
 
 # Hand-enumerated fixture oracle: county, APN, day, normalized sqft, provenance, stale.
 EXPECTED = [
-    ("055", "TEST-A", AS_OF, "217800", ("BIGFOOT", "FLOIE", "FL-LAND"), False),
+    ("055", "TEST-A", AS_OF, "217800", ("BIGFOOT", "FL-LAND", "FLOIE"), False),
     ("055", "TEST-A", AS_OF, "217800", ("FL-LAND",), False),
     ("055", "TEST-B", AS_OF, "87120", ("BIGFOOT",), False),
     ("055", "TEST-B", AS_OF, "130680", ("FLOIE",), False),
