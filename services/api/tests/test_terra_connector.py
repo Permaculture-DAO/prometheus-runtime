@@ -59,3 +59,19 @@ class ConnectorTests(unittest.TestCase):
             self.assertFalse(obj["authoritative"])
             self.assertFalse(obj["real_ingestion_enabled"])
             self.assertEqual(obj["state"],"HOLD")
+
+    def test_malformed_enums(self):
+        for key in ("workstream", "coverage"):
+            x = envelope()
+            x[key] = []
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                snapshot(x)
+
+    def test_combined_raw_bound_before_dedup(self):
+        a = envelope()
+        b = envelope("FLOIE")
+        for x in (a, b):
+            rows = x["fixture"]["observations"]
+            rows.extend([copy.deepcopy(rows[0]) for _ in range(500)])
+        with self.assertRaisesRegex(ValueError, "combined raw observation limit"):
+            reconcile([a, b], "2026-11-24", 30)
