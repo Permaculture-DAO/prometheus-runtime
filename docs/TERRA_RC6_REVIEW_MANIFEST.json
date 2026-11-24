@@ -1,0 +1,79 @@
+{
+  "release_candidate": "TERRA-US-APP-001-RC6-REVIEW",
+  "status": "UNSIGNED_REVIEW_CANDIDATE_NOT_ADMITTED",
+  "as_of": "2026-11-24",
+  "scope": "Commit-pinned RC5 review inputs; Git commit binds repository tree. Individual SHA256 file manifest and signatures not produced.",
+  "repositories": [
+    {
+      "repository": "Permaculture-DAO/prometheus-runtime",
+      "pr": 40,
+      "commit": "299be65019858a6523e596b91e7888c809b5372b",
+      "base": "1be0f20a60cf3934245d1bc76f410683c709404f",
+      "changed_paths": [
+        "adapters/terra_source_policy_review.candidate.json",
+        "adapters/terra_source_registry.candidate.json",
+        "contracts/fixtures/terra_property.synthetic.json",
+        "contracts/terra.connector.envelope.schema.json",
+        "contracts/terra.geometry.synthetic.schema.json",
+        "contracts/terra.property.fixture.schema.json",
+        "docs/TERRA_RC2_RUNTIME_INTEGRATION.md",
+        "docs/TERRA_RC3_CONNECTOR_RECONCILIATION.md",
+        "docs/TERRA_RC4_SEMANTIC_TERRITORIAL.md",
+        "docs/TERRA_RC5_REVIEW_HANDOFF.md",
+        "experiments/terra_rc1/README.md",
+        "experiments/terra_rc1/fixture.json",
+        "experiments/terra_rc1/terra.py",
+        "experiments/terra_rc1/test_terra.py",
+        "services/api/app/main.py",
+        "services/api/app/terra_connector.py",
+        "services/api/app/terra_property.py",
+        "services/api/app/terra_property_core.py",
+        "services/api/app/terra_semantic.py",
+        "services/api/tests/test_terra_connector.py",
+        "services/api/tests/test_terra_property.py",
+        "services/api/tests/test_terra_semantic.py",
+        "services/api/tests/test_terra_status_route.py"
+      ]
+    },
+    {
+      "repository": "Permaculture-DAO/prometheus-canon",
+      "pr": 33,
+      "commit": "39e41ded8ccbd7f44de4867aea8f1894ccb40b2e",
+      "base": "0a0ece00ae53553a514dcb014302eea0002cc9f3",
+      "changed_paths": [
+        "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC1.md",
+        "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC2_DELTA.md",
+        "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC3_DELTA.md",
+        "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC4_DELTA.md",
+        "docs/proposals/TERRA_US_INTELLIGENCE_v0_1_0_RC5_DELTA.md"
+      ]
+    }
+  ],
+  "checks": {
+    "runtime_ci": "PASS",
+    "ravel_ci": "PASS",
+    "claims_discipline": "PASS",
+    "secret_scan": "PASS",
+    "wsl_rc5_sync": "PASS",
+    "wsl_rc1": "15_PASS",
+    "wsl_rc2_rc4": "31_PASS",
+    "wsl_rc5_route": "NOT_EXECUTED_IMPORT_ERROR_FASTAPI_MISSING",
+    "wsl_full_suite": "NOT_VERIFIED",
+    "independent_reviews": "NONE_RECORDED"
+  },
+  "admission": {
+    "real_ingestion": false,
+    "real_gis": false,
+    "evidence_spine_write": false,
+    "production": false,
+    "capital": false
+  },
+  "remaining": [
+    "Resolve isolated pinned local dependencies and run HTTP smoke/regression",
+    "Independent engineering and adversarial review",
+    "Verify dataset-specific rights, costs and authority",
+    "Actual workstream inventory and controlled reconciliation",
+    "Bridge and Console integration review",
+    "Benchmark and human release decision"
+  ]
+}
