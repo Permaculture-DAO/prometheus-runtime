@@ -90,6 +90,8 @@ def main():
                   complexity_comparison="NOT_MEASURED", independent_assurance=False)
     report["deterministic_report_hash"] = digest(report)
     print(json.dumps(dict(report, observed_runtime_seconds=round(elapsed, 6)), sort_keys=True))
+    if actual != expected:
+        print(json.dumps({"actual":actual,"expected":expected},sort_keys=True),file=sys.stderr)
     return 0 if all(checks.values()) else 1
 
 if __name__ == "__main__":
